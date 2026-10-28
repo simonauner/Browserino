@@ -5402,61 +5402,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Matches the whole URL. Use * for any text, e.g. https://tradera.com*"
+            "value": "Matches the whole URL. Use * for any text, e.g. https://example.com*"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сопоставляется со всем URL. * означает любой текст, например https://tradera.com*"
+            "value": "Сопоставляется со всем URL. * означает любой текст, например https://example.com*"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muss der ganzen URL entsprechen. * steht für beliebigen Text, z. B. https://tradera.com*"
+            "value": "Muss der ganzen URL entsprechen. * steht für beliebigen Text, z. B. https://example.com*"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Correspond à l’URL entière. * remplace n’importe quel texte, par ex. https://tradera.com*"
+            "value": "Correspond à l’URL entière. * remplace n’importe quel texte, par ex. https://example.com*"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Coincide con la URL completa. Usa * para cualquier texto, p. ej. https://tradera.com*"
+            "value": "Coincide con la URL completa. Usa * para cualquier texto, p. ej. https://example.com*"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Corresponde à URL inteira. Use * para qualquer texto, por exemplo https://tradera.com*"
+            "value": "Corresponde à URL inteira. Use * para qualquer texto, por exemplo https://example.com*"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Corrisponde all’intero URL. Usa * per qualsiasi testo, ad es. https://tradera.com*"
+            "value": "Corrisponde all’intero URL. Usa * per qualsiasi testo, ad es. https://example.com*"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "URL 全体に一致します。* は任意のテキストを表します（例：https://tradera.com*）"
+            "value": "URL 全体に一致します。* は任意のテキストを表します（例：https://example.com*）"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "전체 URL과 일치합니다. *는 임의의 텍스트를 나타냅니다(예: https://tradera.com*)"
+            "value": "전체 URL과 일치합니다. *는 임의의 텍스트를 나타냅니다(예: https://example.com*)"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "匹配整个 URL。* 表示任意文本，例如 https://tradera.com*"
+            "value": "匹配整个 URL。* 表示任意文本，例如 https://example.com*"
           }
         }
       }
