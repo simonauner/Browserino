@@ -1,0 +1,19 @@
+Browserino/Localizable.xcstrings
+  s_9efb7a833771a9::t_3a9ebc92a7c360 5405,5411,5417,5423,5429,5435,5441,5447,5453,5459
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "720341b7eb35068b4b0e665e26bf8d6738cec41f",
+  "prompts": {},
+  "sessions": {
+    "s_9efb7a833771a9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "25fc9005-eb61-443f-84db-637bcae39e96",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
