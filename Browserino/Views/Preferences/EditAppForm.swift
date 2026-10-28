@@ -11,7 +11,7 @@ struct EditAppForm: View {
     @Binding var app: App
     @Binding var isPresented: Bool
     
-    @AppStorage("apps") private var apps: [App] = []
+    @Setting(\.apps) private var apps
     
     private var hostValid: Bool {
         let url = if app.host.starts(with: /https?:\/\//) {

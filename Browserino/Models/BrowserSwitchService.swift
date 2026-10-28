@@ -174,14 +174,7 @@ final class BrowserSwitchService {
     }
 
     private func configuredBrowserBundleIDs() -> Set<String> {
-        guard
-            let raw = UserDefaults.standard.string(forKey: "browsers"),
-            let urls = [BrowserTarget](rawValue: raw)
-        else {
-            return []
-        }
-
-        return Set(urls.compactMap { Bundle(url: $0.app)?.bundleIdentifier })
+        Set(AppSettings.shared.browsers.compactMap { Bundle(url: $0.app)?.bundleIdentifier })
     }
 
     private func isConfiguredBrowser(_ app: NSRunningApplication) -> Bool {

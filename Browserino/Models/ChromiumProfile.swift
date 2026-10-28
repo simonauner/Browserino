@@ -5,7 +5,6 @@
 
 import AppKit
 import Foundation
-import SwiftUI
 
 struct ChromiumProfile: Hashable {
     /// Directory name on disk, e.g. "Default" or "Profile 2". This is what
@@ -41,7 +40,10 @@ enum ChromiumProfileService {
     /// macOS treats a browser's user data as private to that browser, so reading it
     /// is refused until the user points at the folder themselves. The bookmark from
     /// that choice is what carries the permission across launches.
-    @AppStorage("browserDataAccess") private static var bookmarks: [String: Data] = [:]
+    private static var bookmarks: [String: Data] {
+        get { UserDefaults.standard.json(forKey: "browserDataAccess") ?? [:] }
+        set { UserDefaults.standard.setJSON(newValue, forKey: "browserDataAccess") }
+    }
 
     @discardableResult
     static func requestAccess(forAppAt app: URL) -> Bool {

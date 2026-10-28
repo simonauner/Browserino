@@ -29,11 +29,16 @@ struct PromptRows {
     /// In display order, so a selection index maps straight onto a row.
     let all: [PromptRow]
 
-    init(urls: [URL], sourceTab: SourceTabSnapshot?, defaults: UserDefaults = .standard) {
-        let browsers = [BrowserTarget](rawValue: defaults.string(forKey: "browsers") ?? "") ?? []
-        let hidden = [BrowserTarget](rawValue: defaults.string(forKey: "hiddenBrowsers") ?? "") ?? []
-        let apps = [App](rawValue: defaults.string(forKey: "apps") ?? "") ?? []
-        let shortcuts = [String: String](rawValue: defaults.string(forKey: "shortcuts") ?? "") ?? [:]
+    init(
+        urls: [URL],
+        sourceTab: SourceTabSnapshot?,
+        settings: AppSettings = .shared,
+        defaults: UserDefaults = .standard
+    ) {
+        let browsers = settings.browsers
+        let hidden = settings.hiddenBrowsers
+        let apps = settings.apps
+        let shortcuts = settings.shortcuts
         let profilesEnabled = defaults.object(forKey: "profilesEnabled") as? Bool ?? true
         let appsAtTop = defaults.object(forKey: "apps_atTop") as? Bool ?? true
 
@@ -70,7 +75,7 @@ struct PromptRows {
 struct PromptView: View {
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
-    @AppStorage("rules") private var rules: [Rule] = []
+    @Setting(\.rules) private var rules
     @AppStorage("rules_showInPicker") private var showRuleOption: Bool = true
 
     let urls: [URL]

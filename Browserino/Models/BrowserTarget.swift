@@ -19,9 +19,8 @@ struct BrowserTarget: Codable, Hashable {
     }
 
     /// Earlier builds stored these as bare URL strings. Both shapes have to decode,
-    /// because Array+RawRepresentable turns any decode failure into nil and
-    /// @AppStorage then silently substitutes an empty array — losing the user's
-    /// browser order and hidden set with nothing shown to explain it.
+    /// because AppSettings turns any decode failure into an empty array — losing
+    /// the user's browser order and hidden set with nothing shown to explain it.
     init(from decoder: any Decoder) throws {
         if let container = try? decoder.singleValueContainer(),
            let app = try? container.decode(URL.self) {

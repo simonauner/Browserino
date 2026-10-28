@@ -9,9 +9,9 @@ import KeyboardShortcuts
 /// A read-only overview of every keyboard shortcut. They are assigned in the
 /// Browsers, Apps and General panes; the picker's own keys are fixed.
 struct ShortcutsTab: View {
-    @AppStorage("browsers") private var browsers: [BrowserTarget] = []
-    @AppStorage("apps") private var apps: [App] = []
-    @AppStorage("shortcuts") private var shortcuts: [String: String] = [:]
+    @Setting(\.browsers) private var browsers
+    @Setting(\.apps) private var apps
+    @Setting(\.shortcuts) private var shortcuts
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
 
     /// Browsers, then apps not already listed as browsers, that have a key assigned.

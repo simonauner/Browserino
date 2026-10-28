@@ -102,7 +102,7 @@ struct RuleItem: View {
 }
 
 struct RulesTab: View {
-    @AppStorage("rules") private var rules: [Rule] = []
+    @Setting(\.rules) private var rules
     @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
 
     var body: some View {

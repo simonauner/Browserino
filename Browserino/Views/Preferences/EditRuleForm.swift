@@ -11,7 +11,7 @@ struct EditRuleForm: View {
     @Binding var rule: Rule
     @Binding var isPresented: Bool
     
-    @AppStorage("rules") private var rules: [Rule] = []
+    @Setting(\.rules) private var rules
     
     var body: some View {
         RuleForm(
@@ -36,7 +36,7 @@ struct EditRuleForm: View {
 struct NewRuleForm: View {
     @Binding var isPresented: Bool
     
-    @AppStorage("rules") private var rules: [Rule] = []
+    @Setting(\.rules) private var rules
     
     var body: some View {
         RuleForm(

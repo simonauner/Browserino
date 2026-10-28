@@ -12,7 +12,7 @@ struct BrowserTargetPicker: View {
     @Binding var app: URL?
     @Binding var profile: String?
 
-    @AppStorage("browsers") private var browsers: [BrowserTarget] = []
+    @Setting(\.browsers) private var browsers
     @State private var otherPresented = false
 
     private var selection: BrowserTarget? {

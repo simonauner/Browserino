@@ -10,7 +10,7 @@ import SwiftUI
 struct ShortcutButton: View {
     let shortcutKey: String
     
-    @AppStorage("shortcuts") private var shortcuts: [String: String] = [:]
+    @Setting(\.shortcuts) private var shortcuts
     
     @State private var isRecording: Bool = false
     @FocusState private var focus: Bool
