@@ -95,8 +95,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             Task { @MainActor in
                 guard let self else { return }
                 if let item = self.statusBarItem { NSStatusBar.system.removeStatusItem(item); self.statusBarItem = nil }
+                // The settings window's title follows its selected pane on its own.
                 self.setupStatusBar()
-                self.preferencesWindow?.title = L10n.text("settings.window.title")
                 self.observeLanguage()
             }
         }
