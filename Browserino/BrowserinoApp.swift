@@ -159,7 +159,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         
         preferencesWindow!.isReleasedWhenClosed = false
         preferencesWindow!.titlebarAppearsTransparent = true
-        
+        // A unified toolbar gives the pane title the same height and placement
+        // as System Settings.
+        if preferencesWindow!.toolbar == nil {
+            preferencesWindow!.toolbar = NSToolbar()
+        }
+        preferencesWindow!.toolbarStyle = .unified
+
         preferencesWindow!.contentMinSize = preferencesMinSize
         
         preferencesWindow!.collectionBehavior = [.moveToActiveSpace, .fullScreenNone]

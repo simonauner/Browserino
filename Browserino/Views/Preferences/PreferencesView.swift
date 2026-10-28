@@ -58,9 +58,17 @@ struct PreferencesView: View {
 
     var body: some View {
         NavigationSplitView {
-            List(SettingsPane.allCases, selection: $selection) { pane in
-                Label(L10n.text(pane.titleKey), systemImage: pane.systemImage)
-                    .tag(pane)
+            List(selection: $selection) {
+                // An empty header keeps the first row's highlight off the
+                // toolbar's separator; the sidebar ignores content margins.
+                Section {
+                    ForEach(SettingsPane.allCases) { pane in
+                        Label(L10n.text(pane.titleKey), systemImage: pane.systemImage)
+                            .tag(pane)
+                    }
+                } header: {
+                    Color.clear.frame(height: 0)
+                }
             }
             .navigationSplitViewColumnWidth(Self.sidebarWidth)
             // The panes are the window's only navigation; hiding the list leaves no way back.
