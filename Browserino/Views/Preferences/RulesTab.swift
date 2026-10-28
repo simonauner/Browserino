@@ -31,9 +31,7 @@ struct AddRule: View {
                 Text(verbatim: L10n.text("rules.add"))
             }
             .sheet(isPresented: $addPresented) {
-                NewRuleForm(
-                    isPresented: $addPresented
-                )
+                NewRuleForm()
             }
         }
     }
@@ -94,8 +92,7 @@ struct RuleItem: View {
         .padding(10)
         .sheet(isPresented: $editPresented) {
             EditRuleForm(
-                rule: $rule,
-                isPresented: $editPresented
+                rule: $rule
             )
         }
     }

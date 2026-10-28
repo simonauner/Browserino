@@ -44,15 +44,15 @@ final class Localization {
               let english = Bundle(path: englishPath) else { return localized }
         return english.localizedString(forKey: key, value: key, table: nil)
     }
-    func format(_ key: String, _ value: String) -> String {
-        String(format: text(key), locale: Locale(identifier: activeLanguage), value)
+    func format(_ key: String, _ values: [String]) -> String {
+        String(format: text(key), locale: Locale(identifier: activeLanguage), arguments: values)
     }
 }
 
 @MainActor
 enum L10n {
     static func text(_ key: String) -> String { Localization.shared.text(key) }
-    static func format(_ key: String, _ value: String) -> String { Localization.shared.format(key, value) }
+    static func format(_ key: String, _ values: String...) -> String { Localization.shared.format(key, values) }
 }
 
 struct LocalizedRoot<Content: View>: View {

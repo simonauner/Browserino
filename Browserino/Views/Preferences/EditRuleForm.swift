@@ -9,163 +9,196 @@ import SwiftUI
 
 struct EditRuleForm: View {
     @Binding var rule: Rule
-    @Binding var isPresented: Bool
-    
+
     @Setting(\.rules) private var rules
-    
+
     var body: some View {
         RuleForm(
             rule: rule,
-            onCancel: {
-                isPresented.toggle()
-            },
             onSave: {
                 rule = $0
-                isPresented.toggle()
             },
             onDelete: {
                 rules.removeAll {
                     $0 == rule
                 }
-                isPresented.toggle()
             }
         )
     }
 }
 
 struct NewRuleForm: View {
-    @Binding var isPresented: Bool
-    
     @Setting(\.rules) private var rules
-    
+
     var body: some View {
         RuleForm(
             rule: nil,
-            onCancel: {
-                isPresented.toggle()
-            },
             onSave: {
                 rules.append($0)
-                isPresented.toggle()
-            },
-            onDelete: {
-                isPresented.toggle()
             }
         )
     }
 }
 
 struct RuleForm: View {
-    var rule: Rule?
-    
-    var onCancel: () -> Void
+    var isNew: Bool
     var onSave: (Rule) -> Void
-    var onDelete: () -> Void
+    /// Nil for a rule that isn't saved yet, which has nothing to delete.
+    var onDelete: (() -> Void)?
 
-    @State private var regex: String = ""
-    @State private var kind: Rule.Kind = .regex
+    @Environment(\.dismiss) private var dismiss
+
+    @State private var regex: String
+    @State private var kind: Rule.Kind
     @State private var testUrls: String = ""
     @State private var url: URL?
     @State private var profile: String?
-    
+    @State private var deletePresented = false
+
+    init(rule: Rule?, onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
+        isNew = rule == nil
+        self.onSave = onSave
+        self.onDelete = onDelete
+        _regex = State(initialValue: rule?.regex ?? "")
+        _kind = State(initialValue: rule?.kind ?? .regex)
+        _url = State(initialValue: rule?.app)
+        _profile = State(initialValue: rule?.profile)
+    }
+
     private var compiledRegex: Regex<AnyRegexOutput>? {
-        return Rule.compile(regex, kind: kind)
+        regex.isEmpty ? nil : Rule.compile(regex, kind: kind)
     }
-    
-    private var generatedRegex: String? {
-        return RegexGenerator.regex(from: testUrls.components(separatedBy: .newlines))
+
+    private var testLines: [String] {
+        testUrls
+            .components(separatedBy: .newlines)
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
     }
-    
-    private var testLines: [(line: String, matches: Bool)] {
-        testUrls.split(separator: "\n").map { line in
-            (String(line), compiledRegex.map { line.firstMatch(of: $0) != nil } ?? false)
+
+    private var testResults: [(line: String, matches: Bool)] {
+        testLines.map { line in
+            (line, compiledRegex.map { line.firstMatch(of: $0) != nil } ?? false)
         }
     }
-    
+
+    private var generatedRegex: String? {
+        RegexGenerator.regex(from: testLines)
+    }
+
     var body: some View {
         Form {
-            Section(
-                header: Text(verbatim: L10n.text("settings.tabs.general"))
-                    .font(.headline)
-            ) {
+            Section {
                 Picker(L10n.text("rules.editor.type"), selection: $kind) {
                     Text(verbatim: L10n.text("rules.kind.regex")).tag(Rule.Kind.regex)
                     Text(verbatim: L10n.text("rules.kind.pattern")).tag(Rule.Kind.pattern)
                 }
                 .pickerStyle(.segmented)
-                .fixedSize()
-                
-                TextField(L10n.text(kind == .regex ? "rules.editor.regex" : "rules.editor.pattern"), text: $regex)
-                    .font(
-                        .system(size: 14)
+
+                LabeledContent(L10n.text(kind == .regex ? "rules.editor.regex" : "rules.editor.pattern")) {
+                    TextField(
+                        L10n.text(kind == .regex ? "rules.editor.regex" : "rules.editor.pattern"),
+                        text: $regex,
+                        prompt: Text(verbatim: kind == .regex ? #"https?://(www\.)?example\.com/.*"# : "https://example.com/*")
                     )
-                
-                if kind == .pattern {
-                    Text(verbatim: L10n.text("rules.editor.pattern_help"))
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
+                        .labelsHidden()
+                        .monospaced()
+                        .autocorrectionDisabled()
                 }
-                
-                LabeledContent(L10n.text("rules.editor.test_urls")) {
-                    TextEditor(text: $testUrls)
-                        .font(
-                            .system(size: 14)
-                        )
-                }
-                
-                Button(action: {
-                    kind = .regex
-                    regex = generatedRegex ?? regex
-                }) {
-                    Text(verbatim: L10n.text("rules.editor.generate_regex"))
-                }
-                .disabled(generatedRegex == nil)
-                
-                VStack(alignment: .leading, spacing: 2) {
-                    ForEach(Array(testLines.enumerated()), id: \.offset) { _, testLine in
-                        HStack(spacing: 6) {
-                            // Hidden rather than removed, so all URLs stay aligned.
-                            Image(systemName: "checkmark")
-                                .foregroundStyle(.green)
-                                .opacity(testLine.matches ? 1 : 0)
-                            Text(verbatim: testLine.line)
+            } header: {
+                Text(verbatim: L10n.text(isNew ? "rules.editor.new_title" : "rules.editor.edit_title"))
+            } footer: {
+                expressionFooter
+            }
+
+            Section {
+                TextEditor(text: $testUrls)
+                    .monospaced()
+                    .autocorrectionDisabled()
+                    .scrollContentBackground(.hidden)
+                    .frame(minHeight: 60)
+                    .overlay(alignment: .topLeading) {
+                        if testUrls.isEmpty {
+                            Text(verbatim: L10n.text("rules.editor.test_urls_placeholder"))
+                                .foregroundStyle(.tertiary)
+                                .padding(.leading, 5)
+                                .allowsHitTesting(false)
                         }
                     }
+                    .accessibilityLabel(L10n.text("rules.editor.test_urls"))
+
+                ForEach(Array(testResults.enumerated()), id: \.offset) { _, result in
+                    Label {
+                        Text(verbatim: result.line)
+                            .monospaced()
+                            .lineLimit(1)
+                            .truncationMode(.middle)
+                    } icon: {
+                        Image(systemName: result.matches ? "checkmark.circle.fill" : "xmark.circle")
+                            .foregroundStyle(result.matches ? .green : .secondary)
+                    }
+                    .accessibilityValue(L10n.text(result.matches ? "rules.editor.matches" : "rules.editor.no_match"))
                 }
-                .font(
-                    .system(size: 14)
-                )
-            }
-            
-            Spacer()
-                .frame(height: 32)
-            
-            
-            LabeledContent(L10n.text("browsers.target.open_in")) {
-                BrowserTargetPicker(app: $url, profile: $profile)
-            }
-            
-            Spacer()
-                .frame(height: 32)
-            
-            HStack {
-                Button(role: .cancel, action: onCancel) {
-                    Text(verbatim: L10n.text("common.cancel"))
-                }
-                
-                if rule != nil {
-                    Button(role: .destructive, action: onDelete) {
-                        Text(verbatim: L10n.text("common.delete"))
+            } header: {
+                HStack {
+                    Text(verbatim: L10n.text("rules.editor.test_urls"))
+
+                    Spacer()
+
+                    if !testResults.isEmpty {
+                        Text(verbatim: L10n.format(
+                            "rules.editor.match_count",
+                            String(testResults.filter(\.matches).count),
+                            String(testResults.count)
+                        ))
+                        .foregroundStyle(.secondary)
                     }
                 }
-                
-                Spacer()
-                
-                Button(action: {
+            } footer: {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(verbatim: L10n.text("rules.editor.generate_regex_help"))
+                        .foregroundStyle(.secondary)
+
+                    Spacer()
+
+                    Button(L10n.text("rules.editor.generate_regex")) {
+                        kind = .regex
+                        regex = generatedRegex ?? regex
+                    }
+                    .disabled(generatedRegex == nil)
+                }
+            }
+
+            Section {
+                LabeledContent(L10n.text("browsers.target.open_in")) {
+                    BrowserTargetPicker(app: $url, profile: $profile)
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .frame(width: 520)
+        .toolbar {
+            if onDelete != nil {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(L10n.text("common.delete"), role: .destructive) {
+                        deletePresented = true
+                    }
+                }
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button(L10n.text("common.cancel"), role: .cancel) {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+            }
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button(L10n.text("common.save")) {
                     guard let url else {
                         return
                     }
-                    
+
                     onSave(
                         Rule(
                             regex: regex,
@@ -174,20 +207,31 @@ struct RuleForm: View {
                             kind: kind
                         )
                     )
-                }) {
-                    Text(verbatim: L10n.text("common.save"))
+                    dismiss()
                 }
+                .keyboardShortcut(.defaultAction)
                 .disabled(compiledRegex == nil || url == nil)
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
         }
-        .padding(20)
-        .frame(minWidth: 500)
-        .onAppear {
-            regex = rule?.regex ?? ""
-            kind = rule?.kind ?? .regex
-            url = rule?.app
-            profile = rule?.profile
+        .confirmationDialog(
+            L10n.text("rules.editor.delete_confirmation"),
+            isPresented: $deletePresented
+        ) {
+            Button(L10n.text("common.delete"), role: .destructive) {
+                onDelete?()
+                dismiss()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var expressionFooter: some View {
+        if !regex.isEmpty && compiledRegex == nil {
+            Label(L10n.text("rules.editor.invalid_regex"), systemImage: "exclamationmark.triangle.fill")
+                .foregroundStyle(.red)
+        } else if kind == .pattern {
+            Text(verbatim: L10n.text("rules.editor.pattern_help"))
+                .foregroundStyle(.secondary)
         }
     }
 }
