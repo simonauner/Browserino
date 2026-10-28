@@ -1,0 +1,23 @@
+Browserino/Views/Preferences/LocationsTab.swift
+  s_eb457d96d3ce1a::t_e8b184408302ca 13-14,18-37,52-55,57
+Browserino/Localizable.xcstrings
+  s_eb457d96d3ce1a::t_87796ded211c75 7478-7672
+Browserino/Views/Preferences/EditableList.swift
+  s_eb457d96d3ce1a::t_2701063d6a97ac 1-103
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3773b887fc81237675e2b5fb433822d1f9c1cfac",
+  "prompts": {},
+  "sessions": {
+    "s_eb457d96d3ce1a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61e9d917-73f5-4da1-a86f-49813d2e9382",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
