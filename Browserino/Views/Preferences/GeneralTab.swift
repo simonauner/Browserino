@@ -45,8 +45,6 @@ struct GeneralTab: View {
     @State private var showingExportPicker = false
     @State private var showingImportPicker = false
     @State private var exportDocument = SettingsDocument()
-    @State private var contentHeight: CGFloat?
-    @State private var visibleHeight: CGFloat?
     @Environment(\.fitSettingsHeight) private var fitSettingsHeight
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
@@ -100,212 +98,101 @@ struct GeneralTab: View {
         }
     }
 
-    private func reportOverflow() {
-        guard let contentHeight, let visibleHeight, contentHeight > 0, visibleHeight > 0 else { return }
-        fitSettingsHeight(contentHeight - visibleHeight)
-    }
-
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 16) {
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.language.title")).font(.headline).frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-                    Picker(L10n.text("settings.language.title"), selection: $localization.selectedLanguage) {
-                        Text(verbatim: L10n.text("settings.language.system_default")).tag("")
-                        ForEach(LanguagePolicy.options, id: \.id) { option in
-                            Text(verbatim: option.name).tag(option.id)
-                        }
-                    }.labelsHidden().fixedSize().frame(width: 230, alignment: .leading).frame(maxWidth: .infinity, alignment: .leading)
-                }
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("tabs.transfer.title")).font(.headline).frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-                    VStack(alignment: .leading, spacing: 8) {
-                        LocalizedShortcutRecorder().fixedSize().frame(width: 230, height: 26, alignment: .leading)
-                        Toggle(L10n.text("tabs.transfer.close_source"), isOn: $closeSourceTab)
-                        Text(verbatim: L10n.text("tabs.transfer.safari_keep_source")).fixedSize(horizontal: false, vertical: true)
-                            .font(.callout).foregroundStyle(.secondary)
+        Form {
+            Section {
+                Picker(L10n.text("settings.language.title"), selection: $localization.selectedLanguage) {
+                    Text(verbatim: L10n.text("settings.language.system_default")).tag("")
+                    ForEach(LanguagePolicy.options, id: \.id) { option in
+                        Text(verbatim: option.name).tag(option.id)
                     }
                 }
+            }
 
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.default_browser.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
+            Section {
+                LabeledContent(L10n.text("tabs.transfer.title")) {
+                    LocalizedShortcutRecorder().fixedSize()
+                }
+                Toggle(L10n.text("tabs.transfer.close_source"), isOn: $closeSourceTab)
+            } footer: {
+                Text(verbatim: L10n.text("tabs.transfer.safari_keep_source"))
+            }
 
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button(action: {
+            Section(L10n.text("settings.default_browser.title")) {
+                LabeledContent(L10n.text("settings.default_browser.description")) {
+                    Button(L10n.text("settings.default_browser.make_default")) {
+                        NSWorkspace.shared.setDefaultApplication(
+                            at: Bundle.main.bundleURL,
+                            toOpenURLsWithScheme: "http"
+                        ) { error in
+                            guard error == nil else { return }
                             NSWorkspace.shared.setDefaultApplication(
                                 at: Bundle.main.bundleURL,
-                                toOpenURLsWithScheme: "http"
-                            ) { error in
-                                guard error == nil else { return }
-                                NSWorkspace.shared.setDefaultApplication(
-                                    at: Bundle.main.bundleURL,
-                                    toOpenURLsWithScheme: "https"
-                                ) { _ in
-                                    DispatchQueue.main.async {
-                                        isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
-                                    }
+                                toOpenURLsWithScheme: "https"
+                            ) { _ in
+                                DispatchQueue.main.async {
+                                    isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
                                 }
                             }
-                        }) {
-                            Text(verbatim: L10n.text("settings.default_browser.make_default"))
-                        }
-                        .disabled(isDefault)
-
-                        Text(verbatim: L10n.text("settings.default_browser.description"))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                            .opacity(0.5)
-                    }
-                }
-
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.copy_url.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Toggle(isOn: $closeAfterCopy) {
-                            Text(verbatim: L10n.text("settings.copy_url.close_after_copy"))
-                                .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                                .opacity(0.5)
-                        }
-
-                        Toggle(isOn: $alternativeShortcut) {
-                            Text(verbatim: L10n.text("settings.copy_url.alternative_shortcut"))
-                                .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                                .opacity(0.5)
                         }
                     }
+                    .disabled(isDefault)
                 }
+            }
 
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.appearance.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
+            Section(L10n.text("settings.copy_url.title")) {
+                Toggle(L10n.text("settings.copy_url.close_after_copy"), isOn: $closeAfterCopy)
+                Toggle(L10n.text("settings.copy_url.alternative_shortcut"), isOn: $alternativeShortcut)
+            }
 
-                    VStack(alignment: .leading, spacing: 8) {
-                        Toggle(isOn: $appsAtTop) {
-                            Text(verbatim: L10n.text("settings.appearance.apps_at_top"))
-                                .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                                .opacity(0.5)
-                        }
+            Section(L10n.text("settings.appearance.title")) {
+                Toggle(L10n.text("settings.appearance.apps_at_top"), isOn: $appsAtTop)
+                Toggle(L10n.text("settings.appearance.show_menu_bar"), isOn: $showInMenuBar)
+            }
 
-                        Toggle(isOn: $showInMenuBar) {
-                            Text(verbatim: L10n.text("settings.appearance.show_menu_bar"))
-                                .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                                .opacity(0.5)
-                        }
-                    }
-                }
-
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.startup.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Toggle(isOn: $launchAtLogin) {
-                            Text(verbatim: L10n.text("settings.startup.launch_at_login"))
-                                .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                                .opacity(0.5)
-                        }
-                        .onChange(of: launchAtLogin) { _, newValue in
-                            do {
-                                if newValue {
-                                    try SMAppService.mainApp.register()
-                                } else {
-                                    try SMAppService.mainApp.unregister()
-                                }
-                            } catch {
-                                launchAtLogin = SMAppService.mainApp.status == .enabled
+            Section(L10n.text("settings.startup.title")) {
+                Toggle(L10n.text("settings.startup.launch_at_login"), isOn: $launchAtLogin)
+                    .onChange(of: launchAtLogin) { _, newValue in
+                        do {
+                            if newValue {
+                                try SMAppService.mainApp.register()
+                            } else {
+                                try SMAppService.mainApp.unregister()
                             }
+                        } catch {
+                            launchAtLogin = SMAppService.mainApp.status == .enabled
                         }
                     }
-                }
+            }
 
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.import_export.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button(action: {
-                            exportSettings()
-                        }) {
-                            Text(verbatim: L10n.text("settings.import_export.export"))
-                        }
-
-                        Text(verbatim: L10n.text("settings.import_export.export_description"))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                            .opacity(0.5)
-
-                        Button(action: {
-                            showingImportPicker = true
-                        }) {
-                            Text(verbatim: L10n.text("settings.import_export.import"))
-                        }
-
-                        Text(verbatim: L10n.text("settings.import_export.import_description"))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                            .opacity(0.5)
+            Section(L10n.text("settings.import_export.title")) {
+                LabeledContent(L10n.text("settings.import_export.export_description")) {
+                    Button(L10n.text("settings.import_export.export")) {
+                        exportSettings()
                     }
                 }
-
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.reset.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button(action: {
-                            let defaults = UserDefaults.standard
-                            KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
-                            defaults.removeObject(forKey: "browserDataAccess")
-                            Self.settingsKeys.forEach { key in
-                                defaults.removeObject(forKey: key)
-                            }
-                        }) {
-                            Text(verbatim: L10n.text("settings.reset.action"))
-                        }
-
-                        Text(verbatim: L10n.text("settings.reset.description"))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                            .opacity(0.5)
+                LabeledContent(L10n.text("settings.import_export.import_description")) {
+                    Button(L10n.text("settings.import_export.import")) {
+                        showingImportPicker = true
                     }
                 }
             }
-            .padding(20)
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .onGeometryChange(for: CGFloat.self, of: \.size.height) { height in
-                contentHeight = height
-                reportOverflow()
+
+            Section(L10n.text("settings.reset.title")) {
+                LabeledContent(L10n.text("settings.reset.description")) {
+                    Button(L10n.text("settings.reset.action")) {
+                        let defaults = UserDefaults.standard
+                        KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
+                        defaults.removeObject(forKey: "browserDataAccess")
+                        Self.settingsKeys.forEach { key in
+                            defaults.removeObject(forKey: key)
+                        }
+                    }
+                }
             }
         }
-        .onGeometryChange(for: CGFloat.self) { proxy in
-            // Measure what is visible, not what scrolls under the toolbar.
-            proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom
-        } action: { height in
-            visibleHeight = height
-            reportOverflow()
-        }
+        .formStyle(.grouped)
+        .modifier(FitsSettingsHeight(fit: fitSettingsHeight))
         .onAppear {
             isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
         }
@@ -335,6 +222,26 @@ struct GeneralTab: View {
             case .failure(let error):
                 print("Import failed: \(error.localizedDescription)")
             }
+        }
+    }
+}
+
+/// Reports how far the form's content runs past what the window shows, so the
+/// settings window can grow to fit it. The scroll geometry this needs arrived in
+/// macOS 15; on 14 the window keeps its size and the form scrolls.
+private struct FitsSettingsHeight: ViewModifier {
+    let fit: @MainActor @Sendable (CGFloat) -> Void
+
+    func body(content: Content) -> some View {
+        if #available(macOS 15.0, *) {
+            content.onScrollGeometryChange(for: CGFloat.self) { geometry in
+                // Measure what is visible, not what scrolls under the toolbar.
+                geometry.contentSize.height - (geometry.containerSize.height - geometry.contentInsets.top - geometry.contentInsets.bottom)
+            } action: { _, overflow in
+                fit(overflow)
+            }
+        } else {
+            content
         }
     }
 }
