@@ -10,20 +10,31 @@ struct Directory: Codable, Hashable {
     var directoryPath: String
 }
 
-struct BrowserSearchLocations: View {
-    @Binding var directories: [Directory]
+struct BrowserSearchLocationsTab: View {
+    @Setting(\.directories) private var directories
     @State private var explorerPresented = false
 
     var body: some View {
-        HStack {
-            Text(verbatim: L10n.text("locations.add.instructions"))
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Button(action: {
-                explorerPresented.toggle()
-            }) {
-                Text(verbatim: L10n.text("locations.select_directory"))
+        VStack(alignment: .leading, spacing: 12) {
+            EditableList(
+                count: directories.count,
+                add: {
+                    explorerPresented = true
+                },
+                remove: { rows in
+                    directories.remove(atOffsets: rows)
+                },
+                isRemovable: { index in
+                    directories[index].directoryPath != "/Applications"
+                }
+            ) { index in
+                Label {
+                    Text(verbatim: directories[index].directoryPath)
+                } icon: {
+                    Image(nsImage: NSWorkspace.shared.icon(forFile: directories[index].directoryPath))
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                }
             }
             .fileImporter(
                 isPresented: $explorerPresented,
@@ -36,61 +47,15 @@ struct BrowserSearchLocations: View {
                     }
                 }
             }
-        }
-        .padding(10)
-    }
-}
-
-struct DirectoryItem: View {
-    @Binding var directory: Directory
-    @Binding var directories: [Directory]
-
-    var body: some View {
-        HStack {
-            Text(directory.directoryPath)
-                .font(.system(size: 14))
-                .frame(maxWidth: .infinity, alignment: .leading)
-
-            
-            Button(action: {
-                deleteDirectory()
-            }) {
-                Image(
-                    systemName: "trash")
-            }
-            .disabled(directory.directoryPath == "/Applications")
-            .buttonStyle(.plain)
-        }
-        .padding(10)
-    }
-
-    private func deleteDirectory() {
-        if let index = directories.firstIndex(of: directory) {
-            directories.remove(at: index)
-        }
-    }
-}
-
-struct BrowserSearchLocationsTab: View {
-    @Setting(\.directories) private var directories
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            List {
-                ForEach(Array($directories.enumerated()), id: \.offset) { _, directory in
-                    DirectoryItem(directory: directory, directories: $directories)
-                }
-                BrowserSearchLocations(directories: $directories)
-            }
-            .scrollContentBackground(.hidden)
 
             Text(verbatim: L10n.text("locations.list.instructions"))
-                .font(.subheadline)
-                .foregroundStyle(.primary.opacity(0.5))
-                .frame(maxWidth: .infinity)
+                .foregroundStyle(.secondary)
+
+            Text(verbatim: L10n.text("locations.add.instructions"))
+                .foregroundStyle(.secondary)
         }
+        .padding(20)
         .onAppear(perform: loadDirectories)
-        .padding(.bottom, 20)
     }
 
     private func loadDirectories() {
