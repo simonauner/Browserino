@@ -2022,61 +2022,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag and drop to reorder. Use Add shortcut to assign a key. Click on eye to hide unwanted browsers from prompt"
+            "value": "Drag to reorder. Use Add shortcut to assign a key, and the eye to hide a browser from the picker."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Перетаскивайте для изменения порядка. Нажмите «Назначить» для выбора клавиши. Значок глаза скрывает браузер из списка."
+            "value": "Перетащите, чтобы изменить порядок. «Назначить» задаёт клавишу, а глаз скрывает браузер в окне выбора."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zum Sortieren ziehen. Mit „Zuweisen“ eine Taste festlegen. Das Augensymbol blendet Browser aus."
+            "value": "Zum Umordnen ziehen. Mit „Zuweisen“ eine Taste festlegen, mit dem Auge einen Browser in der Auswahl ausblenden."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Faites glisser pour réordonner. Cliquez sur « Assigner » pour choisir une touche. L’icône œil masque un navigateur."
+            "value": "Faites glisser pour réordonner. « Assigner » attribue une touche, et l’œil masque un navigateur dans le sélecteur."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arrastra para reordenar. Pulsa «Asignar» para elegir una tecla. El icono del ojo oculta un navegador."
+            "value": "Arrastra para reordenar. Usa Asignar para elegir una tecla y el ojo para ocultar un navegador en el selector."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arraste para reordenar. Clique em «Atribuir» para escolher uma tecla. O ícone de olho oculta um navegador."
+            "value": "Arraste para reordenar. Use Atribuir para escolher uma tecla e o olho para ocultar um navegador no seletor."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trascina per riordinare. Premi «Assegna» per scegliere un tasto. L’icona dell’occhio nasconde un browser."
+            "value": "Trascina per riordinare. Usa Assegna per scegliere un tasto e l’occhio per nascondere un browser nel selettore."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドラッグして並べ替えます。「割り当て」でキーを設定し、目のアイコンでブラウザを非表示にします。"
+            "value": "ドラッグで並べ替えます。「割り当て」でキーを設定し、目のアイコンで選択画面からブラウザを隠します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "드래그하여 순서를 바꾸세요. «지정»을 눌러 키를 설정하고 눈 아이콘으로 브라우저를 숨기세요."
+            "value": "드래그하여 순서를 바꾸세요. 지정으로 키를 설정하고, 눈 아이콘으로 선택 창에서 브라우저를 숨깁니다."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "拖动以调整顺序。点击“分配”设置快捷键，点击眼睛图标隐藏浏览器。"
+            "value": "拖移以重新排序。使用“分配”设置按键，点按眼睛图标可在选择器中隐藏浏览器。"
           }
         }
       }
@@ -7732,6 +7732,136 @@
           "stringUnit": {
             "state": "translated",
             "value": "新建域名"
+          }
+        }
+      }
+    },
+    "browsers.visibility.hide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide in picker"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыть в окне выбора"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In der Auswahl ausblenden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer dans le sélecteur"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar en el selector"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar no seletor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nascondi nel selettore"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択画面で非表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택 창에서 숨기기"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在选择器中隐藏"
+          }
+        }
+      }
+    },
+    "browsers.visibility.show": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in picker"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать в окне выбора"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In der Auswahl einblenden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher dans le sélecteur"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en el selector"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar no seletor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostra nel selettore"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択画面に表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택 창에 표시"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在选择器中显示"
           }
         }
       }
