@@ -103,9 +103,16 @@ struct RuleItem: View {
 
 struct RulesTab: View {
     @AppStorage("rules") private var rules: [Rule] = []
-    
+    @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
+
     var body: some View {
         VStack (alignment: .leading) {
+            Toggle(isOn: $showInPicker) {
+                Text(verbatim: L10n.text("rules.picker.show_option"))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.horizontal, 20)
+
             List {
                 AddRule()
 

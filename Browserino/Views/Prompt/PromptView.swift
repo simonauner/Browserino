@@ -18,12 +18,17 @@ struct PromptView: View {
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @AppStorage("profilesEnabled") private var profilesEnabled = true
     @AppStorage("apps_atTop") private var appsAtTop: Bool = true
+    @AppStorage("rules") private var rules: [Rule] = []
+    @AppStorage("rules_showInPicker") private var showRuleOption: Bool = true
 
     let urls: [URL]
     var sourceTab: SourceTabSnapshot? = nil
     @AppStorage("switch_closeSourceTab") private var closeSourceTab = false
 
-    private func open(_ urls: [URL], target: BrowserTarget, isIncognito: Bool) {
+    private func open(_ urls: [URL], target: BrowserTarget, isIncognito: Bool, savingRule: Bool = true) {
+        if savingRule {
+            saveRuleIfRequested(for: target)
+        }
         BrowserUtil.openURL(urls, target: target, isIncognito: isIncognito) { app, error in
             if let error { BrowserSwitchService.shared.presentOpenFailedAlert(error); return }
             guard app != nil, let sourceTab, closeSourceTab else { return }
@@ -38,6 +43,46 @@ struct PromptView: View {
     @State private var opacityAnimation = 0.0
     @State private var selected = 0
     @FocusState private var focused: Bool
+    @State private var alwaysOpen = false
+    @State private var rulePattern = ""
+    @FocusState private var patternFocused: Bool
+
+    /// Rules only apply to a single opened link, so moving a tab or opening
+    /// several links offers no rule.
+    var offersRule: Bool {
+        showRuleOption && sourceTab == nil && urls.count == 1
+    }
+
+    /// The highlighted row, with its app mapping when it is an app row.
+    var selectedItem: (target: BrowserTarget, app: App?)? {
+        let browserIndex = appsAtTop ? selected - appsForUrls.count : selected
+        if visibleBrowsers.indices.contains(browserIndex) {
+            return (visibleBrowsers[browserIndex], nil)
+        }
+
+        let appIndex = appsAtTop ? selected : selected - visibleBrowsers.count
+        guard appsForUrls.indices.contains(appIndex) else { return nil }
+        return (appsForUrls[appIndex].target, appsForUrls[appIndex])
+    }
+
+    /// A rule opens the link unchanged, so an app that rewrites the scheme cannot get one.
+    func canSaveRule(for app: App?) -> Bool {
+        app?.schemeOverride.isEmpty ?? true
+    }
+
+    private func saveRuleIfRequested(for target: BrowserTarget) {
+        guard offersRule, alwaysOpen else { return }
+        rules = Rule.addingPattern(rulePattern, target: target, to: rules)
+    }
+
+    func openSelected(isIncognito: Bool) {
+        guard let item = selectedItem else { return }
+        if let app = item.app {
+            openUrlsInApp(app: app)
+        } else {
+            open(urls, target: item.target, isIncognito: isIncognito)
+        }
+    }
 
     var appsForUrls: [App] {
         (sourceTab == nil ? urls : []).flatMap { url in
@@ -82,7 +127,8 @@ struct PromptView: View {
         open(
             urls,
             target: app.target,
-            isIncognito: false
+            isIncognito: false,
+            savingRule: canSaveRule(for: app)
         )
     }
 
@@ -96,7 +142,8 @@ struct PromptView: View {
                                 PromptItem(
                                     target: app.target,
                                     title: app.target.displayName,
-                                    shortcut: shortcut(for: app.target)
+                                    shortcut: shortcut(for: app.target),
+                                    shortcutsEnabled: !patternFocused
                                 ) {
                                     openUrlsInApp(app: app)
                                 }
@@ -116,7 +163,8 @@ struct PromptView: View {
                             PromptItem(
                                 target: browser,
                                 title: browser.displayName,
-                                shortcut: shortcut(for: browser)
+                                shortcut: shortcut(for: browser),
+                                shortcutsEnabled: !patternFocused
                             ) {
                                 open(
                                     urls,
@@ -139,7 +187,8 @@ struct PromptView: View {
                                 PromptItem(
                                     target: app.target,
                                     title: app.target.displayName,
-                                    shortcut: shortcut(for: app.target)
+                                    shortcut: shortcut(for: app.target),
+                                    shortcutsEnabled: !patternFocused
                                 ) {
                                     openUrlsInApp(app: app)
                                 }
@@ -167,64 +216,25 @@ struct PromptView: View {
                 }
                 .background {
                     Button(action: {
-                        guard selected >= 0, selected < visibleBrowsers.count + appsForUrls.count else { return }
-                        if appsAtTop {
-                            if selected < appsForUrls.count {
-                                openUrlsInApp(app: appsForUrls[selected])
-                            } else {
-                                open(
-                                    urls,
-                                    target: visibleBrowsers[selected - appsForUrls.count],
-                                    isIncognito: false
-                                )
-                            }
-                        } else {
-                            if selected < visibleBrowsers.count {
-                                open(
-                                    urls,
-                                    target: visibleBrowsers[selected],
-                                    isIncognito: false
-                                )
-                            } else {
-                                openUrlsInApp(app: appsForUrls[selected - visibleBrowsers.count])
-                            }
-                        }
+                        openSelected(isIncognito: false)
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.defaultAction)
+                    .disabled(patternFocused)
 
                     Button(action: {
-                        guard selected >= 0, selected < visibleBrowsers.count + appsForUrls.count else { return }
-                        if appsAtTop {
-                            if selected < appsForUrls.count {
-                                openUrlsInApp(app: appsForUrls[selected])
-                            } else {
-                                open(
-                                    urls,
-                                    target: visibleBrowsers[selected - appsForUrls.count],
-                                    isIncognito: true
-                                )
-                            }
-                        } else {
-                            if selected < visibleBrowsers.count {
-                                open(
-                                    urls,
-                                    target: visibleBrowsers[selected],
-                                    isIncognito: true
-                                )
-                            } else {
-                                openUrlsInApp(app: appsForUrls[selected - visibleBrowsers.count])
-                            }
-                        }
+                        openSelected(isIncognito: true)
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.return, modifiers: [.shift])
+                    .disabled(patternFocused)
 
                     Button(action: {
                         NSApplication.shared.keyWindow?.close()
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.cancelAction)
+                    .disabled(patternFocused)
                 }
                 .onAppear {
                     focused.toggle()
@@ -234,8 +244,39 @@ struct PromptView: View {
                 }
                 .scrollEdgeEffectDisabledCompat()
             }
+            // Grows a small picker to fit the rule row rather than leaving room for only one browser.
+            .frame(minHeight: offersRule ? 120 : nil)
 
             Divider()
+
+            if offersRule {
+                VStack(alignment: .leading, spacing: 6) {
+                    Toggle(isOn: $alwaysOpen) {
+                        Text(verbatim: L10n.format("rules.picker.always_open", selectedItem?.target.displayName ?? ""))
+                    }
+                    .disabled(!canSaveRule(for: selectedItem?.app))
+
+                    TextField(L10n.text("rules.picker.pattern"), text: $rulePattern)
+                        .textFieldStyle(.roundedBorder)
+                        .disabled(!alwaysOpen || !canSaveRule(for: selectedItem?.app))
+                        .focused($patternFocused)
+                        .onSubmit {
+                            openSelected(isIncognito: NSEvent.modifierFlags.contains(.shift))
+                        }
+                        .onExitCommand {
+                            focused = true
+                        }
+                }
+                .font(.callout)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .onChange(of: alwaysOpen) {
+                    if !alwaysOpen {
+                        focused = true
+                    }
+                }
+
+                Divider()
+            }
 
             if let host = urls.first?.host() {
                 Button(action: {
@@ -265,6 +306,9 @@ struct PromptView: View {
             maxHeight: .infinity
         )
         .modifier(SelectorSurface())
+        .onAppear {
+            rulePattern = urls.first?.absoluteString ?? ""
+        }
         .opacity(opacityAnimation)
         .edgesIgnoringSafeArea(.all)
     }

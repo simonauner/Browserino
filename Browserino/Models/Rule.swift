@@ -65,4 +65,14 @@ struct Rule: Hashable, Codable {
 
         return "^" + parts.joined(separator: ".*") + "$"
     }
+
+    /// Appends the pattern rule the picker saves for "Always open links like this in…".
+    /// A blank pattern, or a rule that already exists, leaves `rules` as it was.
+    static func addingPattern(_ pattern: String, target: BrowserTarget, to rules: [Rule]) -> [Rule] {
+        let pattern = pattern.trimmingCharacters(in: .whitespacesAndNewlines)
+        let rule = Rule(regex: pattern, app: target.app, profile: target.profile, kind: .pattern)
+        guard !pattern.isEmpty, !rules.contains(rule) else { return rules }
+
+        return rules + [rule]
+    }
 }
