@@ -1,0 +1,21 @@
+Browserino/BrowserinoApp.swift
+  s_725b3878bf8755::t_4b3b06227226aa 48
+  s_725b3878bf8755::t_d5609dffef5bb1 166-167,169
+  s_725b3878bf8755::t_af25abba60e9d0 250-257,259-262
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1746b80b0053a61dd81be4f8219ef47dbb7b8c73",
+  "prompts": {},
+  "sessions": {
+    "s_725b3878bf8755": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ccc1c19a-574d-4779-87a3-4420d3f159fa",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
