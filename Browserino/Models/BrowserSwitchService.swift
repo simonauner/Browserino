@@ -17,42 +17,13 @@ protocol BrowserSwitchPresenting: AnyObject {
     func presentMovePrompt(snapshot: SourceTabSnapshot)
 }
 
-enum BrowserSwitchError: LocalizedError {
+/// Each case is shown through a localized message in `presentError`.
+enum BrowserSwitchError: Error {
     case noBrowser
-    case unsupportedBrowser(String)
+    case unsupportedBrowser
     case noDestination
     case openFailed(String)
-    case closeFailed(String)
-
-    var errorDescription: String? {
-        switch self {
-        case .noBrowser:
-            return "Bring a supported browser to the front and try again."
-        case .unsupportedBrowser(let name):
-            return "\(name) does not support moving tabs. Try Safari, Chrome, Brave, or Edge."
-        case .noDestination:
-            return "Show another browser in the Browsers list, or unhide one, then try again."
-        case .openFailed(let message):
-            return message
-        case .closeFailed(let message):
-            return "The tab was opened in the destination browser, but the original tab could not be closed. \(message)"
-        }
-    }
-
-    var messageText: String {
-        switch self {
-        case .noBrowser:
-            return "No browser tab to move"
-        case .unsupportedBrowser:
-            return "This browser cannot expose its current tab"
-        case .noDestination:
-            return "No other browser to move to"
-        case .openFailed:
-            return "Could not open the tab in the selected browser"
-        case .closeFailed:
-            return "Could not close the original tab"
-        }
-    }
+    case closeFailed
 }
 
 @MainActor
@@ -111,8 +82,8 @@ final class BrowserSwitchService {
         presentError(BrowserSwitchError.openFailed(error.localizedDescription))
     }
 
-    func presentCloseFailedAlert(_ error: Error) {
-        presentError(BrowserSwitchError.closeFailed(error.localizedDescription))
+    func presentCloseFailedAlert() {
+        presentError(BrowserSwitchError.closeFailed)
     }
 
     func presentNoDestinationAlert() {
@@ -153,7 +124,7 @@ final class BrowserSwitchService {
         if let first = unique.first, isConfiguredBrowser(first) {
             switch family(for: first) {
             case .unsupported:
-                throw BrowserSwitchError.unsupportedBrowser(first.localizedName ?? "This browser")
+                throw BrowserSwitchError.unsupportedBrowser
             case .safari, .chromium:
                 return first
             }
@@ -165,8 +136,8 @@ final class BrowserSwitchService {
             return match
         }
 
-        if let unsupported = unique.first(where: { isConfiguredBrowser($0) }) {
-            throw BrowserSwitchError.unsupportedBrowser(unsupported.localizedName ?? "This browser")
+        if unique.contains(where: { isConfiguredBrowser($0) }) {
+            throw BrowserSwitchError.unsupportedBrowser
         }
 
         throw BrowserSwitchError.noBrowser
@@ -236,6 +207,8 @@ final class BrowserSwitchService {
             alert.informativeText = L10n.text("errors.move_tab.no_supported_browser")
         case BrowserSwitchError.noDestination:
             alert.informativeText = L10n.text("errors.move_tab.no_destination")
+        case BrowserSwitchError.openFailed(let message):
+            alert.informativeText = message
         case BrowserSwitchError.closeFailed:
             alert.informativeText = L10n.text("tabs.transfer.source_kept")
         case BrowserTabScriptingError.denied:

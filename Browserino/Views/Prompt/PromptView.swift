@@ -94,7 +94,7 @@ struct PromptView: View {
             guard app != nil, let sourceTab, closeSourceTab else { return }
             Task {
                 do { try await BrowserTabScripting.close(sourceTab) }
-                catch { BrowserSwitchService.shared.presentCloseFailedAlert(error) }
+                catch { BrowserSwitchService.shared.presentCloseFailedAlert() }
             }
         }
     }
