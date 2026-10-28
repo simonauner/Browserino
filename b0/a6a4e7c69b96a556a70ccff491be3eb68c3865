@@ -1,0 +1,19 @@
+Browserino/Views/Preferences/GeneralTab.swift
+  s_da0f2b0a419d7b::t_390f2ae27c37af 328,345,349-355,373,375-379
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b0a6a4e7c69b96a556a70ccff491be3eb68c3865",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
