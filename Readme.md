@@ -1,6 +1,8 @@
+<img src="images/lotsen.png" width="128" height="128" alt="Lotsen icon: an orange pilot boat flying the pilot flag">
+
 # Lotsen
 
-![Lotsen](images/browserino.png?v2)
+![The Lotsen browser selector over a terminal window](images/screenshot.png)
 
 Lotsen is a tiny browser selector for macOS written in SwiftUI. Set it as the default browser, assign shortcuts, and choose which app opens each link. Like a harbour pilot (*lots* in Swedish), it guides every link to the right place.
 
@@ -69,7 +71,7 @@ Browser authentication sessions may still require Safari. Release signing and no
 
 ## Local development
 
-`./scripts/install-local.sh` builds a Release build by default. Set `CONFIGURATION=Debug` for a debug build; the build log is written to `build/xcodebuild.log`.
+`./scripts/install-local.sh` builds a Release build by default. The app icon is drawn in `images/icon/AppIcon.svg`; run `./scripts/build-icons.sh` after editing it to regenerate `Lotsen/Lotsen.icns` and the logo above. Set `CONFIGURATION=Debug` for a debug build; the build log is written to `build/xcodebuild.log`.
 
 Browserino attribution and validation notes: [integration review](docs/UPSTREAM_REVIEW.md). KeyboardShortcuts is licensed under MIT; its notice is bundled with the app.
 
