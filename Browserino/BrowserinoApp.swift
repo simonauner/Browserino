@@ -21,6 +21,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     private var menuBarObservation: NSKeyValueObservation?
     private var selectorWindow: BrowserinoWindow?
     private var preferencesWindow: NSWindow?
+    /// Set while the selector is up over a settings window that was sitting behind
+    /// other apps, so closing the selector can put it back there.
+    private var preferencesHiddenForSelector = false
     
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     
@@ -161,6 +164,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         
         preferencesWindow!.collectionBehavior = [.moveToActiveSpace, .fullScreenNone]
         
+        preferencesHiddenForSelector = false
         NSApplication.shared.activate()
         
         preferencesWindow!.makeKeyAndOrderFront(nil)
@@ -211,6 +215,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             )
         )
         
+        // Activating the app raises every window it has, so a settings window left
+        // open behind other apps would otherwise surface along with the selector.
+        if !NSApp.isActive, let preferences = preferencesWindow, preferences.isVisible {
+            preferences.orderOut(nil)
+            preferencesHiddenForSelector = true
+        }
+
         NSApplication.shared.activate()
         selectorWindow!.deactivateDelay()
         
@@ -232,6 +243,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             selectorWindow!.contentView = nil
             selectorWindow!.close()
         }
+    }
+    
+    func windowWillClose(_ notification: Notification) {
+        guard notification.object as? NSWindow === selectorWindow, preferencesHiddenForSelector else { return }
+        preferencesHiddenForSelector = false
+        preferencesWindow?.orderBack(nil)
     }
     
     func getScreenWithMouse() -> NSScreen? {
