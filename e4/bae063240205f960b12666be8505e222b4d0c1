@@ -1,0 +1,18 @@
+.github/workflows/swift.yml
+  h_731bed5a37ac34 1-22
+Browserino/Localizable.xcstrings
+  h_731bed5a37ac34 5405,5411,5417,5423,5429,5435,5441,5447,5453,5459
+Browserino/Views/Preferences/EditRuleForm.swift
+  h_731bed5a37ac34 79-81,124-137
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e4bae063240205f960b12666be8505e222b4d0c1",
+  "prompts": {},
+  "humans": {
+    "h_731bed5a37ac34": {
+      "author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
