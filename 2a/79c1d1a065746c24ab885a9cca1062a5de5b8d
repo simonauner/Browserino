@@ -1,0 +1,155 @@
+Tests/IncomingURLTests.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 8,17,22,26,29,41,46,51
+  s_ee7632c454f4ff::t_ab418c5bbdf136 32-36
+  s_ee7632c454f4ff::t_50f894195143d5 30-31
+Lotsen.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-8
+Lotsen/Extensions/URLExtensions.swift
+  s_ee7632c454f4ff::t_ab418c5bbdf136 24-27,29,37,42,45
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-9,11-22,28,30-36,38-41,43-44,46-50
+Lotsen/Extensions/Bundle+AppDisplayName.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-23
+Lotsen/Lotsen.entitlements
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-8
+Lotsen/Models/ChromiumProfile.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-16,17-293
+Lotsen/Views/Preferences/BrowsersTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-165
+Lotsen.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-7
+Lotsen/Views/Preferences/BrowserTargetPicker.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-67
+Lotsen/Views/Preferences/GeneralTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-14,17-47,48-100,101,108-109,111,120,129-130,135-136,137,138,140,142,147,152,164-165,167,172-173,177-178,180,189,190-191,192-193,196-228,249-253,255-267,268-270,272-274,282-298,300,306-308
+Lotsen/Models/Localization.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-3,5-46,49-51,52-53,55-65
+Lotsen/Views/Preferences/EditAppForm.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-11,13,28,30,33,39-40,45-47,50,52-53,61,70,78,84,92,97,99-100,101,113-123,125-126
+scripts/install-local.sh
+  s_ee7632c454f4ff::t_77330014b85794 46-48
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 2,7,9,19,28,31-34
+Lotsen/InfoPlist.xcstrings
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-71
+Lotsen/Views/Preferences/LocationsTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-106
+.github/workflows/swift.yml
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1,24
+Lotsen/Assets.xcassets/MenuIcon.imageset/Contents.json
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-15
+SECURITY_REVIEW.md
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 5-6,14,20
+Lotsen/Assets.xcassets/AccentColor.colorset/Contents.json
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-11
+Lotsen/Models/BrowserTabScripting.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-20,21,36-50,52,54-63,65-139
+  s_ee7632c454f4ff::t_f0c7419694e49c 26
+Lotsen/Views/BlurredView.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-41
+Lotsen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-15
+Lotsen/Models/Rule.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-78
+Lotsen/Models/AppSettings.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-13,15-84,86-101
+Lotsen/Views/Preferences/ShortcutButton.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-61
+scripts/check-browser-scripts.py
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 3,12
+scripts/check-localizations.py
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 8,19
+Lotsen/Views/Preferences/AppsTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-133,135-167
+Lotsen/Info.plist
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-58,60-70
+  s_ee7632c454f4ff::t_ab418c5bbdf136 59
+Lotsen/Views/Preferences/ShortcutsTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-116
+Readme.md
+  s_ee7632c454f4ff::t_fc1dd3059fc44f 9
+  s_ee7632c454f4ff::t_b678574d8f85d1 1,3,5,7,11,13,20,32,34-38,52,56,74-78
+Lotsen/Models/IntegrationPolicy.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-86
+Lotsen/Views/Prompt/PromptView.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-11,12-22,23-320
+Lotsen/Modifiers/ButtonStyles.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-36
+Lotsen/Views/BrowserTargetIcon.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-43
+Lotsen/Models/BrowserTargetPresentation.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-3,4-49,50-71
+Lotsen/Models/BrowserUtil.swift
+  s_ee7632c454f4ff::t_2ca7e036e06547 46-47
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-9,10-45,48-200
+Lotsen/Models/JSONDefaults.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-29
+Lotsen/Models/RegexGenerator.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-121
+Lotsen/Views/Preferences/RulesTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-33,35-94,96-135
+Tests/ProfileDiscoveryTests.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 9
+Tests/StoredSettingsTests.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 6
+Lotsen/Views/Preferences/EditRuleForm.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-11,13,15-17,18-19,20-24,25-30,31,33-35,36-37,38-43,45,48,53-55,68,70,77,82-83,89-90,92-96,103,107,141,156,167,169,170,175,185-186,198-200,202-209,211,213-214,215,235-237
+Lotsen/LotsenApplication.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-55
+"Lotsen/Preview Content/Preview Assets.xcassets/Contents.json"
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-6
+Lotsen/Views/Preferences/AboutTab.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-10,15-17,19-21,23-27,29-30,32,34,36-37,39,53,55-56,69-76
+  s_ee7632c454f4ff::t_df06786cb12050 11-14,18,22,28,31,33,35,38,40-52,54,57-68
+Lotsen/Models/SettingsPolicy.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-7,22-114
+  s_ee7632c454f4ff::t_f953f2d477f3a0 8-21
+Lotsen/Assets.xcassets/Contents.json
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-6
+Lotsen/LotsenWindow.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-54
+Lotsen/Extensions/View+ScrollEdgeDisabled.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-21
+Lotsen/Models/BrowserSwitchService.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-14,15-27,28-229
+Lotsen/Views/Prompt/PromptItem.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-65
+Lotsen/LotsenApp.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-18,19-35,40-315
+  s_ee7632c454f4ff::t_f953f2d477f3a0 36-39
+Lotsen/Models/BrowserTarget.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-49
+Tests/SettingsImportTests.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 76
+  s_ee7632c454f4ff::t_f953f2d477f3a0 91-117
+Lotsen/ThirdPartyNotices.txt
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-12
+Lotsen/main.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-17
+Lotsen/Views/Preferences/PreferencesView.swift
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-38,40-101
+Lotsen.xcodeproj/project.pbxproj
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-368,370-379,381-406,408-417,419-433,435-449,451-505
+  s_ee7632c454f4ff::t_66d4c9b66349ba 369,407
+Lotsen/Localizable.xcstrings
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-2609,2611-2615,2617-2621,2623-2627,2629-2633,2635-2639,2641-2645,2647-2651,2653-2657,2659-2663,2665-2674,2676-2680,2682-2686,2688-2692,2694-2698,2700-2704,2706-2710,2712-2716,2718-2722,2724-2728,2730-2804,2806-2810,2812-2816,2818-2822,2824-2828,2830-2834,2836-2840,2842-2846,2848-2852,2854-2858,2860-2869,2871-2875,2877-2881,2883-2887,2889-2893,2895-2899,2901-2905,2907-2911,2913-2917,2919-2923,2925-3448,3514,3580-3584,3586-3590,3592-3596,3598-3602,3604-3608,3610-3614,3616-3620,3622-3626,3628-3632,3634-3638,3640-4039,4041-4045,4047-4051,4053-4057,4059-4063,4065-4069,4071-4075,4077-4081,4083-4087,4089-4093,4095-5274,5276-5280,5282-5286,5288-5292,5294-5298,5300-5304,5306-5310,5312-5316,5318-5322,5324-5328,5330-5469,5471-5475,5477-5481,5483-5487,5489-5493,5495-5499,5501-5505,5507-5511,5513-5517,5519-5523,5525-6567,7348-7351
+  s_ee7632c454f4ff::t_fc79ed793fbac0 3449-3513,3515-3579,3585,3591,3597,3603,3609,3615,3621,3627,3633,3639
+Lotsen.xcodeproj/xcshareddata/xcschemes/Lotsen.xcscheme
+  s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-90
+Lotsen.xcodeproj/xcuserdata/alexstrnik.xcuserdatad/xcschemes/xcschememanagement.plist
+  s_ee7632c454f4ff::t_f20472215eea95 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2a79c1d1a065746c24ab885a9cca1062a5de5b8d",
+  "prompts": {},
+  "sessions": {
+    "s_ee7632c454f4ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3189bd5e-ccd9-43fd-a13e-dec485b01357",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
