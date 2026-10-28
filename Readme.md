@@ -2,7 +2,7 @@
 
 # Lotsen
 
-![The Lotsen browser selector over a terminal window](images/screenshot.png)
+![Illustration of the Lotsen selector opened from a link in a chat app, with Chrome profiles, shortcuts and the option to save a rule](images/screenshot.png)
 
 Lotsen is a tiny browser selector for macOS written in SwiftUI. Set it as the default browser, assign shortcuts, and choose which app opens each link. Like a harbour pilot (*lots* in Swedish), it guides every link to the right place.
 
