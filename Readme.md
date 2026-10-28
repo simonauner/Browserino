@@ -26,8 +26,8 @@ Lotsen has no Homebrew cask and no prebuilt releases yet, so you build it from s
 Requirements: macOS 14 or later and Xcode (the Command Line Tools alone can't build apps).
 
 ```bash
-git clone https://github.com/simonauner/Browserino.git
-cd Browserino
+git clone https://github.com/simonauner/lotsen.git
+cd lotsen
 ./scripts/install-local.sh
 ```
 
