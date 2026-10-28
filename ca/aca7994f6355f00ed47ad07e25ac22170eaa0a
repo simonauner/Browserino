@@ -1,0 +1,22 @@
+Tests/Integration/main.swift
+  s_da0f2b0a419d7b::t_f0cb832f3a0712 102
+  s_da0f2b0a419d7b::t_758095f757178a 91-101
+scripts/test-integration.sh
+  s_da0f2b0a419d7b::t_3e6c035d13ef6d 4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "caaca7994f6355f00ed47ad07e25ac22170eaa0a",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
