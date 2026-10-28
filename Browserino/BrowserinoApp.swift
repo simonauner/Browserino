@@ -24,6 +24,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     /// Set while the selector is up over a settings window that was sitting behind
     /// other apps, so closing the selector can put it back there.
     private var preferencesHiddenForSelector = false
+    /// Set once the user resizes the settings window by hand, so the height
+    /// fitted to its content stops overriding their choice.
+    private var preferencesResizedByUser = false
     
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     
@@ -155,7 +158,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         
         preferencesWindow!.center()
         preferencesWindow!.title = L10n.text("settings.window.title")
-        preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot { PreferencesView() })
+        preferencesResizedByUser = false
+        preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
+            PreferencesView()
+                .environment(\.fitSettingsHeight) { [weak self] overflow in
+                    self?.fitPreferencesHeight(overflow: overflow)
+                }
+        })
         
         preferencesWindow!.isReleasedWhenClosed = false
         preferencesWindow!.titlebarAppearsTransparent = true
@@ -179,6 +188,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         preferencesWindow!.orderFrontRegardless()
     }
     
+    /// Tall enough to show every setting without scrolling, but never more than
+    /// 90% of the screen's visible height (menu bar and Dock excluded). Runs on
+    /// every measurement, since the first ones come before the window has its
+    /// final layout and settle over a few passes.
+    private func fitPreferencesHeight(overflow: CGFloat) {
+        guard !preferencesResizedByUser, overflow.magnitude >= 1, let window = preferencesWindow,
+              let screen = window.screen ?? NSScreen.main else { return }
+
+        let minHeight = window.frameRect(forContentRect: NSRect(origin: .zero, size: window.contentMinSize)).height
+        let maxHeight = (screen.visibleFrame.height * 0.9).rounded(.down)
+        var frame = window.frame
+        frame.size.height = min(max(frame.height + overflow, minHeight), maxHeight)
+        window.setFrame(frame, display: true)
+        window.center()
+    }
+
     func application(_ application: NSApplication, open urls: [URL]) {
         let processedUrls = urls.compactMap(\.browserinoIncomingURL)
         guard !processedUrls.isEmpty else { return }
@@ -259,6 +284,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     private func updateActivationPolicy(preferencesOpen: Bool? = nil) {
         let open = preferencesOpen ?? (preferencesWindow?.isVisible == true || preferencesHiddenForSelector)
         NSApp.setActivationPolicy(open ? .regular : .accessory)
+    }
+
+    func windowWillStartLiveResize(_ notification: Notification) {
+        if notification.object as? NSWindow === preferencesWindow {
+            preferencesResizedByUser = true
+        }
     }
 
     func windowWillClose(_ notification: Notification) {

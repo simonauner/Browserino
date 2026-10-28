@@ -44,6 +44,9 @@ struct GeneralTab: View {
     @State private var showingExportPicker = false
     @State private var showingImportPicker = false
     @State private var exportDocument = SettingsDocument()
+    @State private var contentHeight: CGFloat?
+    @State private var visibleHeight: CGFloat?
+    @Environment(\.fitSettingsHeight) private var fitSettingsHeight
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
@@ -94,6 +97,11 @@ struct GeneralTab: View {
         } catch {
             BrowserUtil.presentError(NSError(domain: "Browserino", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
         }
+    }
+
+    private func reportOverflow() {
+        guard let contentHeight, let visibleHeight, contentHeight > 0, visibleHeight > 0 else { return }
+        fitSettingsHeight(contentHeight - visibleHeight)
     }
 
     var body: some View {
@@ -285,6 +293,17 @@ struct GeneralTab: View {
             }
             .padding(20)
             .frame(maxWidth: .infinity, alignment: .leading)
+            .onGeometryChange(for: CGFloat.self, of: \.size.height) { height in
+                contentHeight = height
+                reportOverflow()
+            }
+        }
+        .onGeometryChange(for: CGFloat.self) { proxy in
+            // Measure what is visible, not what scrolls under the toolbar.
+            proxy.size.height - proxy.safeAreaInsets.top - proxy.safeAreaInsets.bottom
+        } action: { height in
+            visibleHeight = height
+            reportOverflow()
         }
         .onAppear {
             isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
