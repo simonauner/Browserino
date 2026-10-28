@@ -16,9 +16,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build
-      run: xcodebuild -project Browserino.xcodeproj -scheme Browserino -configuration Debug -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO build
-    - name: Run tests
-      run: sh scripts/test-integration.sh
+    - name: Build and test
+      run: xcodebuild test -project Browserino.xcodeproj -scheme Browserino -configuration Debug -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
     - name: Check localizations
       run: python3 scripts/check-localizations.py
