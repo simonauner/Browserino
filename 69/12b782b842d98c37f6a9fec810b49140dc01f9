@@ -1,0 +1,35 @@
+Lotsen/Localizable.xcstrings
+  s_142c4dd88f8df8::t_ff1a634fba5395 2610,3000,3006,3012,3018,3024,3030,3036,3042,3048,3054,7868-8192
+Lotsen/Views/Preferences/AppsTab.swift
+  s_142c4dd88f8df8::t_ba01ae7f8c672a 28-33
+Lotsen/Views/Preferences/AppForm.swift
+  s_142c4dd88f8df8::t_7aa15ab6e07b57 35-38,40-41,43,51-64
+  s_142c4dd88f8df8::t_08df4be2e2f30c 135,141-142
+  s_142c4dd88f8df8::t_19f37ea3a23d23 150
+  s_142c4dd88f8df8::t_94a3850ac40111 86-88,92,94-98,103-111
+  s_6f244b81a625f9::t_e6f4b9bb6e6dce 112
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "6912b782b842d98c37f6a9fec810b49140dc01f9",
+  "prompts": {},
+  "sessions": {
+    "s_142c4dd88f8df8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2eadcf47-a75e-47bf-b177-289204b54c42",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    },
+    "s_6f244b81a625f9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c488ab56-be57-47af-b8ab-e2f197fc4a00",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
