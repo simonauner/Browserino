@@ -36,17 +36,26 @@ struct ShortcutButton: View {
 
                     return .handled
                 }
+        } else if let recordedKey = shortcuts[shortcutKey] {
+            // Key and clear button joined as one control, like the system's own
+            // shortcut fields.
+            ControlGroup {
+                Button(recordedKey, action: startRecording)
+
+                Button(action: { shortcuts[shortcutKey] = nil }) {
+                    Image(systemName: "xmark")
+                }
+                .help(L10n.text("shortcuts.recorder.clear"))
+                .accessibilityLabel(L10n.text("shortcuts.recorder.clear"))
+            }
+            .fixedSize()
         } else {
-            let recordedKey = shortcuts[shortcutKey]
-            
-            Button(action: {
-                isRecording = true
-                focus = true
-            }, label: {
-                Text(recordedKey ?? L10n.text("shortcuts.recorder.assign"))
-                    .padding(5)
-            })
-            .opacity(recordedKey == nil ? 0.5 : 1)
+            Button(L10n.text("shortcuts.recorder.assign"), action: startRecording)
         }
+    }
+
+    private func startRecording() {
+        isRecording = true
+        focus = true
     }
 }
