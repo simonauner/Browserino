@@ -18,7 +18,7 @@ struct AddRule: View {
                 )
                 .opacity(0)
             
-            Text("Add a new rule by typing regex and selecting an app.")
+            Text("Add a new rule by typing regex, or generating one from test URLs, and selecting an app.")
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
