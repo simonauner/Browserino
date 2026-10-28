@@ -344,7 +344,7 @@ struct GeneralTab: View {
 }
 
 /// KeyboardShortcuts uses its own bundle language for its Cocoa recorder.
-/// The pinned 2.4.0 recorder emits a recording-state notification; bridge it
+/// The recorder emits a recording-state notification; bridge it
 /// to Browserino's selected language, including first-responder transitions.
 struct LocalizedShortcutRecorder: NSViewRepresentable {
     func makeCoordinator() -> Coordinator { Coordinator() }
@@ -361,9 +361,17 @@ struct LocalizedShortcutRecorder: NSViewRepresentable {
     final class Coordinator {
         weak var view: KeyboardShortcuts.RecorderCocoa?
         private var observations: [AnyCancellable] = []
+        private var placeholderObservation: NSKeyValueObservation?
         private var recording = false
         func attach(_ view: KeyboardShortcuts.RecorderCocoa) {
             self.view = view
+            // The recorder puts its own placeholder back when it leaves a window,
+            // which a Form does to its rows while laying them out, and when its
+            // window loses key status, in a task that may run after ours. Answer
+            // every reset rather than trying to come last.
+            placeholderObservation = view.observe(\.placeholderString) { [weak self] _, _ in
+                MainActor.assumeIsolated { self?.refresh() }
+            }
             let recorderState = Notification.Name("KeyboardShortcuts_recorderActiveStatusDidChange")
             for name in [recorderState, NSWindow.didBecomeKeyNotification, NSWindow.didResignKeyNotification] {
                 observations.append(NotificationCenter.default.publisher(for: name).receive(on: DispatchQueue.main).sink { [weak self] notification in
@@ -381,9 +389,13 @@ struct LocalizedShortcutRecorder: NSViewRepresentable {
             }
         }
         func refresh() {
+            guard let view else { return }
             let label = L10n.text(recording ? "shortcuts.recorder.press_key" : "shortcuts.recorder.assign")
-            view?.placeholderString = label
-            view?.setAccessibilityPlaceholderValue(label)
+            // Only on a real change, since setting it reports back through the observation.
+            if view.placeholderString != label {
+                view.placeholderString = label
+            }
+            view.setAccessibilityPlaceholderValue(label)
         }
     }
 }
