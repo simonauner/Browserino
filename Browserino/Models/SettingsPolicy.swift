@@ -2,7 +2,7 @@ import Foundation
 import CoreFoundation
 
 enum SettingsPolicy {
-    static let booleans: Set<String> = ["copy_closeAfterCopy", "copy_alternativeShortcut", "showInMenuBar", "apps_atTop", "profilesEnabled", "switch_closeSourceTab"]
+    static let booleans: Set<String> = ["copy_closeAfterCopy", "copy_alternativeShortcut", "showInMenuBar", "apps_atTop", "profilesEnabled", "switch_closeSourceTab", "rules_showInPicker"]
     static let keys = booleans.union(["browsers", "hiddenBrowsers", "apps", "rules", "directories", "privateArgs", "shortcuts", "profileNames", "language", "KeyboardShortcuts_moveCurrentTab"])
 
     struct LegacyProfile: Codable { let directoryName: String; let displayName: String; let isHidden: Bool }

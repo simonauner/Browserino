@@ -11,6 +11,8 @@ struct PromptItem: View {
     var target: BrowserTarget
     var title: String
     var shortcut: String?
+    /// Off while a text field has focus, so typing there does not open a browser.
+    var shortcutsEnabled = true
     var action: () -> Void
 
     var body: some View {
@@ -43,7 +45,7 @@ struct PromptItem: View {
             }
             .padding(8)
         }
-        .if(shortcut?.isEmpty == false) {
+        .if(shortcutsEnabled && shortcut?.isEmpty == false) {
             return $0.keyboardShortcut(
                 KeyEquivalent(shortcut!.lowercased().first!),
                 modifiers: [.shift]
