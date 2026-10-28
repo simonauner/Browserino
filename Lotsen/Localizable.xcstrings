@@ -1827,61 +1827,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset"
+            "value": "Reset…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сбросить"
+            "value": "Сбросить…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zurücksetzen"
+            "value": "Zurücksetzen…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Réinitialiser"
+            "value": "Réinitialiser…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restablecer"
+            "value": "Restablecer…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Redefinir"
+            "value": "Redefinir…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ripristina"
+            "value": "Ripristina…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "リセット"
+            "value": "リセット…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "초기화"
+            "value": "초기화…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "重置"
+            "value": "重置…"
           }
         }
       }
@@ -7342,6 +7342,201 @@
           "stringUnit": {
             "state": "translated",
             "value": "每行一个链接"
+          }
+        }
+      }
+    },
+    "settings.reset.confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all preferences?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить все настройки?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Einstellungen zurücksetzen?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser toutes les préférences ?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer todas las preferencias?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir todas as preferências?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ripristinare tutte le preferenze?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての設定をリセットしますか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 환경설정을 재설정하시겠습니까?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置所有偏好设置？"
+          }
+        }
+      }
+    },
+    "settings.reset.confirmation_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your browsers, apps, rules and shortcuts will be removed. This can’t be undone."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Браузеры, приложения, правила и сочетания клавиш будут удалены. Это действие нельзя отменить."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Browser, Apps, Regeln und Kurzbefehle werden entfernt. Dies kann nicht widerrufen werden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos navigateurs, apps, règles et raccourcis seront supprimés. Cette action est irréversible."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se eliminarán tus navegadores, apps, reglas y atajos. Esta acción no se puede deshacer."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seus navegadores, apps, regras e atalhos serão removidos. Esta ação não pode ser desfeita."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Browser, app, regole e scorciatoie verranno rimossi. L’operazione non può essere annullata."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブラウザ、アプリ、ルール、ショートカットが削除されます。この操作は取り消せません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "브라우저, 앱, 규칙 및 단축키가 제거됩니다. 이 작업은 되돌릴 수 없습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的浏览器、应用、规则和快捷键将被移除。此操作无法撤销。"
+          }
+        }
+      }
+    },
+    "settings.reset.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ripristina"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "재설정"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
           }
         }
       }

@@ -45,6 +45,7 @@ struct GeneralTab: View {
     @State private var showingExportPicker = false
     @State private var showingImportPicker = false
     @State private var exportDocument = SettingsDocument()
+    @State private var resetPresented = false
     @Environment(\.fitSettingsHeight) private var fitSettingsHeight
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
@@ -70,6 +71,15 @@ struct GeneralTab: View {
     }
 
     private static let settingsKeys = SettingsPolicy.keys
+
+    func resetSettings() {
+        let defaults = UserDefaults.standard
+        KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
+        defaults.removeObject(forKey: "browserDataAccess")
+        Self.settingsKeys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
 
     func importSettings(from url: URL) {
         let scoped = url.startAccessingSecurityScopedResource()
@@ -181,13 +191,18 @@ struct GeneralTab: View {
             Section(L10n.text("settings.reset.title")) {
                 LabeledContent(L10n.text("settings.reset.description")) {
                     Button(L10n.text("settings.reset.action")) {
-                        let defaults = UserDefaults.standard
-                        KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
-                        defaults.removeObject(forKey: "browserDataAccess")
-                        Self.settingsKeys.forEach { key in
-                            defaults.removeObject(forKey: key)
-                        }
+                        resetPresented = true
                     }
+                }
+                .confirmationDialog(
+                    L10n.text("settings.reset.confirmation"),
+                    isPresented: $resetPresented
+                ) {
+                    Button(L10n.text("settings.reset.confirm"), role: .destructive) {
+                        resetSettings()
+                    }
+                } message: {
+                    Text(verbatim: L10n.text("settings.reset.confirmation_message"))
                 }
             }
         }
