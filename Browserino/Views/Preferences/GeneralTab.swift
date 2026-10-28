@@ -37,7 +37,7 @@ struct SettingsDocument: FileDocument {
 }
 
 struct GeneralTab: View {
-    @ObservedObject private var localization = Localization.shared
+    @Bindable private var localization = Localization.shared
     @AppStorage("switch_closeSourceTab") private var closeSourceTab = false
     @State private var isDefault = false
     @State private var launchAtLogin = SMAppService.mainApp.status == .enabled

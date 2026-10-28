@@ -7,12 +7,18 @@
 
 import SwiftUI
 import Foundation
-import Combine
 import KeyboardShortcuts
+
+extension UserDefaults {
+    /// Exposed for key-value observing; the app reads the setting through @AppStorage.
+    @objc dynamic var showInMenuBar: Bool {
+        bool(forKey: "showInMenuBar")
+    }
+}
 
 @MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwitchPresenting {
-    private var languageSubscription: AnyCancellable?
+    private var menuBarObservation: NSKeyValueObservation?
     private var selectorWindow: BrowserinoWindow?
     private var preferencesWindow: NSWindow?
     
@@ -29,17 +35,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         BrowserSwitchService.shared.presenter = self
         BrowserSwitchService.shared.startTracking()
         KeyboardShortcuts.onKeyUp(for: .moveCurrentTab) { BrowserSwitchService.shared.beginMove(preferFrontmost: true) }
-        languageSubscription = Localization.shared.$activeLanguage.sink { [weak self] _ in
+        observeLanguage()
+        setupStatusBar()
+
+        menuBarObservation = UserDefaults.standard.observe(\.showInMenuBar) { [weak self] _, _ in
+            // Another process writing our defaults delivers this off the main
+            // thread, so hop rather than assuming isolation.
             Task { @MainActor in
-                guard let self else { return }
-                if let item = self.statusBarItem { NSStatusBar.system.removeStatusItem(item); self.statusBarItem = nil }
-                self.setupStatusBar()
-                self.preferencesWindow?.title = L10n.text("settings.window.title")
+                self?.setupStatusBar()
+                NSApp.setActivationPolicy(.accessory)
             }
         }
-        setupStatusBar()
-        
-        UserDefaults.standard.addObserver(self, forKeyPath: "showInMenuBar", options: [.new], context: nil)
         
         if UserDefaults.standard.object(forKey: "browsers") == nil {
             openPreferences()
@@ -80,19 +86,20 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         }
     }
     
-    override nonisolated func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-        if keyPath == "showInMenuBar" {
-            // Another process writing our defaults delivers this off the main
-            // thread, so hop rather than assuming isolation.
+    /// Rebuilds the menu bar item in the new language. Observation fires once per
+    /// change, so each change re-registers for the next one.
+    private func observeLanguage() {
+        withObservationTracking {
+            _ = Localization.shared.activeLanguage
+        } onChange: { [weak self] in
             Task { @MainActor in
-                setupStatusBar()
-                NSApp.setActivationPolicy(.accessory)
+                guard let self else { return }
+                if let item = self.statusBarItem { NSStatusBar.system.removeStatusItem(item); self.statusBarItem = nil }
+                self.setupStatusBar()
+                self.preferencesWindow?.title = L10n.text("settings.window.title")
+                self.observeLanguage()
             }
         }
-    }
-    
-    deinit {
-        UserDefaults.standard.removeObserver(self, forKeyPath: "showInMenuBar")
     }
     
     func application(_ application: NSApplication, willContinueUserActivityWithType userActivityType: String) -> Bool {
