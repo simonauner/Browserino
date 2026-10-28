@@ -6,30 +6,46 @@ Browserino is a tiny browser selector for MacOS written in SwiftUI. Just set as 
 
 Inspired by great [Browserosaurus](https://github.com/will-stone/browserosaurus), but a little bit faster and smaller thanks to native code, and fixes annoying Electron bug.
 
+# About this fork
+
+This is a fork of [AlexStrNik/Browserino](https://github.com/AlexStrNik/Browserino). It adds the following on top of the original:
+
+- **Browser profiles**: Chromium profiles show up as separate targets, with custom names, visibility and shortcuts (upstream PRs [#48](https://github.com/AlexStrNik/Browserino/pull/48) and [#65](https://github.com/AlexStrNik/Browserino/pull/65)).
+- **Move current tab**: send the open tab to another browser from the menu bar or a global shortcut ([#61](https://github.com/AlexStrNik/Browserino/pull/61)).
+- **Missing apps** stay visible and editable instead of disappearing ([#63](https://github.com/AlexStrNik/Browserino/pull/63)).
+- **Localization** in ten languages, with a manual language picker.
+- **Rules**: write a rule as a simple wildcard pattern such as `https://example.com*` instead of a regex, or generate a regex from the URLs in Test URLs.
+- **Modern macOS**: Swift 6, macOS 14 minimum ([#64](https://github.com/AlexStrNik/Browserino/pull/64)), Liquid Glass on macOS 26 and builds with the Xcode 27 SDK.
+
+The fork has no Homebrew cask and no prebuilt releases, so you build it from source. If you want the original app, install it from [the upstream repository](https://github.com/AlexStrNik/Browserino#installation).
+
 # Installation
 
+Requirements: macOS 14 or later and Xcode (the Command Line Tools alone can't build apps).
+
 ```bash
-brew tap AlexStrNik/Browserino
-brew trust alexstrnik/browserino
-brew install browserino
+git clone https://github.com/simonauner/Browserino.git
+cd Browserino
+./scripts/install-local.sh
 ```
 
-`brew trust` is required on newer Homebrew versions to load casks from third-party taps. The `--no-quarantine` flag has been removed from Homebrew.
+The script builds Browserino, ad-hoc signs it, installs it to `/Applications` and launches it, replacing any running copy. Then pick Browserino as the default browser in **System Settings → Desktop & Dock → Default web browser**.
 
-Or download Browserino from the [releases page](https://github.com/AlexStrNik/Browserino/releases).
+If you already have the original installed with Homebrew, uninstall it first so the two copies don't compete:
 
-## "Apple could not verify Browserino.app is free of malware"
+```bash
+brew uninstall --cask browserino
+```
 
-Browserino is not notarized by Apple, so Gatekeeper blocks it on first launch. To allow it, either:
+To update, pull and run the script again:
 
-- Try to open Browserino, click **Done**, then go to **System Settings → Privacy & Security**, scroll to the **Security** section at the bottom and click **Open Anyway**, or
-- Remove the quarantine flag from Terminal:
+```bash
+git pull && ./scripts/install-local.sh
+```
 
-  ```bash
-  xattr -dr com.apple.quarantine /Applications/Browserino.app
-  ```
+Because the app is built on your own machine it has no quarantine flag, so Gatekeeper doesn't block it on first launch.
 
-If you want to support the app, you can buy it on [Gumroad](https://alexstrnik.gumroad.com/l/browserino).
+If you want to support the original author, you can buy Browserino on [Gumroad](https://alexstrnik.gumroad.com/l/browserino).
 
 ## Languages
 
@@ -49,6 +65,6 @@ Browser authentication sessions may still require Safari. Release signing and no
 
 ## Local development
 
-Run `./scripts/install-local.sh` to build Browserino, ad-hoc sign it and install it to `/Applications`, replacing any running copy. Uninstall the Homebrew cask first so the two copies don't compete. Set `CONFIGURATION=Debug` for a debug build; the build log is written to `build/xcodebuild.log`.
+`./scripts/install-local.sh` builds a Release build by default. Set `CONFIGURATION=Debug` for a debug build; the build log is written to `build/xcodebuild.log`.
 
 Upstream attribution and validation notes: [integration review](docs/UPSTREAM_REVIEW.md). KeyboardShortcuts is licensed under MIT; its notice is bundled with the app.
