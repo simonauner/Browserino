@@ -42,6 +42,7 @@ Lotsen/Assets.xcassets/AccentColor.colorset/Contents.json
   s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-11
 Lotsen/Models/BrowserTabScripting.swift
   s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-20,21,36-50,52,54-63,65-139
+  s_ee7632c454f4ff::t_f0c7419694e49c 26
 Lotsen/Views/BlurredView.swift
   s_ee7632c454f4ff::t_b6ce7a89e5cad0 1-41
 Lotsen.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
