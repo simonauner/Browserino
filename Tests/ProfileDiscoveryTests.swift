@@ -3,7 +3,6 @@ import Testing
 
 /// Local State belongs to the browser, so what it lists cannot be trusted to stay
 /// inside the browser's data directory.
-@MainActor
 struct ProfileDiscoveryTests {
     @Test("profile discovery fixture")
     func discovery() throws {

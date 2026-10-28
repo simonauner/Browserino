@@ -18,8 +18,21 @@ enum BrowserTabScriptingError: Error, Sendable, Equatable {
     case denied, unavailable, changed, unsafeClose, failed(String)
 }
 
-@MainActor
 enum BrowserTabScripting {
+    /// AppleScript returns mixed-up results and spurious errors when scripts run on
+    /// several threads at once, which two quick tab moves, or a close still running
+    /// when the next move starts, would otherwise do. One serial queue keeps them
+    /// apart while keeping them off the main thread.
+    nonisolated private static let scriptQueue = DispatchQueue(label: "xyz.alexstrnik.Browserino.AppleScript")
+
+    nonisolated private static func onScriptQueue<T: Sendable>(_ body: @escaping @Sendable () throws -> T) async throws -> T {
+        try await withCheckedThrowingContinuation { continuation in
+            scriptQueue.async {
+                continuation.resume(with: Result { try body() })
+            }
+        }
+    }
+
     static func family(for id: String) -> BrowserScriptingFamily {
         guard id.utf8.allSatisfy({ (65...90).contains($0) || (97...122).contains($0) || (48...57).contains($0) || [45, 46, 95].contains($0) }) else { return .unsupported }
         if ["com.apple.Safari", "com.apple.SafariTechnologyPreview"].contains(id) { return .safari }
@@ -35,9 +48,9 @@ enum BrowserTabScripting {
         let pid = app.processIdentifier
         let name = app.localizedName ?? identifier
         let safari = family(for: identifier) == .safari
-        return try await Task.detached {
+        return try await onScriptQueue {
             try read(identifier: identifier, pid: pid, name: name, safari: safari)
-        }.value
+        }
     }
 
     static func close(_ snapshot: SourceTabSnapshot) async throws {
@@ -48,7 +61,7 @@ enum BrowserTabScripting {
         // Safari's scripting dictionary exposes no stable tab ID. Keep its source
         // open rather than ever closing a different tab after a reorder.
         guard !snapshot.isSafari else { throw BrowserTabScriptingError.unsafeClose }
-        try await Task.detached { try closeCaptured(snapshot) }.value
+        try await onScriptQueue { try closeCaptured(snapshot) }
     }
 
     nonisolated private static func read(identifier: String, pid: pid_t, name: String, safari: Bool) throws -> SourceTabSnapshot {

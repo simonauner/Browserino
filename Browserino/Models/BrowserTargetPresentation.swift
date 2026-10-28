@@ -1,7 +1,6 @@
 import AppKit
 import Foundation
 
-@MainActor
 extension BrowserTarget {
     var chromiumProfile: ChromiumProfile? {
         guard let profile else {
@@ -48,7 +47,6 @@ extension BrowserTarget {
 
 /// What a row shows for a target, resolved once. Each piece reads the app bundle
 /// or the browser's profile data, which is too slow to repeat on every render.
-@MainActor
 struct BrowserTargetPresentation {
     let target: BrowserTarget
     let bundleIdentifier: String?

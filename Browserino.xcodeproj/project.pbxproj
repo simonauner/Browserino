@@ -377,6 +377,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.Browserino;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -414,6 +415,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.Browserino;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
@@ -429,6 +431,7 @@
 				MARKETING_VERSION = 1.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.BrowserinoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
@@ -444,6 +447,7 @@
 				MARKETING_VERSION = 1.1.16;
 				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.BrowserinoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_VERSION = 6.0;
 			};
 			name = Release;

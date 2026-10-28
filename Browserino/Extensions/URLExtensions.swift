@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension URL {
+nonisolated extension URL {
     func matchesHost(_ configuredHost: String) -> Bool {
         if configuredHost.isEmpty {
             return true
@@ -20,7 +20,7 @@ extension URL {
 }
 
 // Validate external input before routing rules or application scheme overrides.
-extension URL {
+nonisolated extension URL {
     var browserinoIncomingURL: URL? {
         if scheme?.lowercased() == "browserino" {
             guard host?.lowercased() == "open",

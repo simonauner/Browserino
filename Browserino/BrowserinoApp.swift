@@ -16,7 +16,6 @@ extension UserDefaults {
     }
 }
 
-@MainActor
 class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwitchPresenting {
     private var menuBarObservation: NSKeyValueObservation?
     private var selectorWindow: BrowserinoWindow?
