@@ -230,7 +230,7 @@ struct GeneralTab: View {
 /// settings window can grow to fit it. The scroll geometry this needs arrived in
 /// macOS 15; on 14 the window keeps its size and the form scrolls.
 private struct FitsSettingsHeight: ViewModifier {
-    let fit: @MainActor @Sendable (CGFloat) -> Void
+    let fit: FitSettingsHeightAction
 
     func body(content: Content) -> some View {
         if #available(macOS 15.0, *) {

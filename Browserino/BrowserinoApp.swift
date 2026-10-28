@@ -160,9 +160,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         preferencesResizedByUser = false
         preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
             PreferencesView()
-                .environment(\.fitSettingsHeight) { [weak self] overflow in
+                .environment(\.fitSettingsHeight, FitSettingsHeightAction { [weak self] overflow in
                     self?.fitPreferencesHeight(overflow: overflow)
-                }
+                })
         })
         
         preferencesWindow!.isReleasedWhenClosed = false
