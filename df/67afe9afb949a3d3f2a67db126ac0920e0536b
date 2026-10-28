@@ -1,0 +1,28 @@
+Lotsen/Assets.xcassets/MenuIcon.imageset/MenuIcon.svg
+  s_ee7632c454f4ff::t_1f1874c3d7dbd1 1-6
+scripts/render-svg.swift
+  s_ee7632c454f4ff::t_1f1874c3d7dbd1 1-20
+images/icon/AppIcon.svg
+  s_ee7632c454f4ff::t_1f1874c3d7dbd1 1-25,27-41,43-46,50-51
+  s_ee7632c454f4ff::t_21bafa2099a6b4 26,42,47-49
+scripts/build-icons.sh
+  s_ee7632c454f4ff::t_1cc21526b50e90 1-15
+Readme.md
+  s_ee7632c454f4ff::t_a9063ebbc78637 1-2,5,74
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "df67afe9afb949a3d3f2a67db126ac0920e0536b",
+  "prompts": {},
+  "sessions": {
+    "s_ee7632c454f4ff": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3189bd5e-ccd9-43fd-a13e-dec485b01357",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
