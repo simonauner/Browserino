@@ -6,15 +6,14 @@
 
 import AppKit
 import Foundation
-import SwiftUI
 
 @MainActor
 class BrowserUtil {
-    @AppStorage("directories") private static var directories: [Directory] = []
-    @AppStorage("privateArgs") private static var privateArgs: [String: String] = [:]
+    private static var settings: AppSettings { .shared }
 
     static func rescanBrowsers(oldBrowsers: [BrowserTarget]) -> [BrowserTarget]? {
-        if let raw = UserDefaults.standard.string(forKey: "browsers"), [BrowserTarget](rawValue: raw) == nil {
+        if UserDefaults.standard.string(forKey: "browsers") != nil,
+           UserDefaults.standard.json([BrowserTarget].self, forKey: "browsers") == nil {
             presentError(NSError(domain: "Browserino", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
             return nil
         }
@@ -24,12 +23,12 @@ class BrowserUtil {
     static func loadBrowsers(
         oldBrowsers: [BrowserTarget]
     ) -> [BrowserTarget] {
-        if directories.isEmpty {
+        if settings.directories.isEmpty {
             let defaultDirectory = Directory(directoryPath: "/Applications")
-            directories.append(defaultDirectory)
+            settings.directories.append(defaultDirectory)
         }
         
-        let validDirectories = directories.map { $0.directoryPath }
+        let validDirectories = settings.directories.map { $0.directoryPath }
 
         guard let url = URL(string: "https:") else {
             return []
@@ -59,9 +58,9 @@ class BrowserUtil {
             targets(forAppAt: app, oldBrowsers: oldBrowsers)
         }
 
-        let hidden = UserDefaults.standard.string(forKey: "hiddenBrowsers").flatMap { [BrowserTarget](rawValue: $0) } ?? []
+        let hidden = settings.hiddenBrowsers
         let preserved = TargetPolicy.preserveHidden(oldTargets: oldBrowsers, newTargets: discovered, hidden: hidden)
-        if preserved != hidden { UserDefaults.standard.set(preserved.rawValue, forKey: "hiddenBrowsers") }
+        if preserved != hidden { settings.hiddenBrowsers = preserved }
         return merge(discovered: discovered, into: oldBrowsers)
     }
 
@@ -164,7 +163,7 @@ class BrowserUtil {
             arguments.append("--profile-directory=\(profile)")
         }
         if isIncognito {
-            guard let privateArg = privateArgs[identifier], !privateArg.isEmpty else {
+            guard let privateArg = settings.privateArgs[identifier], !privateArg.isEmpty else {
                 fail("errors.private_argument_missing")
                 return
             }

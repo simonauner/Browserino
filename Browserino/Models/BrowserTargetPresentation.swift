@@ -32,7 +32,7 @@ extension BrowserTarget {
             return browser
         }
 
-        let aliases = UserDefaults.standard.string(forKey: "profileNames").flatMap { [String: String](rawValue: $0) } ?? [:]
+        let aliases = AppSettings.shared.profileNames
         let aliasKey = shortcutKey(bundleIdentifier: bundle?.bundleIdentifier ?? app.path)
         return "\(browser) — \(aliases[aliasKey] ?? chromiumProfile()?.name ?? profile)"
     }

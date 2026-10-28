@@ -19,7 +19,7 @@ struct App: Codable, Hashable {
 }
 
 struct NewApp: View {
-    @AppStorage("apps") private var apps: [App] = []
+    @Setting(\.apps) private var apps
     @State private var host: String = ""
     @State private var selectedApp: URL?
     @State private var selectedProfile: String?
@@ -139,7 +139,7 @@ struct AppItem: View {
 }
 
 struct AppsTab: View {
-    @AppStorage("apps") private var apps: [App] = []
+    @Setting(\.apps) private var apps
     
     var body: some View {
         VStack (alignment: .leading) {

@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct BrowsersTab: View {
-    @AppStorage("browsers") private var browsers: [BrowserTarget] = []
-    @AppStorage("hiddenBrowsers") private var hiddenBrowsers: [BrowserTarget] = []
+    @Setting(\.browsers) private var browsers
+    @Setting(\.hiddenBrowsers) private var hiddenBrowsers
     @AppStorage("profilesEnabled") private var profilesEnabled = true
-    @AppStorage("profileNames") private var profileNames: [String: String] = [:]
-    @AppStorage("privateArgs") private var privateArgs: [String: String] = [:]
+    @Setting(\.profileNames) private var profileNames
+    @Setting(\.privateArgs) private var privateArgs
 
     private var displayed: [(offset: Int, element: BrowserTarget)] {
         var seen = Set<URL>()

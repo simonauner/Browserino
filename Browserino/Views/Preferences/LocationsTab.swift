@@ -72,7 +72,7 @@ struct DirectoryItem: View {
 }
 
 struct BrowserSearchLocationsTab: View {
-    @AppStorage("directories") private var directories: [Directory] = []
+    @Setting(\.directories) private var directories
 
     var body: some View {
         VStack(alignment: .leading) {

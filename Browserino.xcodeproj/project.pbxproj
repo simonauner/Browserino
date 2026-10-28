@@ -13,6 +13,8 @@
 		A927A98409113A4B5CAAB710 /* BrowserTabScripting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89719EB991AE9684E7147A2C; };
 		F4652DEE30A7A7CBE811E2AC /* BrowserSwitchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0ADC1D7309FE1222CAAACD9; };
 		FD9F0C28839137C8A2C5239C /* SettingsPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E900D10BCAE70480883BD91; };
+		539500068E71C7703FCC9C37 /* JSONDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73C74350ED77204CA931D4DD /* JSONDefaults.swift */; };
+		268CD8D81897A1A35FE0B514 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDFE658CE00B8893DF781A5D /* AppSettings.swift */; };
 		081C973CEE6F66D3AFCC7281 /* IntegrationPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52511D70CE32BBCC229D4A99; };
 		0548DCF0A79DAD1DD24FFD26 /* Localization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50DD6A34B5CE37F83D76DB0A; };
 		D98E8BAAAF94791EB934B49E /* BrowserTargetPresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 549725F95E2376F8BB7AAF41; };
@@ -28,7 +30,6 @@
 		9830F0BB2C11DE8F00D69C88 /* PreferencesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9830F0BA2C11DE8F00D69C88 /* PreferencesView.swift */; };
 		9830F0C32C11DEED00D69C88 /* ButtonStyles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9830F0C22C11DEED00D69C88 /* ButtonStyles.swift */; };
 		9830F0C52C11DF2C00D69C88 /* BrowserinoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9830F0C42C11DF2C00D69C88 /* BrowserinoWindow.swift */; };
-		9830F0C72C11E87300D69C88 /* Array+RawRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9830F0C62C11E87300D69C88 /* Array+RawRepresentable.swift */; };
 		984671D02E68A06100250D9C /* View+ScrollEdgeDisabled.swift in Sources */ = {isa = PBXBuildFile; fileRef = 984671CF2E68A05800250D9C /* View+ScrollEdgeDisabled.swift */; };
 		986AC6242CECDB5000884C40 /* BrowserinoApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986AC6232CECDB4700884C40 /* BrowserinoApplication.swift */; };
 		986DC8072CFE42E300447DC7 /* RulesTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 986DC8062CFE42E000447DC7 /* RulesTab.swift */; };
@@ -58,6 +59,8 @@
 		89719EB991AE9684E7147A2C /* BrowserTabScripting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/BrowserTabScripting.swift; sourceTree = SOURCE_ROOT; };
 		C0ADC1D7309FE1222CAAACD9 /* BrowserSwitchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/BrowserSwitchService.swift; sourceTree = SOURCE_ROOT; };
 		9E900D10BCAE70480883BD91 /* SettingsPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/SettingsPolicy.swift; sourceTree = SOURCE_ROOT; };
+		73C74350ED77204CA931D4DD /* JSONDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/JSONDefaults.swift; sourceTree = SOURCE_ROOT; };
+		CDFE658CE00B8893DF781A5D /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/AppSettings.swift; sourceTree = SOURCE_ROOT; };
 		52511D70CE32BBCC229D4A99 /* IntegrationPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/IntegrationPolicy.swift; sourceTree = SOURCE_ROOT; };
 		50DD6A34B5CE37F83D76DB0A /* Localization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/Localization.swift; sourceTree = SOURCE_ROOT; };
 		549725F95E2376F8BB7AAF41 /* BrowserTargetPresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Browserino/Models/BrowserTargetPresentation.swift; sourceTree = SOURCE_ROOT; };
@@ -76,7 +79,6 @@
 		9830F0BA2C11DE8F00D69C88 /* PreferencesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesView.swift; sourceTree = "<group>"; };
 		9830F0C22C11DEED00D69C88 /* ButtonStyles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonStyles.swift; sourceTree = "<group>"; };
 		9830F0C42C11DF2C00D69C88 /* BrowserinoWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserinoWindow.swift; sourceTree = "<group>"; };
-		9830F0C62C11E87300D69C88 /* Array+RawRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+RawRepresentable.swift"; sourceTree = "<group>"; };
 		984671CF2E68A05800250D9C /* View+ScrollEdgeDisabled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+ScrollEdgeDisabled.swift"; sourceTree = "<group>"; };
 		986AC6232CECDB4700884C40 /* BrowserinoApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BrowserinoApplication.swift; sourceTree = "<group>"; };
 		986DC8062CFE42E000447DC7 /* RulesTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RulesTab.swift; sourceTree = "<group>"; };
@@ -134,6 +136,8 @@
 				89719EB991AE9684E7147A2C /* BrowserTabScripting.swift */,
 				C0ADC1D7309FE1222CAAACD9 /* BrowserSwitchService.swift */,
 				9E900D10BCAE70480883BD91 /* SettingsPolicy.swift */,
+				73C74350ED77204CA931D4DD /* JSONDefaults.swift */,
+				CDFE658CE00B8893DF781A5D /* AppSettings.swift */,
 				52511D70CE32BBCC229D4A99 /* IntegrationPolicy.swift */,
 				50DD6A34B5CE37F83D76DB0A /* Localization.swift */,
 				549725F95E2376F8BB7AAF41 /* BrowserTargetPresentation.swift */,
@@ -182,7 +186,6 @@
 				B9CFBE182F0C6F3D00FC6D37 /* URLExtensions.swift */,
 				B9CFBE1B2F0C6F3D00FC6D37 /* Bundle+AppDisplayName.swift */,
 				984671CF2E68A05800250D9C /* View+ScrollEdgeDisabled.swift */,
-				9830F0C62C11E87300D69C88 /* Array+RawRepresentable.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -324,6 +327,8 @@
 				A927A98409113A4B5CAAB710 /* BrowserTabScripting.swift in Sources */,
 				F4652DEE30A7A7CBE811E2AC /* BrowserSwitchService.swift in Sources */,
 				FD9F0C28839137C8A2C5239C /* SettingsPolicy.swift in Sources */,
+				539500068E71C7703FCC9C37 /* JSONDefaults.swift in Sources */,
+				268CD8D81897A1A35FE0B514 /* AppSettings.swift in Sources */,
 				081C973CEE6F66D3AFCC7281 /* IntegrationPolicy.swift in Sources */,
 				0548DCF0A79DAD1DD24FFD26 /* Localization.swift in Sources */,
 				D98E8BAAAF94791EB934B49E /* BrowserTargetPresentation.swift in Sources */,
@@ -356,7 +361,6 @@
 				664FDF222CE4AA6B009766AA /* BrowserUtil.swift in Sources */,
 				9830F0B92C11B09700D69C88 /* BlurredView.swift in Sources */,
 				986AC6242CECDB5000884C40 /* BrowserinoApplication.swift in Sources */,
-				9830F0C72C11E87300D69C88 /* Array+RawRepresentable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -22,7 +22,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     private var selectorWindow: BrowserinoWindow?
     private var preferencesWindow: NSWindow?
     
-    @AppStorage("rules") private var rules: [Rule] = []
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     
     var statusMenu: NSMenu!
@@ -122,8 +121,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     @objc func moveCurrentTab() { BrowserSwitchService.shared.beginMove(preferFrontmost: false) }
 
     func presentMovePrompt(snapshot: SourceTabSnapshot) {
-        let targets = [BrowserTarget](rawValue: UserDefaults.standard.string(forKey: "browsers") ?? "") ?? []
-        let hidden = [BrowserTarget](rawValue: UserDefaults.standard.string(forKey: "hiddenBrowsers") ?? "") ?? []
+        let targets = AppSettings.shared.browsers
+        let hidden = AppSettings.shared.hiddenBrowsers
         guard TargetPolicy.visible(targets, hidden: hidden, profilesEnabled: UserDefaults.standard.object(forKey: "profilesEnabled") as? Bool != false).contains(where: { Bundle(url: $0.app) != nil && Bundle(url: $0.app)?.bundleIdentifier != snapshot.bundleIdentifier }) else {
             BrowserSwitchService.shared.presentNoDestinationAlert(); return
         }
@@ -175,7 +174,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if processedUrls.count == 1 {
             let urlString = processedUrls.first!.absoluteString
 
-            for rule in rules {
+            for rule in AppSettings.shared.rules {
                 if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
                     BrowserUtil.openURL(
                         processedUrls,

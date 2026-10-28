@@ -88,3 +88,15 @@ check(Rule.addingPattern("   ", target: chrome, to: [legacyRule]) == [legacyRule
 check(Rule.addingPattern("https://example.com/a?b=1", target: chrome, to: []).first?.compiledRegex.map { "https://example.com/a?b=1".firstMatch(of: $0) != nil } == true, "exact picker URL matches itself")
 check((try? SettingsPolicy.validate(["rules_showInPicker": false])) != nil, "picker rule setting is importable")
 print("Picker rule checks passed")
+let storedSuite = "BrowserinoJSONDefaultsChecks-" + UUID().uuidString
+let stored = UserDefaults(suiteName: storedSuite)!
+stored.setJSON(["com.google.Chrome": "C"], forKey: "shortcuts")
+check(stored.string(forKey: "shortcuts") == #"{"com.google.Chrome":"C"}"#, "settings keep their JSON string format")
+check(stored.json([String: String].self, forKey: "shortcuts") == ["com.google.Chrome": "C"], "settings round-trip")
+stored.set(#"["file:///Applications/A.app/"]"#, forKey: "browsers")
+check(stored.json([BrowserTarget].self, forKey: "browsers")?.first?.app.lastPathComponent == "A.app", "legacy stored browsers decode")
+stored.set("[42]", forKey: "browsers")
+check(stored.json([BrowserTarget].self, forKey: "browsers") == nil, "malformed stored browsers read as nil")
+check(stored.json([Rule].self, forKey: "missing") == nil, "missing settings read as nil")
+stored.removePersistentDomain(forName: storedSuite)
+print("Stored settings checks passed")
