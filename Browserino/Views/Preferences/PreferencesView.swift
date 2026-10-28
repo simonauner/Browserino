@@ -50,6 +50,12 @@ enum SettingsPane: CaseIterable, Identifiable {
     }
 }
 
+extension EnvironmentValues {
+    /// Lets a pane ask the settings window to grow or shrink by the height its
+    /// content overflows the visible area.
+    @Entry var fitSettingsHeight: @MainActor @Sendable (CGFloat) -> Void = { _ in }
+}
+
 struct PreferencesView: View {
     static let sidebarWidth: CGFloat = 200
     static let contentMinSize = CGSize(width: 860, height: 500)
