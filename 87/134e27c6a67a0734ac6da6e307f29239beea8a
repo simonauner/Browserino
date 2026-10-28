@@ -1,0 +1,25 @@
+Browserino/Models/Rule.swift
+  s_db0af891d26e30::t_c08c0d59d3d294 11-16,19-55
+Browserino/BrowserinoApp.swift
+  s_db0af891d26e30::t_14cd018b74921c 143
+Browserino/Views/Preferences/EditRuleForm.swift
+  s_db0af891d26e30::t_2b72daa56fae92 68,73,101-108,113-118,127,191-192,206
+Browserino/Views/Preferences/RulesTab.swift
+  s_db0af891d26e30::t_afa2d46c9772c7 21,61-66,108
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "87134e27c6a67a0734ac6da6e307f29239beea8a",
+  "prompts": {},
+  "sessions": {
+    "s_db0af891d26e30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d83c49da-d63d-405a-8d97-dc98099966cf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
