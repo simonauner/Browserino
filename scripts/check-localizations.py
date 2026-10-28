@@ -5,7 +5,7 @@ import re
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-catalog = json.loads((root / 'Browserino/Localizable.xcstrings').read_text())
+catalog = json.loads((root / 'Lotsen/Localizable.xcstrings').read_text())
 strings = catalog['strings']
 languages = {'en', 'ru', 'de', 'fr', 'es', 'pt-BR', 'it', 'ja', 'ko', 'zh-Hans'}
 for key, entry in strings.items():
@@ -16,7 +16,7 @@ for key, entry in strings.items():
         assert unit['state'] == 'translated' and unit['value'].strip(), (key, language)
         assert unit['value'].count('%@') == entry['localizations']['en']['stringUnit']['value'].count('%@'), (key, language)
 
-for path in (root / 'Browserino').rglob('*.swift'):
+for path in (root / 'Lotsen').rglob('*.swift'):
     source = path.read_text()
     for key in re.findall(r'(?:Text|Label|TextField|LabeledContent|NSLocalizedString|L10n.text|L10n.format|fail)\(\s*"([^"\n]*)"', source):
         if not key or '\\(' in key or key.startswith('https://'):

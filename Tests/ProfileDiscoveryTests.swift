@@ -6,7 +6,7 @@ import Testing
 struct ProfileDiscoveryTests {
     @Test("profile discovery fixture")
     func discovery() throws {
-        let root = FileManager.default.temporaryDirectory.appendingPathComponent("BrowserinoProfiles-" + UUID().uuidString)
+        let root = FileManager.default.temporaryDirectory.appendingPathComponent("LotsenProfiles-" + UUID().uuidString)
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: root) }
         let app = root.appendingPathComponent("Browser.app")

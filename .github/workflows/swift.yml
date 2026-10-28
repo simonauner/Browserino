@@ -1,4 +1,4 @@
-# This workflow builds the Browserino Xcode project and runs its tests
+# This workflow builds the Lotsen Xcode project and runs its tests
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-swift
 
 name: Swift
@@ -21,6 +21,6 @@ jobs:
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_26.6.app
     - name: Build and test
-      run: xcodebuild test -project Browserino.xcodeproj -scheme Browserino -configuration Debug -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
+      run: xcodebuild test -project Lotsen.xcodeproj -scheme Lotsen -configuration Debug -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
     - name: Check localizations
       run: python3 scripts/check-localizations.py

@@ -73,7 +73,7 @@ struct SettingsImportTests {
 
     @Test("legacy Chrome profiles migrate once")
     func legacyProfilesMigrate() throws {
-        let suiteName = "BrowserinoTests." + UUID().uuidString
+        let suiteName = "LotsenTests." + UUID().uuidString
         let defaults = try #require(UserDefaults(suiteName: suiteName))
         defer { defaults.removePersistentDomain(forName: suiteName) }
         let chrome = URL(fileURLWithPath: "/Applications/Google Chrome.app")
@@ -87,5 +87,32 @@ struct SettingsImportTests {
         let first = defaults.string(forKey: "hiddenBrowsers")
         SettingsPolicy.migrateLegacyProfiles(defaults: defaults, chrome: chrome)
         #expect(first == defaults.string(forKey: "hiddenBrowsers"), "migration idempotent")
+    }
+
+    @Test("Browserino settings copied on first launch only")
+    func browserinoSettingsMigrate() throws {
+        let suiteName = "LotsenTests." + UUID().uuidString
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        let browserino: [String: Any] = ["browsers": "[]", "language": "de", "showInMenuBar": false]
+
+        SettingsPolicy.migrateFromBrowserino(defaults: defaults, browserino: browserino)
+        #expect(defaults.string(forKey: "language") == "de")
+        #expect(defaults.object(forKey: "showInMenuBar") as? Bool == false)
+
+        defaults.set("fr", forKey: "language")
+        SettingsPolicy.migrateFromBrowserino(defaults: defaults, browserino: browserino)
+        #expect(defaults.string(forKey: "language") == "fr", "later launches keep Lotsen's own settings")
+    }
+
+    @Test("Browserino settings never overwrite an existing setup")
+    func browserinoSettingsSkippedWhenConfigured() throws {
+        let suiteName = "LotsenTests." + UUID().uuidString
+        let defaults = try #require(UserDefaults(suiteName: suiteName))
+        defer { defaults.removePersistentDomain(forName: suiteName) }
+        defaults.set("[]", forKey: "browsers")
+
+        SettingsPolicy.migrateFromBrowserino(defaults: defaults, browserino: ["language": "de"])
+        #expect(defaults.string(forKey: "language") == nil)
     }
 }

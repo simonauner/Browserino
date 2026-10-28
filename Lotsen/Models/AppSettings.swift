@@ -1,0 +1,101 @@
+//
+//  AppSettings.swift
+//  Lotsen
+//
+
+import Foundation
+import SwiftUI
+
+/// The settings stored as JSON, decoded once and kept in step with UserDefaults.
+///
+/// Each value is written back as it changes, and everything is read again when
+/// UserDefaults changes underneath, which is how an imported settings file or a
+/// migration reaches views that are already open.
+@Observable
+final class AppSettings {
+    static let shared = AppSettings()
+
+    var browsers: [BrowserTarget] { didSet { store(browsers, forKey: "browsers") } }
+    var hiddenBrowsers: [BrowserTarget] { didSet { store(hiddenBrowsers, forKey: "hiddenBrowsers") } }
+    var apps: [App] { didSet { store(apps, forKey: "apps") } }
+    var rules: [Rule] { didSet { store(rules, forKey: "rules") } }
+    var directories: [Directory] { didSet { store(directories, forKey: "directories") } }
+    var shortcuts: [String: String] { didSet { store(shortcuts, forKey: "shortcuts") } }
+    var profileNames: [String: String] { didSet { store(profileNames, forKey: "profileNames") } }
+    var privateArgs: [String: String] { didSet { store(privateArgs, forKey: "privateArgs") } }
+
+    @ObservationIgnored private let defaults: UserDefaults
+    /// Set while values are being read back, so that doing so does not write them again.
+    @ObservationIgnored private var reloading = false
+    @ObservationIgnored private var observation: (any NSObjectProtocol)?
+
+    init(defaults: UserDefaults = .standard) {
+        self.defaults = defaults
+        browsers = defaults.json(forKey: "browsers") ?? []
+        hiddenBrowsers = defaults.json(forKey: "hiddenBrowsers") ?? []
+        apps = defaults.json(forKey: "apps") ?? []
+        rules = defaults.json(forKey: "rules") ?? []
+        directories = defaults.json(forKey: "directories") ?? []
+        shortcuts = defaults.json(forKey: "shortcuts") ?? [:]
+        profileNames = defaults.json(forKey: "profileNames") ?? [:]
+        privateArgs = defaults.json(forKey: "privateArgs") ?? [:]
+
+        observation = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: defaults,
+            queue: nil
+        ) { [weak self] _ in
+            Task { @MainActor in self?.reload() }
+        }
+    }
+
+    private func store<Value: Encodable>(_ value: Value, forKey key: String) {
+        guard !reloading else {
+            return
+        }
+
+        defaults.setJSON(value, forKey: key)
+    }
+
+    /// Only assigns what actually changed, so views showing the rest stay put.
+    private func reload() {
+        reloading = true
+        defer { reloading = false }
+
+        func update<Value: Decodable & Equatable>(_ keyPath: ReferenceWritableKeyPath<AppSettings, Value>, _ key: String, empty: Value) {
+            let value = defaults.json(Value.self, forKey: key) ?? empty
+            if self[keyPath: keyPath] != value {
+                self[keyPath: keyPath] = value
+            }
+        }
+
+        update(\.browsers, "browsers", empty: [])
+        update(\.hiddenBrowsers, "hiddenBrowsers", empty: [])
+        update(\.apps, "apps", empty: [])
+        update(\.rules, "rules", empty: [])
+        update(\.directories, "directories", empty: [])
+        update(\.shortcuts, "shortcuts", empty: [:])
+        update(\.profileNames, "profileNames", empty: [:])
+        update(\.privateArgs, "privateArgs", empty: [:])
+    }
+}
+
+/// A view's handle on one of `AppSettings`' values, used the way @AppStorage is:
+/// assign to it, or pass `$name` where a binding is needed.
+@propertyWrapper
+struct Setting<Value>: DynamicProperty {
+    private let keyPath: ReferenceWritableKeyPath<AppSettings, Value>
+
+    init(_ keyPath: ReferenceWritableKeyPath<AppSettings, Value>) {
+        self.keyPath = keyPath
+    }
+
+    var wrappedValue: Value {
+        get { AppSettings.shared[keyPath: keyPath] }
+        nonmutating set { AppSettings.shared[keyPath: keyPath] = newValue }
+    }
+
+    var projectedValue: Binding<Value> {
+        Bindable(AppSettings.shared)[dynamicMember: keyPath]
+    }
+}

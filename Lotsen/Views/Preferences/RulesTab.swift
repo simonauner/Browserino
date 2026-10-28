@@ -1,0 +1,135 @@
+//
+//  RulesTab.swift
+//  Lotsen
+//
+//  Created by Aleksandr Strizhnev on 02.12.2024.
+//
+
+import SwiftUI
+
+struct AddRule: View {
+    @State private var addPresented = false
+    
+    var body: some View {
+        HStack {
+            Image(systemName: "plus")
+                .font(
+                    .system(size: 14)
+                )
+                .opacity(0)
+            
+            Text(verbatim: L10n.text("rules.editor.instructions"))
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity, alignment: .leading)
+            
+            Spacer()
+                .frame(width: 16)
+            
+            Button(action: {
+                addPresented.toggle()
+            }) {
+                Text(verbatim: L10n.text("rules.add"))
+            }
+            .sheet(isPresented: $addPresented) {
+                NewRuleForm()
+            }
+        }
+    }
+}
+
+struct RuleItem: View {
+    @Binding var rule: Rule
+    @State private var editPresented = false
+    
+    var body: some View {
+        let bundle = Bundle(url: rule.app)
+
+        HStack {
+            Button(action: {
+                editPresented.toggle()
+            }) {
+                Label(rule.regex, systemImage: "pencil")
+                    .font(
+                        .system(size: 14)
+                    )
+                    .foregroundStyle(.primary)
+            }
+            .buttonStyle(.plain)
+            
+            if rule.kind == .pattern {
+                Text(verbatim: L10n.text("rules.kind.pattern"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
+            Spacer()
+            
+            
+            Text(bundle == nil
+                 ? L10n.format("browsers.status.not_installed", rule.app.appDisplayName)
+                 : rule.target.displayName)
+                .font(
+                    .system(size: 14)
+                )
+                .foregroundStyle(
+                    bundle == nil || rule.target.hasMissingProfile ? .secondary : .primary
+                )
+            
+            
+            Spacer()
+                .frame(width: 8)
+            
+            if bundle != nil {
+                BrowserTargetIcon(target: rule.target)
+                    .frame(width: 32, height: 32)
+            } else {
+                Image(systemName: "questionmark.app.dashed")
+                    .font(.system(size: 24))
+                    .foregroundStyle(.secondary)
+                    .frame(width: 32, height: 32)
+            }
+        }
+        .padding(10)
+        .sheet(isPresented: $editPresented) {
+            EditRuleForm(
+                rule: $rule
+            )
+        }
+    }
+}
+
+struct RulesTab: View {
+    @Setting(\.rules) private var rules
+    @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
+
+    var body: some View {
+        VStack (alignment: .leading) {
+            Toggle(isOn: $showInPicker) {
+                Text(verbatim: L10n.text("rules.picker.show_option"))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            .padding(.horizontal, 20)
+
+            List {
+                AddRule()
+
+                ForEach(Array($rules.enumerated()), id: \.offset) { offset, rule in
+                    RuleItem(
+                        rule: rule
+                    )
+                }
+            }
+            .scrollContentBackground(.hidden)
+            
+            Text(verbatim: L10n.text("rules.list.instructions"))
+                .font(.subheadline)
+                .foregroundStyle(.primary.opacity(0.5))
+                .frame(maxWidth: .infinity)
+        }
+        .padding(.bottom, 20)
+    }
+}
+
+#Preview {
+    RulesTab()
+}
