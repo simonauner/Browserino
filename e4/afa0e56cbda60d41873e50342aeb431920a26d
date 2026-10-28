@@ -1,0 +1,21 @@
+Readme.md
+  s_9b9c46f746f2ad::t_eab6d6be8eca37 33
+.github/workflows/release.yml
+  s_9b9c46f746f2ad::t_4bd6ff745d34ad 1-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e4afa0e56cbda60d41873e50342aeb431920a26d",
+  "prompts": {},
+  "sessions": {
+    "s_9b9c46f746f2ad": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "b8c9b8e4-8e80-4093-99b9-1393f3a5b732",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
