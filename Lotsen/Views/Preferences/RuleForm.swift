@@ -1,44 +1,11 @@
 //
-//  EditRuleForm.swift
+//  RuleForm.swift
 //  Lotsen
 //
 //  Created by Aleksandr Strizhnev on 02.12.2024.
 //
 
 import SwiftUI
-
-struct EditRuleForm: View {
-    @Binding var rule: Rule
-
-    @Setting(\.rules) private var rules
-
-    var body: some View {
-        RuleForm(
-            rule: rule,
-            onSave: {
-                rule = $0
-            },
-            onDelete: {
-                rules.removeAll {
-                    $0 == rule
-                }
-            }
-        )
-    }
-}
-
-struct NewRuleForm: View {
-    @Setting(\.rules) private var rules
-
-    var body: some View {
-        RuleForm(
-            rule: nil,
-            onSave: {
-                rules.append($0)
-            }
-        )
-    }
-}
 
 struct RuleForm: View {
     var isNew: Bool

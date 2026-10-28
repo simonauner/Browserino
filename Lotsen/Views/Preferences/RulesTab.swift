@@ -7,126 +7,99 @@
 
 import SwiftUI
 
-struct AddRule: View {
-    @State private var addPresented = false
-    
-    var body: some View {
-        HStack {
-            Image(systemName: "plus")
-                .font(
-                    .system(size: 14)
-                )
-                .opacity(0)
-            
-            Text(verbatim: L10n.text("rules.editor.instructions"))
-                .foregroundStyle(.secondary)
-                .frame(maxWidth: .infinity, alignment: .leading)
-            
-            Spacer()
-                .frame(width: 16)
-            
-            Button(action: {
-                addPresented.toggle()
-            }) {
-                Text(verbatim: L10n.text("rules.add"))
-            }
-            .sheet(isPresented: $addPresented) {
-                NewRuleForm()
-            }
-        }
-    }
-}
+struct RuleRow: View {
+    let rule: Rule
 
-struct RuleItem: View {
-    @Binding var rule: Rule
-    @State private var editPresented = false
-    
     var body: some View {
         let bundle = Bundle(url: rule.app)
 
         HStack {
-            Button(action: {
-                editPresented.toggle()
-            }) {
-                Label(rule.regex, systemImage: "pencil")
-                    .font(
-                        .system(size: 14)
-                    )
-                    .foregroundStyle(.primary)
-            }
-            .buttonStyle(.plain)
-            
+            Text(verbatim: rule.regex)
+                .monospaced()
+                .lineLimit(1)
+                .truncationMode(.middle)
+
             if rule.kind == .pattern {
                 Text(verbatim: L10n.text("rules.kind.pattern"))
                     .font(.caption)
                     .foregroundStyle(.secondary)
             }
-            
+
             Spacer()
-            
-            
+
             Text(bundle == nil
                  ? L10n.format("browsers.status.not_installed", rule.app.appDisplayName)
                  : rule.target.displayName)
-                .font(
-                    .system(size: 14)
-                )
                 .foregroundStyle(
                     bundle == nil || rule.target.hasMissingProfile ? .secondary : .primary
                 )
-            
-            
-            Spacer()
-                .frame(width: 8)
-            
+
             if bundle != nil {
                 BrowserTargetIcon(target: rule.target)
-                    .frame(width: 32, height: 32)
+                    .frame(width: 24, height: 24)
             } else {
                 Image(systemName: "questionmark.app.dashed")
-                    .font(.system(size: 24))
+                    .font(.title2)
                     .foregroundStyle(.secondary)
-                    .frame(width: 32, height: 32)
+                    .frame(width: 24, height: 24)
             }
         }
-        .padding(10)
-        .sheet(isPresented: $editPresented) {
-            EditRuleForm(
-                rule: $rule
-            )
-        }
+        .padding(.vertical, 2)
     }
 }
 
 struct RulesTab: View {
     @Setting(\.rules) private var rules
     @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
+    @State private var addPresented = false
+    @State private var editing: EditedRow<Rule>?
 
     var body: some View {
-        VStack (alignment: .leading) {
+        VStack(alignment: .leading, spacing: 12) {
             Toggle(isOn: $showInPicker) {
                 Text(verbatim: L10n.text("rules.picker.show_option"))
                     .fixedSize(horizontal: false, vertical: true)
             }
-            .padding(.horizontal, 20)
 
-            List {
-                AddRule()
-
-                ForEach(Array($rules.enumerated()), id: \.offset) { offset, rule in
-                    RuleItem(
-                        rule: rule
-                    )
+            EditableList(
+                count: rules.count,
+                add: {
+                    addPresented = true
+                },
+                edit: { index in
+                    editing = EditedRow(id: index, value: rules[index])
+                },
+                remove: { rows in
+                    rules.remove(atOffsets: rows)
                 }
+            ) { index in
+                RuleRow(rule: rules[index])
             }
-            .scrollContentBackground(.hidden)
             
             Text(verbatim: L10n.text("rules.list.instructions"))
-                .font(.subheadline)
-                .foregroundStyle(.primary.opacity(0.5))
-                .frame(maxWidth: .infinity)
+                .foregroundStyle(.secondary)
         }
-        .padding(.bottom, 20)
+        .padding(20)
+        .sheet(isPresented: $addPresented) {
+            RuleForm(rule: nil) {
+                rules.append($0)
+            }
+        }
+        .sheet(item: $editing) { row in
+            RuleForm(
+                rule: row.value,
+                onSave: { rule in
+                    if rules.indices.contains(row.id) {
+                        rules[row.id] = rule
+                    }
+                },
+                onDelete: {
+                    rules.removeAll {
+                        $0 == row.value
+                    }
+                }
+            )
+        }
     }
 }
 

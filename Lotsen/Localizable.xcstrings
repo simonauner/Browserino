@@ -3056,197 +3056,67 @@
         }
       }
     },
-    "rules.editor.instructions": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add a new rule by typing a regex or pattern, or generating one from test URLs, and selecting an app."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавьте правило: введите регулярное выражение или шаблон либо создайте его из тестовых URL и выберите приложение."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Neue Regel mit regulärem Ausdruck oder Muster hinzufügen – oder aus Test-URLs erzeugen – und eine App wählen."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajoutez une règle avec une expression régulière ou un motif, ou générez-la à partir d’URL de test, puis choisissez une application."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Añade una regla con una expresión regular o un patrón, o genérala a partir de URL de prueba, y elige una aplicación."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adicione uma regra com uma expressão regular ou um padrão, ou gere-a a partir de URLs de teste, e escolha um aplicativo."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aggiungi una regola con un’espressione regolare o un pattern, oppure generala dagli URL di prova, e scegli un’app."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正規表現またはパターンを入力するか、テスト URL から生成し、アプリを選択してルールを追加します。"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "정규식 또는 패턴을 입력하거나 테스트 URL에서 생성한 뒤 앱을 선택하여 규칙을 추가하세요."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入正则表达式或模式，或从测试 URL 生成，然后选择应用以添加规则。"
-          }
-        }
-      }
-    },
-    "rules.add": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add new rule"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавить правило"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regel hinzufügen"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajouter une règle"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Añadir regla"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adicionar regra"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aggiungi regola"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ルールを追加"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "규칙 추가"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加规则"
-          }
-        }
-      }
-    },
     "rules.list.instructions": {
       "extractionState": "manual",
       "localizations": {
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type regex or pattern and choose app in which links will be opened without prompt"
+            "value": "Links that match a rule open in its app without the picker. Double-click a rule to edit it."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Укажите регулярное выражение или шаблон и приложение для открытия ссылок без выбора"
+            "value": "Ссылки, подходящие под правило, открываются в его приложении без окна выбора. Дважды щёлкните правило, чтобы изменить его."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Regulären Ausdruck oder Muster und App zum Öffnen ohne Auswahl angeben"
+            "value": "Links, die einer Regel entsprechen, öffnen ohne Auswahl in deren App. Doppelklicke auf eine Regel, um sie zu bearbeiten."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez une expression régulière ou un motif et choisissez l’application pour ouvrir les liens sans sélection"
+            "value": "Les liens qui correspondent à une règle s’ouvrent dans son app sans sélection. Double-cliquez sur une règle pour la modifier."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escribe una expresión regular o un patrón y elige la aplicación para abrir los enlaces sin preguntar"
+            "value": "Los enlaces que coinciden con una regla se abren en su app sin preguntar. Haz doble clic en una regla para editarla."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Digite uma expressão regular ou um padrão e escolha o aplicativo para abrir os links sem perguntar"
+            "value": "Os links que correspondem a uma regra abrem no app dela sem perguntar. Clique duas vezes em uma regra para editá-la."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inserisci un’espressione regolare o un pattern e scegli l’app per aprire i link senza chiedere"
+            "value": "I link che corrispondono a una regola si aprono nella sua app senza chiedere. Fai doppio clic su una regola per modificarla."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正規表現またはパターンとアプリを指定すると、選択画面なしでリンクを開きます"
+            "value": "ルールに一致するリンクは、選択画面なしでそのアプリで開きます。ルールをダブルクリックすると編集できます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "정규식 또는 패턴을 입력하고 선택 창 없이 링크를 열 앱을 선택하세요"
+            "value": "규칙과 일치하는 링크는 선택 창 없이 해당 앱에서 열립니다. 규칙을 이중 클릭하여 편집하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入正则表达式或模式并选择直接打开链接的应用"
+            "value": "匹配规则的链接会直接在其应用中打开。双击规则即可编辑。"
           }
         }
       }
