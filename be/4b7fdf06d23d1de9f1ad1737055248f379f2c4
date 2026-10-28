@@ -1,0 +1,25 @@
+Browserino/Views/Prompt/PromptView.swift
+  s_da0f2b0a419d7b::t_37c356e05a0287 11-61,63-70,80-87,116-118,133-137,140,144-152,154-159,188-189,194-196,199,211,253
+Browserino/Views/Prompt/PromptItem.swift
+  s_da0f2b0a419d7b::t_833be8e97c7257 11,20,42
+Browserino/Views/BrowserTargetIcon.swift
+  s_da0f2b0a419d7b::t_c283e9ac428386 11-12,15-26,28,31-32
+Browserino/Models/BrowserTargetPresentation.swift
+  s_da0f2b0a419d7b::t_9ed850ebe4bb5a 23-29,36-37,43-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "be4b7fdf06d23d1de9f1ad1737055248f379f2c4",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
