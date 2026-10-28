@@ -1,0 +1,19 @@
+Browserino/Models/BrowserTabScripting.swift
+  s_da0f2b0a419d7b::t_9c74d6e8bfef6c 23-36,52,54,65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ca18f5a9b03b361ecbc2a50dae2c62a9c120dfda",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
