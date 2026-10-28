@@ -33,7 +33,7 @@ struct PromptItem: View {
                         .background(
                             Color.secondary.opacity(0.2)
                         )
-                        .cornerRadius(4)
+                        .clipShape(.rect(cornerRadius: 4))
                 }
                 
                 Spacer()
@@ -44,18 +44,22 @@ struct PromptItem: View {
             }
             .padding(8)
         }
-        .if(shortcutsEnabled && shortcut?.isEmpty == false) {
-            return $0.keyboardShortcut(
-                KeyEquivalent(shortcut!.lowercased().first!),
-                modifiers: [.shift]
-            ).background {
+        .keyboardShortcut(key.map { KeyboardShortcut($0, modifiers: [.shift]) })
+        .background {
+            if let key {
                 Button(action: action) {}
                     .opacity(0)
-                    .keyboardShortcut(
-                        KeyEquivalent(shortcut!.lowercased().first!),
-                        modifiers: []
-                    )
+                    .keyboardShortcut(key, modifiers: [])
             }
         }
+    }
+
+    /// The recorded key, while shortcuts are enabled.
+    private var key: KeyEquivalent? {
+        guard shortcutsEnabled, let character = shortcut?.lowercased().first else {
+            return nil
+        }
+
+        return KeyEquivalent(character)
     }
 }

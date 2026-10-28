@@ -279,7 +279,7 @@ struct PromptView: View {
             if let host = urls.first?.host() {
                 Button(action: {
                     let pasteboard = NSPasteboard.general
-                    pasteboard.declareTypes([.string], owner: nil)
+                    pasteboard.clearContents()
                     pasteboard.setString(urls.first?.absoluteString ?? "", forType: .string)
 
                     if closeAfterCopy {
@@ -295,7 +295,7 @@ struct PromptView: View {
                     KeyEquivalent("c"),
                     modifiers: alternativeShortcut ? [.command] : [.command, .option]
                 )
-                .toolTip(urls.first?.absoluteString ?? "")
+                .help(urls.first?.absoluteString ?? "")
             }
         }
         .padding(12)
@@ -308,7 +308,7 @@ struct PromptView: View {
             rulePattern = urls.first?.absoluteString ?? ""
         }
         .opacity(opacityAnimation)
-        .edgesIgnoringSafeArea(.all)
+        .ignoresSafeArea()
     }
 }
 
