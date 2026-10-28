@@ -3062,61 +3062,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Add a new rule by typing regex and selecting an app."
+            "value": "Add a new rule by typing a regex or pattern, or generating one from test URLs, and selecting an app."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Добавьте правило: введите регулярное выражение и выберите приложение."
+            "value": "Добавьте правило: введите регулярное выражение или шаблон либо создайте его из тестовых URL и выберите приложение."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Neue Regel mit regulärem Ausdruck und App hinzufügen."
+            "value": "Neue Regel mit regulärem Ausdruck oder Muster hinzufügen – oder aus Test-URLs erzeugen – und eine App wählen."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ajoutez une règle avec une expression régulière et une application."
+            "value": "Ajoutez une règle avec une expression régulière ou un motif, ou générez-la à partir d’URL de test, puis choisissez une application."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Añade una regla con una expresión regular y una aplicación."
+            "value": "Añade una regla con una expresión regular o un patrón, o genérala a partir de URL de prueba, y elige una aplicación."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Adicione uma regra com uma expressão regular e um aplicativo."
+            "value": "Adicione uma regra com uma expressão regular ou um padrão, ou gere-a a partir de URLs de teste, e escolha um aplicativo."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aggiungi una regola con un’espressione regolare e un’app."
+            "value": "Aggiungi una regola con un’espressione regolare o un pattern, oppure generala dagli URL di prova, e scegli un’app."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正規表現とアプリを指定してルールを追加します。"
+            "value": "正規表現またはパターンを入力するか、テスト URL から生成し、アプリを選択してルールを追加します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "정규식을 입력하고 앱을 선택하여 규칙을 추가하세요."
+            "value": "정규식 또는 패턴을 입력하거나 테스트 URL에서 생성한 뒤 앱을 선택하여 규칙을 추가하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入正则表达式并选择应用以添加规则。"
+            "value": "输入正则表达式或模式，或从测试 URL 生成，然后选择应用以添加规则。"
           }
         }
       }
@@ -3192,61 +3192,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type regex and choose app in which links will be opened without prompt"
+            "value": "Type regex or pattern and choose app in which links will be opened without prompt"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Укажите регулярное выражение и приложение для открытия ссылок без выбора"
+            "value": "Укажите регулярное выражение или шаблон и приложение для открытия ссылок без выбора"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Regulären Ausdruck und App zum Öffnen ohne Auswahl angeben"
+            "value": "Regulären Ausdruck oder Muster und App zum Öffnen ohne Auswahl angeben"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez une expression régulière et choisissez l’application pour ouvrir les liens sans sélection"
+            "value": "Saisissez une expression régulière ou un motif et choisissez l’application pour ouvrir les liens sans sélection"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escribe una expresión regular y elige la aplicación para abrir los enlaces sin preguntar"
+            "value": "Escribe una expresión regular o un patrón y elige la aplicación para abrir los enlaces sin preguntar"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Digite uma expressão regular e escolha o aplicativo para abrir os links sem perguntar"
+            "value": "Digite uma expressão regular ou um padrão e escolha o aplicativo para abrir os links sem perguntar"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inserisci un’espressione regolare e scegli l’app per aprire i link senza chiedere"
+            "value": "Inserisci un’espressione regolare o un pattern e scegli l’app per aprire i link senza chiedere"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正規表現とアプリを指定すると、選択画面なしでリンクを開きます"
+            "value": "正規表現またはパターンとアプリを指定すると、選択画面なしでリンクを開きます"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "정규식을 입력하고 선택 창 없이 링크를 열 앱을 선택하세요"
+            "value": "정규식 또는 패턴을 입력하고 선택 창 없이 링크를 열 앱을 선택하세요"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入正则表达式并选择直接打开链接的应用"
+            "value": "输入正则表达式或模式并选择直接打开链接的应用"
           }
         }
       }
@@ -5132,6 +5132,396 @@
           "stringUnit": {
             "state": "translated",
             "value": "设置格式无效"
+          }
+        }
+      }
+    },
+    "rules.editor.type": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Тип:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Typ:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Type :"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo:"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tipo:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "種類："
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유형:"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "类型："
+          }
+        }
+      }
+    },
+    "rules.kind.regex": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regex"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Регулярное выражение"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regulärer Ausdruck"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expression régulière"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expresión regular"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Expressão regular"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Espressione regolare"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正規表現"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "정규식"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正则表达式"
+          }
+        }
+      }
+    },
+    "rules.kind.pattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаблон"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muster"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motif"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patrón"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Padrão"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "パターン"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "패턴"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式"
+          }
+        }
+      }
+    },
+    "rules.editor.pattern": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern:"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Шаблон:"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muster:"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Motif :"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Patrón:"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Padrão:"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pattern:"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "パターン："
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "패턴:"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "模式："
+          }
+        }
+      }
+    },
+    "rules.editor.pattern_help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matches the whole URL. Use * for any text, e.g. https://tradera.com*"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сопоставляется со всем URL. * означает любой текст, например https://tradera.com*"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Muss der ganzen URL entsprechen. * steht für beliebigen Text, z. B. https://tradera.com*"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correspond à l’URL entière. * remplace n’importe quel texte, par ex. https://tradera.com*"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coincide con la URL completa. Usa * para cualquier texto, p. ej. https://tradera.com*"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corresponde à URL inteira. Use * para qualquer texto, por exemplo https://tradera.com*"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrisponde all’intero URL. Usa * per qualsiasi testo, ad es. https://tradera.com*"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "URL 全体に一致します。* は任意のテキストを表します（例：https://tradera.com*）"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "전체 URL과 일치합니다. *는 임의의 텍스트를 나타냅니다(예: https://tradera.com*)"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "匹配整个 URL。* 表示任意文本，例如 https://tradera.com*"
+          }
+        }
+      }
+    },
+    "rules.editor.generate_regex": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generate regex from test URLs"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Создать регулярное выражение из тестовых URL"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regulären Ausdruck aus Test-URLs erzeugen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Générer une expression régulière à partir des URL de test"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Generar expresión regular a partir de las URL de prueba"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Gerar expressão regular a partir das URLs de teste"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Genera espressione regolare dagli URL di prova"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "テスト URL から正規表現を生成"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "테스트 URL에서 정규식 생성"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "从测试 URL 生成正则表达式"
           }
         }
       }

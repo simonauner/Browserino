@@ -58,6 +58,12 @@ struct RuleItem: View {
             }
             .buttonStyle(.plain)
             
+            if rule.kind == .pattern {
+                Text(verbatim: L10n.text("rules.kind.pattern"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+            
             Spacer()
             
             

@@ -162,9 +162,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             let urlString = processedUrls.first!.absoluteString
 
             for rule in rules {
-                let regex = try? Regex(rule.regex).ignoresCase()
-                
-                if let regex, urlString.firstMatch(of: regex) != nil {
+                if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
                     BrowserUtil.openURL(
                         processedUrls,
                         target: rule.target,

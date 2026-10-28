@@ -63,12 +63,17 @@ struct RuleForm: View {
     var onDelete: () -> Void
 
     @State private var regex: String = ""
-    @State private var testUrls: String = "https://github.com/AlexStrNik/Browserino\nhttps://x.com/alexstrnik"
+    @State private var kind: Rule.Kind = .regex
+    @State private var testUrls: String = ""
     @State private var url: URL?
     @State private var profile: String?
     
     private var compiledRegex: Regex<AnyRegexOutput>? {
-        return try? Regex(regex).ignoresCase()
+        return Rule.compile(regex, kind: kind)
+    }
+    
+    private var generatedRegex: String? {
+        return RegexGenerator.regex(from: testUrls.components(separatedBy: .newlines))
     }
     
     private var attributtedText: AttributedString {
@@ -92,10 +97,23 @@ struct RuleForm: View {
                 header: Text(verbatim: L10n.text("settings.tabs.general"))
                     .font(.headline)
             ) {
-                TextField(L10n.text("rules.editor.regex"), text: $regex)
+                Picker(L10n.text("rules.editor.type"), selection: $kind) {
+                    Text(verbatim: L10n.text("rules.kind.regex")).tag(Rule.Kind.regex)
+                    Text(verbatim: L10n.text("rules.kind.pattern")).tag(Rule.Kind.pattern)
+                }
+                .pickerStyle(.segmented)
+                .fixedSize()
+                
+                TextField(L10n.text(kind == .regex ? "rules.editor.regex" : "rules.editor.pattern"), text: $regex)
                     .font(
                         .system(size: 14)
                     )
+                
+                if kind == .pattern {
+                    Text(verbatim: L10n.text("rules.editor.pattern_help"))
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
                 
                 LabeledContent(L10n.text("rules.editor.test_urls")) {
                     TextEditor(text: $testUrls)
@@ -103,6 +121,14 @@ struct RuleForm: View {
                             .system(size: 14)
                         )
                 }
+                
+                Button(action: {
+                    kind = .regex
+                    regex = generatedRegex ?? regex
+                }) {
+                    Text(verbatim: L10n.text("rules.editor.generate_regex"))
+                }
+                .disabled(generatedRegex == nil)
                 
                 Text(attributtedText)
                     .font(
@@ -143,7 +169,8 @@ struct RuleForm: View {
                         Rule(
                             regex: regex,
                             app: url,
-                            profile: profile
+                            profile: profile,
+                            kind: kind
                         )
                     )
                 }) {
@@ -157,6 +184,7 @@ struct RuleForm: View {
         .frame(minWidth: 500)
         .onAppear {
             regex = rule?.regex ?? ""
+            kind = rule?.kind ?? .regex
             url = rule?.app
             profile = rule?.profile
         }
