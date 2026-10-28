@@ -25,7 +25,12 @@ struct AppRow: View {
         let bundle = Bundle(url: app.app)
 
         HStack {
-            Text(verbatim: app.host.isEmpty ? "*" : app.host)
+            Text(verbatim: app.host.isEmpty ? L10n.text("apps.list.all_domains") : app.host)
+
+            if !app.schemeOverride.isEmpty {
+                Text(verbatim: L10n.format("apps.list.opens_as", app.schemeOverride))
+                    .foregroundStyle(.secondary)
+            }
 
             Spacer()
 
