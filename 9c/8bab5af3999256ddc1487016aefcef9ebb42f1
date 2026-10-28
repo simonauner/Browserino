@@ -1,0 +1,23 @@
+Browserino/Views/Prompt/PromptView.swift
+  s_da0f2b0a419d7b::t_948422381c8d9c 97
+Browserino/Models/BrowserSwitchService.swift
+  s_da0f2b0a419d7b::t_711b93e19a1ad3 139
+  s_da0f2b0a419d7b::t_c4014f2e1ef1c4 20-21,23,26,86,127,140,210-211
+  s_da0f2b0a419d7b::t_948422381c8d9c 85
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9c8bab5af3999256ddc1487016aefcef9ebb42f1",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
