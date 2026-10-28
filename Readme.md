@@ -35,4 +35,8 @@ Use Move current tab from the menu bar or assign its global shortcut in General.
 
 Browser authentication sessions may still require Safari. Release signing and notarization are separate from these development builds.
 
+## Local development
+
+Run `./scripts/install-local.sh` to build Browserino, ad-hoc sign it and install it to `/Applications`, replacing any running copy. Uninstall the Homebrew cask first so the two copies don't compete. Set `CONFIGURATION=Debug` for a debug build; the build log is written to `build/xcodebuild.log`.
+
 Upstream attribution and validation notes: [integration review](docs/UPSTREAM_REVIEW.md). KeyboardShortcuts is licensed under MIT; its notice is bundled with the app.
