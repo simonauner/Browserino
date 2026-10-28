@@ -17,7 +17,7 @@ KeyboardShortcuts 2.4.0 is pinned to a fixed revision. Its MIT license is packag
 
 ## Checks and limits
 
-Run URL tests from `Tests/main.swift`, `sh scripts/test-integration.sh`, and `python3 scripts/check-localizations.py`. AppleScript compilation check: generate with `python3 scripts/check-browser-scripts.py`, compile the generated Swift checker, then run it outside the filesystem sandbox. The checker never executes the AppleScript commands.
+Run the URL, settings, policy and profile tests with `xcodebuild test -project Browserino.xcodeproj -scheme Browserino CODE_SIGNING_ALLOWED=NO`, and `python3 scripts/check-localizations.py`. AppleScript compilation check: generate with `python3 scripts/check-browser-scripts.py`, compile the generated Swift checker, then run it outside the filesystem sandbox. The checker never executes the AppleScript commands.
 
 Debug and Release compile on Xcode 27 with signing disabled. Interface checks use a separate test bundle ID on macOS 26.6.2. SDK compilation does not establish macOS 27 runtime compatibility. Actual Automation permission and browser-tab transfer round trips, fullscreen Spaces, multiple displays and Reduce Transparency rendering remain manual checks. Distribution signing/notarization is not verified.
 

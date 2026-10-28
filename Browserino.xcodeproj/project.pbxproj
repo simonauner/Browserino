@@ -12,6 +12,7 @@
 
 /* Begin PBXFileReference section */
 		9830F0A22C119A3000D69C88 /* Browserino.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Browserino.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9F05EB9EAA28B8D1003864C /* BrowserinoTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BrowserinoTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -22,6 +23,21 @@
 			);
 			target = 9830F0A12C119A3000D69C88 /* Browserino */;
 		};
+		0EFA02A9B3AC8AA8CB58E224 /* Exceptions for "Browserino" folder in "BrowserinoTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				"Extensions/Bundle+AppDisplayName.swift",
+				Extensions/URLExtensions.swift,
+				Models/BrowserTarget.swift,
+				Models/ChromiumProfile.swift,
+				Models/IntegrationPolicy.swift,
+				Models/JSONDefaults.swift,
+				Models/Localization.swift,
+				Models/Rule.swift,
+				Models/SettingsPolicy.swift,
+			);
+			target = DB2224CF33106429076C095E /* BrowserinoTests */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -29,8 +45,14 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				518EE6964A36FC241A0EADB3 /* Exceptions for "Browserino" folder in "Browserino" target */,
+				0EFA02A9B3AC8AA8CB58E224 /* Exceptions for "Browserino" folder in "BrowserinoTests" target */,
 			);
 			path = Browserino;
+			sourceTree = "<group>";
+		};
+		092551FEEAC77C98F399AB42 /* Tests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -44,6 +66,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C0DB7CCE1232B725A369755 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -51,6 +80,7 @@
 			isa = PBXGroup;
 			children = (
 				9830F0A42C119A3000D69C88 /* Browserino */,
+				092551FEEAC77C98F399AB42 /* Tests */,
 				9830F0A32C119A3000D69C88 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -59,6 +89,7 @@
 			isa = PBXGroup;
 			children = (
 				9830F0A22C119A3000D69C88 /* Browserino.app */,
+				A9F05EB9EAA28B8D1003864C /* BrowserinoTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -89,6 +120,26 @@
 			productReference = 9830F0A22C119A3000D69C88 /* Browserino.app */;
 			productType = "com.apple.product-type.application";
 		};
+		DB2224CF33106429076C095E /* BrowserinoTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 737AFBE4A88A9DDC4F56F239 /* Build configuration list for PBXNativeTarget "BrowserinoTests" */;
+			buildPhases = (
+				59ACE6B095048E7C3B529F40 /* Sources */,
+				3C0DB7CCE1232B725A369755 /* Frameworks */,
+				D91349E4AF77FBAB3F9888DA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				092551FEEAC77C98F399AB42 /* Tests */,
+			);
+			name = BrowserinoTests;
+			productName = BrowserinoTests;
+			productReference = A9F05EB9EAA28B8D1003864C /* BrowserinoTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -101,6 +152,9 @@
 				TargetAttributes = {
 					9830F0A12C119A3000D69C88 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					DB2224CF33106429076C095E = {
+						CreatedOnToolsVersion = 27.1;
 					};
 				};
 			};
@@ -132,6 +186,7 @@
 			projectRoot = "";
 			targets = (
 				9830F0A12C119A3000D69C88 /* Browserino */,
+				DB2224CF33106429076C095E /* BrowserinoTests */,
 			);
 		};
 /* End PBXProject section */
@@ -144,10 +199,24 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		D91349E4AF77FBAB3F9888DA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		9830F09E2C119A3000D69C88 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59ACE6B095048E7C3B529F40 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -349,6 +418,36 @@
 			};
 			name = Release;
 		};
+		70A353EBECF5AF474A595820 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.16;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.BrowserinoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Debug;
+		};
+		257BE339E8712E0310431BAC /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 14.0;
+				MARKETING_VERSION = 1.1.16;
+				PRODUCT_BUNDLE_IDENTIFIER = xyz.alexstrnik.BrowserinoTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 6.0;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -366,6 +465,15 @@
 			buildConfigurations = (
 				9830F0B22C119A3100D69C88 /* Debug */,
 				9830F0B32C119A3100D69C88 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		737AFBE4A88A9DDC4F56F239 /* Build configuration list for PBXNativeTarget "BrowserinoTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				70A353EBECF5AF474A595820 /* Debug */,
+				257BE339E8712E0310431BAC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
