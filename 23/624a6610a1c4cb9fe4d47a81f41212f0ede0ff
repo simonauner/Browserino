@@ -1,0 +1,19 @@
+Browserino/Extensions/View+ScrollEdgeDisabled.swift
+  s_db0af891d26e30::t_d13a544eb280b4 16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "23624a6610a1c4cb9fe4d47a81f41212f0ede0ff",
+  "prompts": {},
+  "sessions": {
+    "s_db0af891d26e30": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d83c49da-d63d-405a-8d97-dc98099966cf",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
