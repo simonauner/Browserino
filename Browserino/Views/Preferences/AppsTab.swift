@@ -131,8 +131,7 @@ struct AppItem: View {
         .padding(10)
         .sheet(isPresented: $editPresented) {
             EditAppForm(
-                app: $app,
-                isPresented: $editPresented
+                app: $app
             )
         }
     }

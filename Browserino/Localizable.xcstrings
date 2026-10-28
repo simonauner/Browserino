@@ -2607,61 +2607,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Host:"
+            "value": "Host"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Домен:"
+            "value": "Домен"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Domain:"
+            "value": "Domain"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Domaine :"
+            "value": "Domaine"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dominio:"
+            "value": "Dominio"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Domínio:"
+            "value": "Domínio"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Dominio:"
+            "value": "Dominio"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドメイン："
+            "value": "ドメイン"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "도메인:"
+            "value": "도메인"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "域名："
+            "value": "域名"
           }
         }
       }
@@ -2672,61 +2672,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Replace scheme:"
+            "value": "Replace scheme"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Заменить схему:"
+            "value": "Заменить схему"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Schema ersetzen:"
+            "value": "Schema ersetzen"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Remplacer le schéma :"
+            "value": "Remplacer le schéma"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reemplazar esquema:"
+            "value": "Reemplazar esquema"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Substituir esquema:"
+            "value": "Substituir esquema"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sostituisci schema:"
+            "value": "Sostituisci schema"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "スキームを置換："
+            "value": "スキームを置換"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "스킴 변경:"
+            "value": "스킴 변경"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "替换协议："
+            "value": "替换协议"
           }
         }
       }
@@ -2802,61 +2802,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Regex:"
+            "value": "Regex"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Регулярное выражение:"
+            "value": "Регулярное выражение"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Regulärer Ausdruck:"
+            "value": "Regulärer Ausdruck"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Expression régulière :"
+            "value": "Expression régulière"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Expresión regular:"
+            "value": "Expresión regular"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Expressão regular:"
+            "value": "Expressão regular"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Espressione regolare:"
+            "value": "Espressione regolare"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正規表現："
+            "value": "正規表現"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "정규식:"
+            "value": "정규식"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "正则表达式："
+            "value": "正则表达式"
           }
         }
       }
@@ -2867,61 +2867,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Test URLs:"
+            "value": "Test URLs"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Тестовые ссылки:"
+            "value": "Тестовые ссылки"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Test-URLs:"
+            "value": "Test-URLs"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Liens de test :"
+            "value": "Liens de test"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Enlaces de prueba:"
+            "value": "Enlaces de prueba"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "URLs de teste:"
+            "value": "URLs de teste"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "URL di prova:"
+            "value": "URL di prova"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "テスト用URL："
+            "value": "テスト用URL"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "테스트 URL:"
+            "value": "테스트 URL"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "测试链接："
+            "value": "测试链接"
           }
         }
       }
@@ -3907,61 +3907,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Open in:"
+            "value": "Open in"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Открыть в:"
+            "value": "Открыть в"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Öffnen in:"
+            "value": "Öffnen in"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ouvrir dans :"
+            "value": "Ouvrir dans"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir en:"
+            "value": "Abrir en"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Abrir em:"
+            "value": "Abrir em"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Apri in:"
+            "value": "Apri in"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "開くアプリ："
+            "value": "開くアプリ"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "열기:"
+            "value": "열기"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开方式："
+            "value": "打开方式"
           }
         }
       }
@@ -5142,61 +5142,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type:"
+            "value": "Type"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Тип:"
+            "value": "Тип"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Typ:"
+            "value": "Typ"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type :"
+            "value": "Type"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tipo:"
+            "value": "Tipo"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tipo:"
+            "value": "Tipo"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Tipo:"
+            "value": "Tipo"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "種類："
+            "value": "種類"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "유형:"
+            "value": "유형"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "类型："
+            "value": "类型"
           }
         }
       }
@@ -5337,61 +5337,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pattern:"
+            "value": "Pattern"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Шаблон:"
+            "value": "Шаблон"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Muster:"
+            "value": "Muster"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Motif :"
+            "value": "Motif"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Patrón:"
+            "value": "Patrón"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Padrão:"
+            "value": "Padrão"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pattern:"
+            "value": "Pattern"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "パターン："
+            "value": "パターン"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "패턴:"
+            "value": "패턴"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "模式："
+            "value": "模式"
           }
         }
       }
@@ -6432,6 +6432,786 @@
           "stringUnit": {
             "state": "translated",
             "value": "在选择器中按下浏览器对应的键即可在其中打开链接。按住 Shift 键可在隐私窗口中打开。"
+          }
+        }
+      }
+    },
+    "rules.editor.new_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Rule"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новое правило"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Regel"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouvelle règle"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva regla"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nova regra"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuova regola"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新規ルール"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "새 규칙"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建规则"
+          }
+        }
+      }
+    },
+    "rules.editor.edit_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Rule"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменить правило"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Regel bearbeiten"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier la règle"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar regla"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar regra"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifica regola"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルールを編集"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "규칙 편집"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑规则"
+          }
+        }
+      }
+    },
+    "rules.editor.invalid_regex": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This isn’t a valid regular expression."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недопустимое регулярное выражение."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dies ist kein gültiger regulärer Ausdruck."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cette expression régulière n’est pas valide."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es una expresión regular válida."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Esta não é uma expressão regular válida."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questa non è un’espressione regolare valida."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効な正規表現ではありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 정규식이 아닙니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这不是有效的正则表达式。"
+          }
+        }
+      }
+    },
+    "rules.editor.match_count": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ of %@ match"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадает %@ из %@"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ von %@ passen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ sur %@ correspondent"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coinciden %@ de %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ de %@ correspondem"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ su %@ corrispondono"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@ 件が一致"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@/%@개 일치"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ / %@ 个匹配"
+          }
+        }
+      }
+    },
+    "rules.editor.generate_regex_help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Replaces the rule with a regular expression that matches the test URLs."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Заменяет правило регулярным выражением, которое подходит под тестовые ссылки."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ersetzt die Regel durch einen regulären Ausdruck, der den Test-URLs entspricht."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remplace la règle par une expression régulière qui correspond aux liens de test."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sustituye la regla por una expresión regular que coincide con los enlaces de prueba."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Substitui a regra por uma expressão regular que corresponde às URLs de teste."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sostituisce la regola con un’espressione regolare che corrisponde agli URL di prova."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ルールを、テスト用URLに一致する正規表現に置き換えます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "규칙을 테스트 URL과 일치하는 정규식으로 바꿉니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "将规则替换为匹配测试链接的正则表达式。"
+          }
+        }
+      }
+    },
+    "rules.editor.matches": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Matches"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Совпадает"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passt"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Correspond"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Coincide"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corresponde"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Corrisponde"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一致"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "일치"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "匹配"
+          }
+        }
+      }
+    },
+    "rules.editor.no_match": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Doesn’t match"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не совпадает"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Passt nicht"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ne correspond pas"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No coincide"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não corresponde"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Non corrisponde"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "一致しない"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "일치하지 않음"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "不匹配"
+          }
+        }
+      }
+    },
+    "rules.editor.delete_confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this rule?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить это правило?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Regel löschen?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer cette règle ?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar esta regla?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar esta regra?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminare questa regola?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このルールを削除しますか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 규칙을 삭제하시겠습니까?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除此规则？"
+          }
+        }
+      }
+    },
+    "apps.editor.edit_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit Domain"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменить домен"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Domain bearbeiten"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier le domaine"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar dominio"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar domínio"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifica dominio"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ドメインを編集"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "도메인 편집"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑域名"
+          }
+        }
+      }
+    },
+    "apps.editor.invalid_host": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "This isn’t a valid domain."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Недопустимый домен."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dies ist keine gültige Domain."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce domaine n’est pas valide."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No es un dominio válido."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Este não é um domínio válido."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Questo non è un dominio valido."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "有効なドメインではありません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "유효한 도메인이 아닙니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "这不是有效的域名。"
+          }
+        }
+      }
+    },
+    "apps.editor.delete_confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Delete this domain?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить этот домен?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Diese Domain löschen?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer ce domaine ?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar este dominio?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar este domínio?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminare questo dominio?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "このドメインを削除しますか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "이 도메인을 삭제하시겠습니까?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "删除此域名？"
+          }
+        }
+      }
+    },
+    "rules.editor.test_urls_placeholder": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "One URL per line"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "По одной ссылке на строку"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine URL pro Zeile"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un lien par ligne"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un enlace por línea"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uma URL por linha"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un URL per riga"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1行に1つのURL"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "한 줄에 URL 하나씩"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "每行一个链接"
           }
         }
       }

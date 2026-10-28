@@ -9,94 +9,107 @@ import SwiftUI
 
 struct EditAppForm: View {
     @Binding var app: App
-    @Binding var isPresented: Bool
-    
+
     @Setting(\.apps) private var apps
-    
-    private var hostValid: Bool {
-        let url = if app.host.starts(with: /https?:\/\//) {
-            app.host
-        } else {
-            "http://" + app.host
-        }
-        
-        return !app.host.isEmpty && URL(string: url)?.host() != nil
+    @Environment(\.dismiss) private var dismiss
+
+    /// Edits are made on a copy, so Cancel leaves the saved site untouched.
+    @State private var draft: App
+    @State private var deletePresented = false
+
+    init(app: Binding<App>) {
+        _app = app
+        _draft = State(initialValue: app.wrappedValue)
     }
-    
+
+    private var hostUrl: URL? {
+        let url = if draft.host.starts(with: /https?:\/\//) {
+            draft.host
+        } else {
+            "http://" + draft.host
+        }
+
+        return draft.host.isEmpty ? nil : URL(string: url)
+    }
+
+    private var hostValid: Bool {
+        hostUrl?.host() != nil
+    }
+
     var body: some View {
         Form {
-            Section(
-                header: Text(verbatim: L10n.text("settings.tabs.general"))
-                    .font(.headline)
-            ) {
-                TextField(L10n.text("apps.editor.host"), text: $app.host)
-                    .font(
-                        .system(size: 14)
-                    )
-                
+            Section {
+                TextField(L10n.text("apps.editor.host"), text: $draft.host)
+                    .autocorrectionDisabled()
+
                 LabeledContent(L10n.text("browsers.target.open_in")) {
                     BrowserTargetPicker(
                         app: Binding(
-                            get: { app.app },
-                            set: { if let selected = $0 { app.app = selected } }
+                            get: { draft.app },
+                            set: { if let selected = $0 { draft.app = selected } }
                         ),
-                        profile: $app.profile
+                        profile: $draft.profile
                     )
                 }
+            } header: {
+                Text(verbatim: L10n.text("apps.editor.edit_title"))
+            } footer: {
+                if !draft.host.isEmpty && !hostValid {
+                    Label(L10n.text("apps.editor.invalid_host"), systemImage: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.red)
+                }
             }
-            
-            Spacer()
-                .frame(height: 32)
-            
-            Section(
-                header: Text(verbatim: L10n.text("settings.section.advanced"))
-                    .font(.headline)
-            ) {
-                TextField(L10n.text("apps.editor.replace_scheme"), text: $app.schemeOverride)
-                    .font(
-                        .system(size: 14)
-                    )
+
+            Section(L10n.text("settings.section.advanced")) {
+                LabeledContent(L10n.text("apps.editor.replace_scheme")) {
+                    TextField(L10n.text("apps.editor.replace_scheme"), text: $draft.schemeOverride)
+                        .labelsHidden()
+                        .monospaced()
+                        .autocorrectionDisabled()
+                }
             }
-            
-            Spacer()
-                .frame(height: 32)
-            
-            HStack {
-                Button(role: .cancel, action: {
-                    isPresented.toggle()
-                }) {
-                    Text(verbatim: L10n.text("common.cancel"))
+        }
+        .formStyle(.grouped)
+        .frame(width: 520)
+        .toolbar {
+            ToolbarItem(placement: .destructiveAction) {
+                Button(L10n.text("common.delete"), role: .destructive) {
+                    deletePresented = true
                 }
-                
-                Button(role: .destructive, action: {
-                    apps.removeAll {
-                        $0 == app
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button(L10n.text("common.cancel"), role: .cancel) {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+            }
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button(L10n.text("common.save")) {
+                    guard let host = hostUrl?.host() else {
+                        return
                     }
-                    isPresented.toggle()
-                }) {
-                    Text(verbatim: L10n.text("common.delete"))
+
+                    draft.host = host
+                    app = draft
+                    dismiss()
                 }
-                
-                Spacer()
-                
-                Button(action: {
-                    let hostUrl = if app.host.starts(with: /https?:\/\//) {
-                        app.host
-                    } else {
-                        "http://" + app.host
-                    }
-                    app.host = URL(string: hostUrl)!.host()!
-                    
-                    isPresented.toggle()
-                }) {
-                    Text(verbatim: L10n.text("common.save"))
-                }
+                .keyboardShortcut(.defaultAction)
                 .disabled(!hostValid)
             }
-            .frame(maxWidth: .infinity, alignment: .trailing)
         }
-        .padding(20)
-        .frame(minWidth: 500)
+        .confirmationDialog(
+            L10n.text("apps.editor.delete_confirmation"),
+            isPresented: $deletePresented
+        ) {
+            Button(L10n.text("common.delete"), role: .destructive) {
+                apps.removeAll {
+                    $0 == app
+                }
+                dismiss()
+            }
+        }
     }
 }
 
@@ -108,7 +121,6 @@ struct EditAppForm: View {
                 schemeOverride: "",
                 app: URL(string: "file:///Applications/Mattermost.app")!
             )
-        ),
-        isPresented: .constant(true)
+        )
     )
 }
