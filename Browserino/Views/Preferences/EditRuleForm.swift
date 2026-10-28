@@ -62,12 +62,11 @@ struct RuleForm: View {
     var onSave: (Rule) -> Void
     var onDelete: () -> Void
 
-    @State private var openWithPresented = false
-    
     @State private var regex: String = ""
     @State private var kind: Rule.Kind = .regex
     @State private var testUrls: String = ""
     @State private var url: URL?
+    @State private var profile: String?
     
     private var compiledRegex: Regex<AnyRegexOutput>? {
         return Rule.compile(regex, kind: kind)
@@ -95,28 +94,28 @@ struct RuleForm: View {
     var body: some View {
         Form {
             Section(
-                header: Text("General")
+                header: Text(verbatim: L10n.text("settings.tabs.general"))
                     .font(.headline)
             ) {
-                Picker("Type:", selection: $kind) {
-                    Text("Regex").tag(Rule.Kind.regex)
-                    Text("Pattern").tag(Rule.Kind.pattern)
+                Picker(L10n.text("rules.editor.type"), selection: $kind) {
+                    Text(verbatim: L10n.text("rules.kind.regex")).tag(Rule.Kind.regex)
+                    Text(verbatim: L10n.text("rules.kind.pattern")).tag(Rule.Kind.pattern)
                 }
                 .pickerStyle(.segmented)
                 .fixedSize()
                 
-                TextField(kind == .regex ? "Regex:" : "Pattern:", text: $regex)
+                TextField(L10n.text(kind == .regex ? "rules.editor.regex" : "rules.editor.pattern"), text: $regex)
                     .font(
                         .system(size: 14)
                     )
                 
                 if kind == .pattern {
-                    Text("Matches the whole URL. Use * for any text, e.g. https://tradera.com*")
+                    Text(verbatim: L10n.text("rules.editor.pattern_help"))
                         .font(.callout)
                         .foregroundStyle(.secondary)
                 }
                 
-                LabeledContent("Test URLs:") {
+                LabeledContent(L10n.text("rules.editor.test_urls")) {
                     TextEditor(text: $testUrls)
                         .font(
                             .system(size: 14)
@@ -127,7 +126,7 @@ struct RuleForm: View {
                     kind = .regex
                     regex = generatedRegex ?? regex
                 }) {
-                    Text("Generate regex from test URLs")
+                    Text(verbatim: L10n.text("rules.editor.generate_regex"))
                 }
                 .disabled(generatedRegex == nil)
                 
@@ -141,27 +140,8 @@ struct RuleForm: View {
                 .frame(height: 32)
             
             
-            LabeledContent("Application:") {
-                Button(action: {
-                    openWithPresented.toggle()
-                }) {
-                    Text("Open with")
-                }
-                .fileImporter(
-                    isPresented: $openWithPresented,
-                    allowedContentTypes: [.application]
-                ) {
-                    if case .success(let url) = $0 {
-                        self.url = url
-                    }
-                }
-                
-                if let bundle = url.map({ Bundle(url: $0)! }) {
-                    Text("\(bundle.infoDictionary!["CFBundleName"] as! String)")
-                        .padding(.horizontal, 5)
-                        .font(.callout)
-                        .foregroundStyle(.secondary)
-                }
+            LabeledContent(L10n.text("browsers.target.open_in")) {
+                BrowserTargetPicker(app: $url, profile: $profile)
             }
             
             Spacer()
@@ -169,12 +149,12 @@ struct RuleForm: View {
             
             HStack {
                 Button(role: .cancel, action: onCancel) {
-                    Text("Cancel")
+                    Text(verbatim: L10n.text("common.cancel"))
                 }
                 
                 if rule != nil {
                     Button(role: .destructive, action: onDelete) {
-                        Text("Delete")
+                        Text(verbatim: L10n.text("common.delete"))
                     }
                 }
                 
@@ -189,11 +169,12 @@ struct RuleForm: View {
                         Rule(
                             regex: regex,
                             app: url,
+                            profile: profile,
                             kind: kind
                         )
                     )
                 }) {
-                    Text("Save")
+                    Text(verbatim: L10n.text("common.save"))
                 }
                 .disabled(compiledRegex == nil || url == nil)
             }
@@ -205,6 +186,7 @@ struct RuleForm: View {
             regex = rule?.regex ?? ""
             kind = rule?.kind ?? .regex
             url = rule?.app
+            profile = rule?.profile
         }
     }
 }

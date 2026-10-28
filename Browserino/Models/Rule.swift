@@ -16,20 +16,32 @@ struct Rule: Hashable, Codable {
     /// The regex, or the pattern when `kind` is `.pattern`.
     var regex: String
     var app: URL
+    var profile: String?
     var kind: Kind = .regex
 
-    init(regex: String, app: URL, kind: Kind = .regex) {
-        self.regex = regex
-        self.app = app
-        self.kind = kind
+    init(regex: String, app: URL, profile: String? = nil, kind: Kind = .regex) {
+        self.regex = regex; self.app = app; self.profile = profile; self.kind = kind
+    }
+    private enum CodingKeys: String, CodingKey { case regex, app, profile, profileDirectory, kind }
+    // Rules saved before `kind` existed are regexes.
+    init(from decoder: any Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        regex = try values.decode(String.self, forKey: .regex)
+        app = try values.decode(URL.self, forKey: .app)
+        profile = try values.decodeIfPresent(String.self, forKey: .profile)
+            ?? values.decodeIfPresent(String.self, forKey: .profileDirectory)
+        kind = try values.decodeIfPresent(Kind.self, forKey: .kind) ?? .regex
+    }
+    func encode(to encoder: any Encoder) throws {
+        var values = encoder.container(keyedBy: CodingKeys.self)
+        try values.encode(regex, forKey: .regex)
+        try values.encode(app, forKey: .app)
+        try values.encodeIfPresent(profile, forKey: .profile)
+        try values.encode(kind, forKey: .kind)
     }
 
-    // Rules saved before `kind` existed are regexes.
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        regex = try container.decode(String.self, forKey: .regex)
-        app = try container.decode(URL.self, forKey: .app)
-        kind = try container.decodeIfPresent(Kind.self, forKey: .kind) ?? .regex
+    var target: BrowserTarget {
+        BrowserTarget(app: app, profile: profile)
     }
 
     var compiledRegex: Regex<AnyRegexOutput>? {
