@@ -1,0 +1,33 @@
+Browserino/BrowserinoApp.swift
+  s_843da408a12ff7::t_7055af55e401aa 12-18,21,38-43,45-46,89-94,96-100,165,215
+Browserino/BrowserinoWindow.swift
+  s_843da408a12ff7::t_623b1011a6e547 49
+Browserino/Models/BrowserSwitchService.swift
+  s_843da408a12ff7::t_0e4d8c7117a6f6 202
+Browserino/Models/Localization.swift
+  s_843da408a12ff7::t_0e3430a711fca7 4-5,7-8,14,20-29,31,59
+Browserino/Modifiers/ButtonStyles.swift
+  s_843da408a12ff7::t_ff879b4b612d29 34
+Browserino/Views/Preferences/GeneralTab.swift
+  s_843da408a12ff7::t_71bb4cb145f774 40
+Browserino/Views/Prompt/PromptItem.swift
+  s_843da408a12ff7::t_f0ca8a7bb97c5d 36,47-49,52,56-64
+Browserino/Views/Prompt/PromptView.swift
+  s_843da408a12ff7::t_86f591c6a14d06 282,298,311
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "0eaef772f53358bdb568699d563017c0b711f87e",
+  "prompts": {},
+  "sessions": {
+    "s_843da408a12ff7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "7ce39260-63a3-4e88-9dfd-723d575e1cb1",
+        "model": "unknown"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
