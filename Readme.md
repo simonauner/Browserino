@@ -30,7 +30,7 @@ Several of these features started as pull requests to Browserino that are still 
 
 The [integration notes](docs/UPSTREAM_REVIEW.md) describe what was taken from each pull request and what changed along the way.
 
-Lotsen has no Homebrew cask and no prebuilt releases yet, so you build it from source. If you want the original app, install it from [the Browserino repository](https://github.com/AlexStrNik/Browserino#installation).
+Lotsen has no Homebrew cask and no prebuilt builds yet, so you build it from source. Each version is tagged, and its changes are listed under [Releases](https://github.com/simonauner/lotsen/releases). If you want the original app, install it from [the Browserino repository](https://github.com/AlexStrNik/Browserino#installation).
 
 # Installation
 

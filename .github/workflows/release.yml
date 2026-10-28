@@ -1,0 +1,45 @@
+# Publishes a GitHub release whenever a push to main changes Lotsen's version.
+# The release carries generated notes only; there is no signed build to attach yet.
+
+name: Release
+
+on:
+  push:
+    branches: [ "main" ]
+    paths: [ "Lotsen.xcodeproj/project.pbxproj" ]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v7
+      with:
+        fetch-depth: 0
+    - name: Release the new version
+      env:
+        GH_TOKEN: ${{ github.token }}
+        BEFORE: ${{ github.event.before }}
+      run: |
+        version() {
+          sed -n 's/.*MARKETING_VERSION = \([0-9.]*\);/\1/p' | sort -u
+        }
+        current=$(version < Lotsen.xcodeproj/project.pbxproj)
+        previous=$(git show "$BEFORE:Lotsen.xcodeproj/project.pbxproj" 2>/dev/null | version || true)
+
+        if [ "$current" = "$previous" ]; then
+          echo "Version is still $current; nothing to release."
+          exit 0
+        fi
+
+        tag="v$current"
+        if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
+          echo "::error::Tag $tag already exists. Bump to a version that hasn't been released."
+          exit 1
+        fi
+
+        gh release create "$tag" --target "$GITHUB_SHA" --title "Lotsen $current" --generate-notes
