@@ -158,11 +158,14 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         preferencesWindow!.center()
         preferencesWindow!.title = L10n.text("settings.window.title")
         preferencesResizedByUser = false
+        // Made out here so the root view's closure captures the action, not self:
+        // the window would otherwise hold its delegate through its content.
+        let fitHeight = FitSettingsHeightAction { [weak self] overflow in
+            self?.fitPreferencesHeight(overflow: overflow)
+        }
         preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
             PreferencesView()
-                .environment(\.fitSettingsHeight, FitSettingsHeightAction { [weak self] overflow in
-                    self?.fitPreferencesHeight(overflow: overflow)
-                })
+                .environment(\.fitSettingsHeight, fitHeight)
         })
         
         preferencesWindow!.isReleasedWhenClosed = false
