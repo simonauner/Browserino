@@ -2022,7 +2022,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag and drop to reorder. Press record to assign a shortcut. Click on eye to hide unwanted browsers from prompt"
+            "value": "Drag and drop to reorder. Use Add shortcut to assign a key. Click on eye to hide unwanted browsers from prompt"
           }
         },
         "ru": {
@@ -2152,7 +2152,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Record"
+            "value": "Add shortcut"
           }
         },
         "ru": {
@@ -2207,6 +2207,71 @@
           "stringUnit": {
             "state": "translated",
             "value": "分配"
+          }
+        }
+      }
+    },
+    "shortcuts.recorder.clear": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove shortcut"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить сочетание"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Kurzbefehl entfernen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer le raccourci"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar atajo"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover atalho"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rimuovi scorciatoia"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ショートカットを削除"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "단축키 제거"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除快捷键"
           }
         }
       }
@@ -6247,7 +6312,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "No shortcuts assigned. Record one in Browsers or Apps."
+            "value": "No shortcuts assigned. Add one in Browsers or Apps."
           }
         },
         "ru": {
