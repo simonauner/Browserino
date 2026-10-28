@@ -44,7 +44,6 @@ struct GeneralTab: View {
     @State private var showingExportPicker = false
     @State private var showingImportPicker = false
     @State private var exportDocument = SettingsDocument()
-    @Setting(\.browsers) private var browsers
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
@@ -149,26 +148,6 @@ struct GeneralTab: View {
                         .disabled(isDefault)
 
                         Text(verbatim: L10n.text("settings.default_browser.description"))
-                            .fixedSize(horizontal: false, vertical: true)
-                            .font(.callout)
-                            .opacity(0.5)
-                    }
-                }
-
-                HStack(alignment: .top, spacing: 32) {
-                    Text(verbatim: L10n.text("settings.installed_browsers.title"))
-                        .font(.headline)
-                        .frame(width: 200, alignment: .trailing)
-                        .multilineTextAlignment(.trailing)
-
-                    VStack(alignment: .leading, spacing: 8) {
-                        Button(action: {
-                            if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
-                        }) {
-                            Text(verbatim: L10n.text("settings.installed_browsers.rescan"))
-                        }
-
-                        Text(verbatim: L10n.text("settings.installed_browsers.description"))
                             .fixedSize(horizontal: false, vertical: true)
                             .font(.callout)
                             .opacity(0.5)

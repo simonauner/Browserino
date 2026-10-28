@@ -41,8 +41,17 @@ struct BrowsersTab: View {
 
     var body: some View {
         VStack(alignment: .leading) {
-            Toggle(L10n.text("browsers.profiles.show"), isOn: $profilesEnabled)
-                .padding(.horizontal, 20)
+            HStack {
+                Toggle(L10n.text("browsers.profiles.show"), isOn: $profilesEnabled)
+
+                Spacer()
+
+                Button(L10n.text("settings.installed_browsers.rescan")) {
+                    if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
+                }
+                .help(L10n.text("settings.installed_browsers.description"))
+            }
+            .padding(.horizontal, 20)
             List {
                 ForEach(displayed, id: \.offset) { offset, browser in
                     if let bundle = Bundle(url: browser.app) {
