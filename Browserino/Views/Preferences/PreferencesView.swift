@@ -50,10 +50,31 @@ enum SettingsPane: CaseIterable, Identifiable {
     }
 }
 
+/// Lets a pane ask the settings window to grow or shrink by the height its
+/// content overflows the visible area. A value with an identity rather than a
+/// bare closure, because SwiftUI cannot compare closures and would otherwise
+/// treat every update as a new action.
+nonisolated struct FitSettingsHeightAction: Equatable, Sendable {
+    static let none = FitSettingsHeightAction { _ in }
+
+    private let id = UUID()
+    private let perform: @MainActor @Sendable (CGFloat) -> Void
+
+    init(_ perform: @escaping @MainActor @Sendable (CGFloat) -> Void) {
+        self.perform = perform
+    }
+
+    @MainActor func callAsFunction(_ overflow: CGFloat) {
+        perform(overflow)
+    }
+
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        lhs.id == rhs.id
+    }
+}
+
 extension EnvironmentValues {
-    /// Lets a pane ask the settings window to grow or shrink by the height its
-    /// content overflows the visible area.
-    @Entry var fitSettingsHeight: @MainActor @Sendable (CGFloat) -> Void = { _ in }
+    @Entry var fitSettingsHeight: FitSettingsHeightAction = .none
 }
 
 struct PreferencesView: View {
