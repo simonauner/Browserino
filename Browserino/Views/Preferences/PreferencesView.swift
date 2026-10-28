@@ -7,46 +7,75 @@
 
 import SwiftUI
 
-struct PreferencesView: View {
-    var body: some View {
-        TabView {
-            GeneralTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.general"), systemImage: "gear")
-                }
-                .tag(0)
-            
-            BrowsersTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.browsers"), systemImage: "gear")
-                }
-                .tag(1)
-            
-            AppsTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.apps"), systemImage: "gear")
-                }
-                .tag(2)
-            
-            RulesTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.rules"), systemImage: "gear")
-                }
-                .tag(3)
-            
-            BrowserSearchLocationsTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.locations"), systemImage: "gear")
-                }
-                .tag(4)
+enum SettingsPane: CaseIterable, Identifiable {
+    case general, browsers, apps, rules, locations, about
 
-            AboutTab()
-                .tabItem {
-                    Label(L10n.text("settings.tabs.about"), systemImage: "gear")
-                }
-                .tag(5)
+    var id: Self { self }
+
+    var titleKey: String {
+        switch self {
+        case .general: "settings.tabs.general"
+        case .browsers: "settings.tabs.browsers"
+        case .apps: "settings.tabs.apps"
+        case .rules: "settings.tabs.rules"
+        case .locations: "settings.tabs.locations"
+        case .about: "settings.tabs.about"
         }
-        .frame(minWidth: 860, minHeight: 500)
+    }
+
+    var systemImage: String {
+        switch self {
+        case .general: "gearshape"
+        case .browsers: "globe"
+        case .apps: "square.grid.2x2"
+        case .rules: "arrow.triangle.branch"
+        case .locations: "folder"
+        case .about: "info.circle"
+        }
+    }
+
+    @MainActor @ViewBuilder
+    var content: some View {
+        switch self {
+        case .general: GeneralTab()
+        case .browsers: BrowsersTab()
+        case .apps: AppsTab()
+        case .rules: RulesTab()
+        case .locations: BrowserSearchLocationsTab()
+        case .about: AboutTab()
+        }
+    }
+}
+
+struct PreferencesView: View {
+    static let sidebarWidth: CGFloat = 200
+    static let contentMinSize = CGSize(width: 860, height: 500)
+
+    @State private var selection: SettingsPane = .general
+
+    var body: some View {
+        NavigationSplitView {
+            List(SettingsPane.allCases, selection: $selection) { pane in
+                Label(L10n.text(pane.titleKey), systemImage: pane.systemImage)
+                    .tag(pane)
+            }
+            .navigationSplitViewColumnWidth(Self.sidebarWidth)
+            // The panes are the window's only navigation; hiding the list leaves no way back.
+            .toolbar(removing: .sidebarToggle)
+        } detail: {
+            selection.content
+                // NavigationSplitView sizes the detail at a near-zero width when it
+                // works out the window's minimum height. Text that wraps without
+                // truncating, like the Rules toggle, then asks for hundreds of
+                // points and pushes the whole window up under the title bar.
+                .frame(minWidth: Self.contentMinSize.width)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+                .navigationTitle(L10n.text(selection.titleKey))
+        }
+        .frame(
+            minWidth: Self.sidebarWidth + Self.contentMinSize.width,
+            minHeight: Self.contentMinSize.height
+        )
     }
 }
 

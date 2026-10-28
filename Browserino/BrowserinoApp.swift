@@ -127,11 +127,18 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         NSApplication.shared.terminate(nil)
     }
     
+    private var preferencesMinSize: NSSize {
+        NSSize(
+            width: PreferencesView.sidebarWidth + PreferencesView.contentMinSize.width,
+            height: PreferencesView.contentMinSize.height
+        )
+    }
+
     @objc func openPreferences() {
         if preferencesWindow == nil {
             preferencesWindow = NSWindow(
-                contentRect: NSRect(x: 0, y: 0, width: 860, height: 500),
-                styleMask: [.miniaturizable, .closable, .resizable, .titled],
+                contentRect: NSRect(origin: .zero, size: preferencesMinSize),
+                styleMask: [.miniaturizable, .closable, .resizable, .titled, .fullSizeContentView],
                 backing: .buffered,
                 defer: false
             )
@@ -144,7 +151,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         preferencesWindow!.isReleasedWhenClosed = false
         preferencesWindow!.titlebarAppearsTransparent = true
         
-        preferencesWindow!.contentMinSize = NSSize(width: 860, height: 500)
+        preferencesWindow!.contentMinSize = preferencesMinSize
         
         preferencesWindow!.collectionBehavior = [.moveToActiveSpace, .fullScreenNone]
         
