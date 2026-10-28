@@ -21,7 +21,7 @@ struct AboutTab: View {
                 .frame(width: 128, height: 128)
 
             Text(verbatim:
-                "Lotsen v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as! String)"
+                "Lotsen v\(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "")"
             )
             .font(.title)
             .frame(maxWidth: .infinity)
@@ -29,12 +29,9 @@ struct AboutTab: View {
             Spacer()
                 .frame(height: 16)
 
-            Button(action: {
-                NSWorkspace.shared.open(repository)
-            }) {
+            Link(destination: repository) {
                 Text(verbatim: repository.absoluteString)
             }
-            .buttonStyle(.link)
 
             Spacer()
                 .frame(height: 24)
@@ -42,12 +39,9 @@ struct AboutTab: View {
             // Lotsen began as a fork of Browserino; keep its author credited here.
             Text(verbatim: L10n.text("about.based_on"))
 
-            Button(action: {
-                NSWorkspace.shared.open(browserino)
-            }) {
+            Link(destination: browserino) {
                 Text(verbatim: browserino.absoluteString)
             }
-            .buttonStyle(.link)
 
             Spacer()
                 .frame(height: 16)
@@ -59,12 +53,9 @@ struct AboutTab: View {
             Spacer()
                 .frame(height: 16)
 
-            Button(action: {
-                NSWorkspace.shared.open(license)
-            }) {
+            Link(destination: license) {
                 Text(verbatim: L10n.text("about.license"))
             }
-            .buttonStyle(.link)
 
             Spacer()
         }
