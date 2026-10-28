@@ -18,7 +18,7 @@ struct AddRule: View {
                 )
                 .opacity(0)
             
-            Text("Add a new rule by typing regex, or generating one from test URLs, and selecting an app.")
+            Text("Add a new rule by typing a regex or pattern, or generating one from test URLs, and selecting an app.")
                 .foregroundStyle(.secondary)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
@@ -57,6 +57,12 @@ struct RuleItem: View {
                     .foregroundStyle(.primary)
             }
             .buttonStyle(.plain)
+            
+            if rule.kind == .pattern {
+                Text("Pattern")
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
             
             Spacer()
             
@@ -99,7 +105,7 @@ struct RulesTab: View {
                 }
             }
             
-            Text("Type regex and choose app in which links will be opened without prompt")
+            Text("Type regex or pattern and choose app in which links will be opened without prompt")
                 .font(.subheadline)
                 .foregroundStyle(.primary.opacity(0.5))
                 .frame(maxWidth: .infinity)
