@@ -38,6 +38,13 @@ class BrowserinoApplication: NSApplication {
                     ) {
                         return
                     }
+                case "w":
+                    // There is no main menu to supply Close, so handle it here for
+                    // windows that can be closed (the settings window, not the selector).
+                    if let window = keyWindow, window.styleMask.contains(.closable) {
+                        window.performClose(self)
+                        return
+                    }
                 default:
                     break
                 }
