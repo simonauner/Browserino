@@ -1,0 +1,23 @@
+Readme.md
+  s_2a2f6a18af4844::t_521dda373bdde8 38-41
+scripts/install-local.sh
+  s_2a2f6a18af4844::t_b0a25593f7fc80 1-46
+.gitignore
+  s_2a2f6a18af4844::t_768eeb8837f5d4 62-64
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b16e407603b7d1adcc045c36a84504b8426454ae",
+  "prompts": {},
+  "sessions": {
+    "s_2a2f6a18af4844": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3981d13-0f3b-425b-a897-67ff65ce0a2a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
