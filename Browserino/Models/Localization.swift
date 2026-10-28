@@ -1,32 +1,34 @@
 import Foundation
 import SwiftUI
-import Combine
 
-@MainActor
-final class Localization: ObservableObject {
+@MainActor @Observable
+final class Localization {
     static let shared = Localization()
-    @Published private(set) var activeLanguage: String
-    @Published var selectedLanguage: String {
+    private(set) var activeLanguage: String
+    var selectedLanguage: String {
         didSet {
             UserDefaults.standard.set(selectedLanguage, forKey: "language")
             updateLanguage()
         }
     }
-    private var observation: AnyCancellable?
+    @ObservationIgnored private var observation: (any NSObjectProtocol)?
 
     private init() {
         let initial = UserDefaults.standard.string(forKey: "language") ?? ""
         selectedLanguage = initial
         activeLanguage = LanguagePolicy.resolve(selection: initial, preferred: Locale.preferredLanguages)
-        observation = NotificationCenter.default.publisher(for: UserDefaults.didChangeNotification)
-            .sink { _ in
-                Task { @MainActor in
-                    let service = Localization.shared
-                    let stored = UserDefaults.standard.string(forKey: "language") ?? ""
-                    if service.selectedLanguage != stored { service.selectedLanguage = stored }
-                    service.updateLanguage()
-                }
+        observation = NotificationCenter.default.addObserver(
+            forName: UserDefaults.didChangeNotification,
+            object: nil,
+            queue: nil
+        ) { _ in
+            Task { @MainActor in
+                let service = Localization.shared
+                let stored = UserDefaults.standard.string(forKey: "language") ?? ""
+                if service.selectedLanguage != stored { service.selectedLanguage = stored }
+                service.updateLanguage()
             }
+        }
     }
     private func updateLanguage() {
         let resolved = LanguagePolicy.resolve(selection: selectedLanguage, preferred: Locale.preferredLanguages)
@@ -54,7 +56,7 @@ enum L10n {
 }
 
 struct LocalizedRoot<Content: View>: View {
-    @ObservedObject private var localization = Localization.shared
+    private let localization = Localization.shared
     @ViewBuilder let content: () -> Content
     var body: some View {
         content()

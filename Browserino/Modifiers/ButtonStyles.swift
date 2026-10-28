@@ -31,6 +31,6 @@ struct SelectButtonStyle: ButtonStyle {
             .foregroundStyle(self.selected ? Color.white : Color.primary)
             .background(configuration.isPressed || selected ? Color.accentColor : .clear)
             .modifier(BackgroundOnHover())
-            .cornerRadius(8)
+            .clipShape(.rect(cornerRadius: 8))
     }
 }

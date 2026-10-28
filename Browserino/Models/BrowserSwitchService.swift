@@ -199,7 +199,7 @@ final class BrowserSwitchService {
     }
 
     private func presentError(_ error: Error) {
-        NSApplication.shared.activateCompat()
+        NSApplication.shared.activate()
         let alert = NSAlert()
         alert.messageText = L10n.text("errors.move_tab.title")
         switch error {

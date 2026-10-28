@@ -46,7 +46,7 @@ class BrowserinoWindow: NSPanel {
     func deactivateDelay() {
         self.hidesOnDeactivate = false
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {
-            NSApplication.shared.activateCompat()
+            NSApplication.shared.activate()
             self.makeKeyAndOrderFront(nil)
             self.hidesOnDeactivate = true
         }
