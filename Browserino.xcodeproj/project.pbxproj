@@ -40,6 +40,7 @@
 		989B17F52C16FC690039441B /* ShortcutButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B17F42C16FC690039441B /* ShortcutButton.swift */; };
 		989B17F72C16FD260039441B /* GeneralTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B17F62C16FD260039441B /* GeneralTab.swift */; };
 		989B17F92C170C160039441B /* AboutTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B17F82C170C160039441B /* AboutTab.swift */; };
+		A1C0FFEE2EC1000000000001 /* ShortcutsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1C0FFEE2EC1000000000002 /* ShortcutsTab.swift */; };
 		989B17FB2C1710D70039441B /* AppsTab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B17FA2C1710D70039441B /* AppsTab.swift */; };
 		989B17FD2C17400A0039441B /* EditAppForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 989B17FC2C17400A0039441B /* EditAppForm.swift */; };
 		98F919362C12187500BDC10C /* Browserino.icns in Resources */ = {isa = PBXBuildFile; fileRef = 98F919352C12187500BDC10C /* Browserino.icns */; };
@@ -87,6 +88,7 @@
 		989B17F42C16FC690039441B /* ShortcutButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutButton.swift; sourceTree = "<group>"; };
 		989B17F62C16FD260039441B /* GeneralTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralTab.swift; sourceTree = "<group>"; };
 		989B17F82C170C160039441B /* AboutTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutTab.swift; sourceTree = "<group>"; };
+		A1C0FFEE2EC1000000000002 /* ShortcutsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortcutsTab.swift; sourceTree = "<group>"; };
 		989B17FA2C1710D70039441B /* AppsTab.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppsTab.swift; sourceTree = "<group>"; };
 		989B17FC2C17400A0039441B /* EditAppForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAppForm.swift; sourceTree = "<group>"; };
 		98F919352C12187500BDC10C /* Browserino.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Browserino.icns; sourceTree = "<group>"; };
@@ -227,6 +229,7 @@
 				989B17FA2C1710D70039441B /* AppsTab.swift */,
 				989B17F62C16FD260039441B /* GeneralTab.swift */,
 				989B17F82C170C160039441B /* AboutTab.swift */,
+				A1C0FFEE2EC1000000000002 /* ShortcutsTab.swift */,
 				6692478F2CEB48A5006A8C8B /* LocationsTab.swift */,
 			);
 			path = Preferences;
@@ -346,6 +349,7 @@
 				989B17EF2C16F7640039441B /* PromptItem.swift in Sources */,
 				669247902CEB48A5006A8C8B /* LocationsTab.swift in Sources */,
 				989B17F92C170C160039441B /* AboutTab.swift in Sources */,
+				A1C0FFEE2EC1000000000001 /* ShortcutsTab.swift in Sources */,
 				989B17F52C16FC690039441B /* ShortcutButton.swift in Sources */,
 				9830F0C32C11DEED00D69C88 /* ButtonStyles.swift in Sources */,
 				9830F0B62C119CD800D69C88 /* main.swift in Sources */,

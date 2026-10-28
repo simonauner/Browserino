@@ -8,7 +8,7 @@
 import SwiftUI
 
 enum SettingsPane: CaseIterable, Identifiable {
-    case general, browsers, apps, rules, locations, about
+    case general, browsers, apps, rules, locations, shortcuts, about
 
     var id: Self { self }
 
@@ -19,6 +19,7 @@ enum SettingsPane: CaseIterable, Identifiable {
         case .apps: "settings.tabs.apps"
         case .rules: "settings.tabs.rules"
         case .locations: "settings.tabs.locations"
+        case .shortcuts: "settings.tabs.shortcuts"
         case .about: "settings.tabs.about"
         }
     }
@@ -30,6 +31,7 @@ enum SettingsPane: CaseIterable, Identifiable {
         case .apps: "square.grid.2x2"
         case .rules: "arrow.triangle.branch"
         case .locations: "folder"
+        case .shortcuts: "keyboard"
         case .about: "info.circle"
         }
     }
@@ -42,6 +44,7 @@ enum SettingsPane: CaseIterable, Identifiable {
         case .apps: AppsTab()
         case .rules: RulesTab()
         case .locations: BrowserSearchLocationsTab()
+        case .shortcuts: ShortcutsTab()
         case .about: AboutTab()
         }
     }
