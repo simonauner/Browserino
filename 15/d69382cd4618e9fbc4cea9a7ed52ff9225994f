@@ -1,0 +1,22 @@
+Browserino/Localizable.xcstrings
+  s_b8771b457261e6::t_34e2f7493d783f 2025,2155,2214-2278,6315
+Browserino/Views/Preferences/ShortcutButton.swift
+  s_b8771b457261e6::t_d7fad430cb61be 39-51,53,56-59
+  s_b8771b457261e6::t_8fbc6abac1e6d8 60
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "15d69382cd4618e9fbc4cea9a7ed52ff9225994f",
+  "prompts": {},
+  "sessions": {
+    "s_b8771b457261e6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "2a18a1c3-8120-497b-91f2-cfc04d7f407d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
