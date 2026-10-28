@@ -60,6 +60,20 @@ struct GeneralTab: View {
         return Bundle(url: browserUrl)?.bundleIdentifier
     }
 
+    func makeDefaultBrowser() async {
+        defer { refreshIsDefault() }
+        // Throws when the user declines the system prompt, which needs no alert
+        // and no second prompt for https.
+        do {
+            try await NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL, toOpenURLsWithScheme: "http")
+            try await NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL, toOpenURLsWithScheme: "https")
+        } catch {}
+    }
+
+    func refreshIsDefault() {
+        isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+    }
+
     func exportSettings() {
         let defaults = UserDefaults.standard
         let dictionary = defaults.dictionaryRepresentation()
@@ -129,19 +143,8 @@ struct GeneralTab: View {
             Section(L10n.text("settings.default_browser.title")) {
                 LabeledContent(L10n.text("settings.default_browser.description")) {
                     Button(L10n.text("settings.default_browser.make_default")) {
-                        NSWorkspace.shared.setDefaultApplication(
-                            at: Bundle.main.bundleURL,
-                            toOpenURLsWithScheme: "http"
-                        ) { error in
-                            guard error == nil else { return }
-                            NSWorkspace.shared.setDefaultApplication(
-                                at: Bundle.main.bundleURL,
-                                toOpenURLsWithScheme: "https"
-                            ) { _ in
-                                DispatchQueue.main.async {
-                                    isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
-                                }
-                            }
+                        Task {
+                            await makeDefaultBrowser()
                         }
                     }
                     .disabled(isDefault)
@@ -206,8 +209,10 @@ struct GeneralTab: View {
         }
         .formStyle(.grouped)
         .modifier(FitsSettingsHeight(fit: fitSettingsHeight))
-        .onAppear {
-            isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+        .onAppear(perform: refreshIsDefault)
+        // The default browser can change in System Settings while this pane is open.
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            refreshIsDefault()
         }
         .fileExporter(
             isPresented: $showingExportPicker,
