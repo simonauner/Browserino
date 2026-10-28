@@ -55,85 +55,71 @@ struct BrowsersTab: View {
             List {
                 ForEach(displayed, id: \.offset) { offset, browser in
                     if let bundle = Bundle(url: browser.app) {
-                        HStack {
+                        let isFirstOfApp = browsers.first(where: { $0.app == browser.app }) == browser
+                        let isHidden = TargetPolicy.visible(browsers.filter { $0.app == browser.app }, hidden: hiddenBrowsers, profilesEnabled: profilesEnabled).isEmpty
+                            || TargetPolicy.isHidden(browser, hidden: hiddenBrowsers)
+
+                        HStack(spacing: 12) {
                             Text((offset + 1).formatted())
-                                .font(
-                                    .system(size: 16)
-                                )
-                                .frame(width: 30, alignment: .leading)
+                                .monospacedDigit()
+                                .foregroundStyle(.secondary)
+                                .frame(width: 20, alignment: .trailing)
 
                             BrowserTargetIcon(target: browser)
-                                .frame(width: 32, height: 32)
+                                .frame(width: 24, height: 24)
 
-                            Spacer()
-                                .frame(width: 8)
-
-                            Group {
                             if let profile = browser.profile, let identifier = bundle.bundleIdentifier {
                                 TextField(profile, text: Binding(
                                     get: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] ?? browser.chromiumProfile?.name ?? profile },
                                     set: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] = $0 }
                                 ))
-                                .frame(minWidth: 100)
+                                .textFieldStyle(.roundedBorder)
+                                .frame(minWidth: 100, maxWidth: 200)
                             } else {
                                 Text(browser.displayName)
                             }
-                            }
-                                .font(
-                                    .system(size: 14)
-                                )
 
                             Spacer()
-                                .frame(width: 32)
 
                             if let browserId = bundle.bundleIdentifier {
                                 // Incognito is a property of the browser, not of one
                                 // profile, so it stays on the plain row and every
                                 // profile of that browser inherits it.
-                                if !profilesEnabled || browsers.first(where: { $0.app == browser.app }) == browser {
+                                if !profilesEnabled || isFirstOfApp {
                                     TextField(L10n.text("browsers.private_argument.placeholder"),
                                         text: privateArg(for: browserId)
                                     )
-                                    .font(
-                                        .system(size: 14).monospaced()
-                                    )
-                                } else {
-                                    Spacer()
+                                    .textFieldStyle(.roundedBorder)
+                                    .monospaced()
+                                    .autocorrectionDisabled()
+                                    .frame(width: 180)
                                 }
-
-                                Spacer()
-                                    .frame(width: 32)
 
                                 ShortcutButton(
                                     shortcutKey: browser.shortcutKey(bundleIdentifier: browserId)
                                 )
                             }
 
-                            if profilesEnabled && browsers.first(where: { $0.app == browser.app }) == browser && needsProfileAccess(browser) {
+                            if profilesEnabled && isFirstOfApp && needsProfileAccess(browser) {
                                 Button(L10n.text("browsers.profiles.enable")) {
                                     if ChromiumProfileService.requestAccess(forAppAt: browser.app) {
                                         if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
                                     }
                                 }
-                                .help(L10n.text("browsers.profiles.enable"))
-
-                                Spacer()
-                                    .frame(width: 8)
                             }
-
-                            Spacer()
-                                .frame(width: 8)
 
                             Button(action: {
                                 hiddenBrowsers = TargetPolicy.toggle(browser, targets: browsers, hidden: hiddenBrowsers)
                             }) {
-                                Image(
-                                    systemName: TargetPolicy.visible(browsers.filter { $0.app == browser.app }, hidden: hiddenBrowsers, profilesEnabled: profilesEnabled).isEmpty || TargetPolicy.isHidden(browser, hidden: hiddenBrowsers)
-                                        ? "eye.slash.fill" : "eye.fill")
+                                Image(systemName: isHidden ? "eye.slash" : "eye")
+                                    .foregroundStyle(isHidden ? .secondary : .primary)
+                                    .frame(width: 20)
                             }
-                            .buttonStyle(.plain)
+                            .buttonStyle(.borderless)
+                            .help(L10n.text(isHidden ? "browsers.visibility.show" : "browsers.visibility.hide"))
+                            .accessibilityLabel(L10n.text(isHidden ? "browsers.visibility.show" : "browsers.visibility.hide"))
                         }
-                        .padding(10)
+                        .padding(.vertical, 4)
                     }
                 }
                 .onMove(perform: move)
@@ -150,11 +136,9 @@ struct BrowsersTab: View {
                 if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
             }
 
-            Text(verbatim: L10n.text("browsers.list.instructions")
-            )
-            .font(.subheadline)
-            .foregroundStyle(.primary.opacity(0.5))
-            .frame(maxWidth: .infinity)
+            Text(verbatim: L10n.text("browsers.list.instructions"))
+                .foregroundStyle(.secondary)
+                .padding(.horizontal, 20)
         }
         .padding(.bottom, 20)
     }

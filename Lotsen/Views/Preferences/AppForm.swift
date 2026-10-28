@@ -1,0 +1,141 @@
+//
+//  AppForm.swift
+//  Lotsen
+//
+//  Created by Aleksandr Strizhnev on 10.06.2024.
+//
+
+import SwiftUI
+
+struct AppForm: View {
+    var isNew: Bool
+    var onSave: (App) -> Void
+    /// Nil for a domain that isn't saved yet, which has nothing to delete.
+    var onDelete: (() -> Void)?
+
+    @Environment(\.dismiss) private var dismiss
+
+    /// Edits are made on a copy, so Cancel leaves the saved domain untouched.
+    @State private var host: String
+    @State private var schemeOverride: String
+    @State private var url: URL?
+    @State private var profile: String?
+    @State private var deletePresented = false
+
+    init(app: App?, onSave: @escaping (App) -> Void, onDelete: (() -> Void)? = nil) {
+        isNew = app == nil
+        self.onSave = onSave
+        self.onDelete = onDelete
+        _host = State(initialValue: app?.host ?? "")
+        _schemeOverride = State(initialValue: app?.schemeOverride ?? "")
+        _url = State(initialValue: app?.app)
+        _profile = State(initialValue: app?.profile)
+    }
+
+    private var hostUrl: URL? {
+        let url = if host.starts(with: /https?:\/\//) {
+            host
+        } else {
+            "http://" + host
+        }
+
+        return URL(string: url)
+    }
+
+    /// An empty host matches every domain.
+    private var hostValid: Bool {
+        host.isEmpty || hostUrl?.host() != nil
+    }
+
+    var body: some View {
+        Form {
+            Section {
+                TextField(
+                    L10n.text("apps.editor.host"),
+                    text: $host,
+                    prompt: Text(verbatim: L10n.text("apps.host.placeholder"))
+                )
+                .autocorrectionDisabled()
+
+                LabeledContent(L10n.text("browsers.target.open_in")) {
+                    BrowserTargetPicker(app: $url, profile: $profile)
+                }
+            } header: {
+                Text(verbatim: L10n.text(isNew ? "apps.editor.new_title" : "apps.editor.edit_title"))
+            } footer: {
+                if !hostValid {
+                    Label(L10n.text("apps.editor.invalid_host"), systemImage: "exclamationmark.triangle.fill")
+                        .foregroundStyle(.red)
+                }
+            }
+
+            Section(L10n.text("settings.section.advanced")) {
+                LabeledContent(L10n.text("apps.editor.replace_scheme")) {
+                    TextField(L10n.text("apps.editor.replace_scheme"), text: $schemeOverride)
+                        .labelsHidden()
+                        .monospaced()
+                        .autocorrectionDisabled()
+                }
+            }
+        }
+        .formStyle(.grouped)
+        .frame(width: 520)
+        .toolbar {
+            if onDelete != nil {
+                ToolbarItem(placement: .destructiveAction) {
+                    Button(L10n.text("common.delete"), role: .destructive) {
+                        deletePresented = true
+                    }
+                }
+            }
+
+            ToolbarItem(placement: .cancellationAction) {
+                Button(L10n.text("common.cancel"), role: .cancel) {
+                    dismiss()
+                }
+                .keyboardShortcut(.cancelAction)
+            }
+
+            ToolbarItem(placement: .confirmationAction) {
+                Button(L10n.text("common.save")) {
+                    guard let url, hostValid else {
+                        return
+                    }
+
+                    onSave(
+                        App(
+                            host: host.isEmpty ? "" : hostUrl?.host() ?? host,
+                            schemeOverride: schemeOverride,
+                            app: url,
+                            profile: profile
+                        )
+                    )
+                    dismiss()
+                }
+                .keyboardShortcut(.defaultAction)
+                .disabled(!hostValid || url == nil)
+            }
+        }
+        .confirmationDialog(
+            L10n.text("apps.editor.delete_confirmation"),
+            isPresented: $deletePresented
+        ) {
+            Button(L10n.text("common.delete"), role: .destructive) {
+                onDelete?()
+                dismiss()
+            }
+        }
+    }
+}
+
+#Preview {
+    AppForm(
+        app: App(
+            host: "mm.2gis.one",
+            schemeOverride: "",
+            app: URL(string: "file:///Applications/Mattermost.app")!
+        ),
+        onSave: { _ in },
+        onDelete: {}
+    )
+}

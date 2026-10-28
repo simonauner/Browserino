@@ -1502,61 +1502,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Export"
+            "value": "Export…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Экспорт"
+            "value": "Экспорт…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportieren"
+            "value": "Exportieren…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exporter"
+            "value": "Exporter…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar"
+            "value": "Exportar…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar"
+            "value": "Exportar…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esporta"
+            "value": "Esporta…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "書き出す"
+            "value": "書き出す…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "내보내기"
+            "value": "내보내기…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导出"
+            "value": "导出…"
           }
         }
       }
@@ -1632,61 +1632,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Import"
+            "value": "Import…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Импорт"
+            "value": "Импорт…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importieren"
+            "value": "Importieren…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importer"
+            "value": "Importer…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importar"
+            "value": "Importar…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importar"
+            "value": "Importar…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importa"
+            "value": "Importa…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "読み込む"
+            "value": "読み込む…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "가져오기"
+            "value": "가져오기…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入"
+            "value": "导入…"
           }
         }
       }
@@ -1827,61 +1827,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Reset"
+            "value": "Reset…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Сбросить"
+            "value": "Сбросить…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zurücksetzen"
+            "value": "Zurücksetzen…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Réinitialiser"
+            "value": "Réinitialiser…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Restablecer"
+            "value": "Restablecer…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Redefinir"
+            "value": "Redefinir…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Ripristina"
+            "value": "Ripristina…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "リセット"
+            "value": "リセット…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "초기화"
+            "value": "초기화…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "重置"
+            "value": "重置…"
           }
         }
       }
@@ -2022,61 +2022,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Drag and drop to reorder. Use Add shortcut to assign a key. Click on eye to hide unwanted browsers from prompt"
+            "value": "Drag to reorder. Use Add shortcut to assign a key, and the eye to hide a browser from the picker."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Перетаскивайте для изменения порядка. Нажмите «Назначить» для выбора клавиши. Значок глаза скрывает браузер из списка."
+            "value": "Перетащите, чтобы изменить порядок. «Назначить» задаёт клавишу, а глаз скрывает браузер в окне выбора."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Zum Sortieren ziehen. Mit „Zuweisen“ eine Taste festlegen. Das Augensymbol blendet Browser aus."
+            "value": "Zum Umordnen ziehen. Mit „Zuweisen“ eine Taste festlegen, mit dem Auge einen Browser in der Auswahl ausblenden."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Faites glisser pour réordonner. Cliquez sur « Assigner » pour choisir une touche. L’icône œil masque un navigateur."
+            "value": "Faites glisser pour réordonner. « Assigner » attribue une touche, et l’œil masque un navigateur dans le sélecteur."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arrastra para reordenar. Pulsa «Asignar» para elegir una tecla. El icono del ojo oculta un navegador."
+            "value": "Arrastra para reordenar. Usa Asignar para elegir una tecla y el ojo para ocultar un navegador en el selector."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Arraste para reordenar. Clique em «Atribuir» para escolher uma tecla. O ícone de olho oculta um navegador."
+            "value": "Arraste para reordenar. Use Atribuir para escolher uma tecla e o olho para ocultar um navegador no seletor."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Trascina per riordinare. Premi «Assegna» per scegliere un tasto. L’icona dell’occhio nasconde un browser."
+            "value": "Trascina per riordinare. Usa Assegna per scegliere un tasto e l’occhio per nascondere un browser nel selettore."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドラッグして並べ替えます。「割り当て」でキーを設定し、目のアイコンでブラウザを非表示にします。"
+            "value": "ドラッグで並べ替えます。「割り当て」でキーを設定し、目のアイコンで選択画面からブラウザを隠します。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "드래그하여 순서를 바꾸세요. «지정»을 눌러 키를 설정하고 눈 아이콘으로 브라우저를 숨기세요."
+            "value": "드래그하여 순서를 바꾸세요. 지정으로 키를 설정하고, 눈 아이콘으로 선택 창에서 브라우저를 숨깁니다."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "拖动以调整顺序。点击“分配”设置快捷键，点击眼睛图标隐藏浏览器。"
+            "value": "拖移以重新排序。使用“分配”设置按键，点按眼睛图标可在选择器中隐藏浏览器。"
           }
         }
       }
@@ -2997,191 +2997,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type domain and choose app in which links will be opened"
+            "value": "Links to these domains also offer the chosen app in the picker. Double-click a domain to edit it."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Укажите домен и выберите приложение для открытия ссылок"
+            "value": "Для ссылок на эти домены в окне выбора также появится выбранное приложение. Дважды щёлкните домен, чтобы изменить его."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Domain eingeben und App zum Öffnen der Links auswählen"
+            "value": "Für Links zu diesen Domains bietet die Auswahl auch die gewählte App an. Doppelklicke auf eine Domain, um sie zu bearbeiten."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez un domaine et choisissez l’application pour ouvrir les liens"
+            "value": "Pour les liens vers ces domaines, le sélecteur propose aussi l’app choisie. Double-cliquez sur un domaine pour le modifier."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escribe un dominio y elige la aplicación para abrir los enlaces"
+            "value": "Para los enlaces a estos dominios, el selector también ofrece la app elegida. Haz doble clic en un dominio para editarlo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Digite um domínio e escolha o aplicativo para abrir os links"
+            "value": "Para links destes domínios, o seletor também oferece o app escolhido. Clique duas vezes em um domínio para editá-lo."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inserisci un dominio e scegli l’app per aprire i link"
+            "value": "Per i link a questi domini, il selettore propone anche l’app scelta. Fai doppio clic su un dominio per modificarlo."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドメインを入力し、リンクを開くアプリを選択"
+            "value": "これらのドメインへのリンクでは、選択画面に指定したアプリも表示されます。ドメインをダブルクリックすると編集できます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "도메인을 입력하고 링크를 열 앱을 선택하세요"
+            "value": "이 도메인의 링크를 열 때 선택 창에 지정한 앱도 표시됩니다. 도메인을 이중 클릭하여 편집하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入域名并选择打开链接的应用"
-          }
-        }
-      }
-    },
-    "rules.editor.instructions": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add a new rule by typing a regex or pattern, or generating one from test URLs, and selecting an app."
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавьте правило: введите регулярное выражение или шаблон либо создайте его из тестовых URL и выберите приложение."
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Neue Regel mit regulärem Ausdruck oder Muster hinzufügen – oder aus Test-URLs erzeugen – und eine App wählen."
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajoutez une règle avec une expression régulière ou un motif, ou générez-la à partir d’URL de test, puis choisissez une application."
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Añade una regla con una expresión regular o un patrón, o genérala a partir de URL de prueba, y elige una aplicación."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adicione uma regra com uma expressão regular ou um padrão, ou gere-a a partir de URLs de teste, e escolha um aplicativo."
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aggiungi una regola con un’espressione regolare o un pattern, oppure generala dagli URL di prova, e scegli un’app."
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "正規表現またはパターンを入力するか、テスト URL から生成し、アプリを選択してルールを追加します。"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "정규식 또는 패턴을 입력하거나 테스트 URL에서 생성한 뒤 앱을 선택하여 규칙을 추가하세요."
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "输入正则表达式或模式，或从测试 URL 生成，然后选择应用以添加规则。"
-          }
-        }
-      }
-    },
-    "rules.add": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Add new rule"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Добавить правило"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Regel hinzufügen"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ajouter une règle"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Añadir regla"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adicionar regra"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Aggiungi regola"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "ルールを追加"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "규칙 추가"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "添加规则"
+            "value": "打开这些域名的链接时，选择器中也会显示所选应用。双击域名即可编辑。"
           }
         }
       }
@@ -3192,61 +3062,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type regex or pattern and choose app in which links will be opened without prompt"
+            "value": "Links that match a rule open in its app without the picker. Double-click a rule to edit it."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Укажите регулярное выражение или шаблон и приложение для открытия ссылок без выбора"
+            "value": "Ссылки, подходящие под правило, открываются в его приложении без окна выбора. Дважды щёлкните правило, чтобы изменить его."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Regulären Ausdruck oder Muster und App zum Öffnen ohne Auswahl angeben"
+            "value": "Links, die einer Regel entsprechen, öffnen ohne Auswahl in deren App. Doppelklicke auf eine Regel, um sie zu bearbeiten."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez une expression régulière ou un motif et choisissez l’application pour ouvrir les liens sans sélection"
+            "value": "Les liens qui correspondent à une règle s’ouvrent dans son app sans sélection. Double-cliquez sur une règle pour la modifier."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escribe una expresión regular o un patrón y elige la aplicación para abrir los enlaces sin preguntar"
+            "value": "Los enlaces que coinciden con una regla se abren en su app sin preguntar. Haz doble clic en una regla para editarla."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Digite uma expressão regular ou um padrão e escolha o aplicativo para abrir os links sem perguntar"
+            "value": "Os links que correspondem a uma regra abrem no app dela sem perguntar. Clique duas vezes em uma regra para editá-la."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inserisci un’espressione regolare o un pattern e scegli l’app per aprire i link senza chiedere"
+            "value": "I link che corrispondono a una regola si aprono nella sua app senza chiedere. Fai doppio clic su una regola per modificarla."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "正規表現またはパターンとアプリを指定すると、選択画面なしでリンクを開きます"
+            "value": "ルールに一致するリンクは、選択画面なしでそのアプリで開きます。ルールをダブルクリックすると編集できます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "정규식 또는 패턴을 입력하고 선택 창 없이 링크를 열 앱을 선택하세요"
+            "value": "규칙과 일치하는 링크는 선택 창 없이 해당 앱에서 열립니다. 규칙을 이중 클릭하여 편집하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入正则表达式或模式并选择直接打开链接的应用"
+            "value": "匹配规则的链接会直接在其应用中打开。双击规则即可编辑。"
           }
         }
       }
@@ -3312,71 +3182,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "选择文件夹以添加搜索位置（在 Finder 中按 ⇧⌘G 输入路径）。"
-          }
-        }
-      }
-    },
-    "locations.select_directory": {
-      "extractionState": "manual",
-      "localizations": {
-        "en": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Select directory"
-          }
-        },
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Выбрать папку"
-          }
-        },
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ordner auswählen"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Choisir un dossier"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Elegir carpeta"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Selecionar pasta"
-          }
-        },
-        "it": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Scegli cartella"
-          }
-        },
-        "ja": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "フォルダを選択"
-          }
-        },
-        "ko": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "폴더 선택"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "选择文件夹"
           }
         }
       }
@@ -7342,6 +7147,721 @@
           "stringUnit": {
             "state": "translated",
             "value": "每行一个链接"
+          }
+        }
+      }
+    },
+    "settings.reset.confirmation": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset all preferences?"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить все настройки?"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Einstellungen zurücksetzen?"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser toutes les préférences ?"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Restablecer todas las preferencias?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir todas as preferências?"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ripristinare tutte le preferenze?"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべての設定をリセットしますか？"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 환경설정을 재설정하시겠습니까?"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置所有偏好设置？"
+          }
+        }
+      }
+    },
+    "settings.reset.confirmation_message": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Your browsers, apps, rules and shortcuts will be removed. This can’t be undone."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Браузеры, приложения, правила и сочетания клавиш будут удалены. Это действие нельзя отменить."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Deine Browser, Apps, Regeln und Kurzbefehle werden entfernt. Dies kann nicht widerrufen werden."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vos navigateurs, apps, règles et raccourcis seront supprimés. Cette action est irréversible."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se eliminarán tus navegadores, apps, reglas y atajos. Esta acción no se puede deshacer."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seus navegadores, apps, regras e atalhos serão removidos. Esta ação não pode ser desfeita."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Browser, app, regole e scorciatoie verranno rimossi. L’operazione non può essere annullata."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ブラウザ、アプリ、ルール、ショートカットが削除されます。この操作は取り消せません。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "브라우저, 앱, 규칙 및 단축키가 제거됩니다. 이 작업은 되돌릴 수 없습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "你的浏览器、应用、规则和快捷键将被移除。此操作无法撤销。"
+          }
+        }
+      }
+    },
+    "settings.reset.confirm": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reset"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Сбросить"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Zurücksetzen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Réinitialiser"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Restablecer"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Redefinir"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ripristina"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "リセット"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "재설정"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重置"
+          }
+        }
+      }
+    },
+    "errors.import_settings.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not import settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось импортировать настройки"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen konnten nicht importiert werden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’importer les réglages"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron importar los ajustes"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível importar os ajustes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile importare le impostazioni"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を読み込めませんでした"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정을 가져올 수 없습니다"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法导入设置"
+          }
+        }
+      }
+    },
+    "errors.export_settings.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not export settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось экспортировать настройки"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen konnten nicht exportiert werden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’exporter les réglages"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron exportar los ajustes"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível exportar os ajustes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile esportare le impostazioni"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を書き出せませんでした"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정을 내보낼 수 없습니다"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法导出设置"
+          }
+        }
+      }
+    },
+    "common.add": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Add"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Добавить"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hinzufügen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ajouter"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Añadir"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aggiungi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "追加"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "추가"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "添加"
+          }
+        }
+      }
+    },
+    "common.remove": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remove"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Удалить"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Entfernen"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Supprimer"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Remover"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rimuovi"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "削除"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "제거"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "移除"
+          }
+        }
+      }
+    },
+    "common.edit": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Edit…"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Изменить…"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Bearbeiten …"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifier…"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar…"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Modifica…"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "編集…"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "편집…"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "编辑…"
+          }
+        }
+      }
+    },
+    "apps.editor.new_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Domain"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый домен"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Domain"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau domaine"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo dominio"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novo domínio"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuovo dominio"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新規ドメイン"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "새 도메인"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建域名"
+          }
+        }
+      }
+    },
+    "browsers.visibility.hide": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hide in picker"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Скрыть в окне выбора"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In der Auswahl ausblenden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer dans le sélecteur"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar en el selector"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ocultar no seletor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nascondi nel selettore"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択画面で非表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택 창에서 숨기기"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在选择器中隐藏"
+          }
+        }
+      }
+    },
+    "browsers.visibility.show": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Show in picker"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Показать в окне выбора"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "In der Auswahl einblenden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher dans le sélecteur"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar en el selector"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar no seletor"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostra nel selettore"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "選択画面に表示"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "선택 창에 표시"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "在选择器中显示"
           }
         }
       }

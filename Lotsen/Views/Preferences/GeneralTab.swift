@@ -45,6 +45,7 @@ struct GeneralTab: View {
     @State private var showingExportPicker = false
     @State private var showingImportPicker = false
     @State private var exportDocument = SettingsDocument()
+    @State private var resetPresented = false
     @Environment(\.fitSettingsHeight) private var fitSettingsHeight
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
@@ -59,6 +60,20 @@ struct GeneralTab: View {
         return Bundle(url: browserUrl)?.bundleIdentifier
     }
 
+    func makeDefaultBrowser() async {
+        defer { refreshIsDefault() }
+        // Throws when the user declines the system prompt, which needs no alert
+        // and no second prompt for https.
+        do {
+            try await NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL, toOpenURLsWithScheme: "http")
+            try await NSWorkspace.shared.setDefaultApplication(at: Bundle.main.bundleURL, toOpenURLsWithScheme: "https")
+        } catch {}
+    }
+
+    func refreshIsDefault() {
+        isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+    }
+
     func exportSettings() {
         let defaults = UserDefaults.standard
         let dictionary = defaults.dictionaryRepresentation()
@@ -71,6 +86,15 @@ struct GeneralTab: View {
 
     private static let settingsKeys = SettingsPolicy.keys
 
+    func resetSettings() {
+        let defaults = UserDefaults.standard
+        KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
+        defaults.removeObject(forKey: "browserDataAccess")
+        Self.settingsKeys.forEach { key in
+            defaults.removeObject(forKey: key)
+        }
+    }
+
     func importSettings(from url: URL) {
         let scoped = url.startAccessingSecurityScopedResource()
         defer { if scoped { url.stopAccessingSecurityScopedResource() } }
@@ -79,7 +103,7 @@ struct GeneralTab: View {
             let settings = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
             guard let settings = settings else {
-                BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
+                BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]), title: L10n.text("errors.import_settings.title"))
                 return
             }
 
@@ -91,10 +115,8 @@ struct GeneralTab: View {
                     KeyboardShortcuts.setShortcut(shortcut, for: .moveCurrentTab)
                 } else { defaults.set(value, forKey: key) }
             }
-
-            print("Settings imported successfully")
         } catch {
-            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
+            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]), title: L10n.text("errors.import_settings.title"))
         }
     }
 
@@ -121,19 +143,8 @@ struct GeneralTab: View {
             Section(L10n.text("settings.default_browser.title")) {
                 LabeledContent(L10n.text("settings.default_browser.description")) {
                     Button(L10n.text("settings.default_browser.make_default")) {
-                        NSWorkspace.shared.setDefaultApplication(
-                            at: Bundle.main.bundleURL,
-                            toOpenURLsWithScheme: "http"
-                        ) { error in
-                            guard error == nil else { return }
-                            NSWorkspace.shared.setDefaultApplication(
-                                at: Bundle.main.bundleURL,
-                                toOpenURLsWithScheme: "https"
-                            ) { _ in
-                                DispatchQueue.main.async {
-                                    isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
-                                }
-                            }
+                        Task {
+                            await makeDefaultBrowser()
                         }
                     }
                     .disabled(isDefault)
@@ -181,20 +192,27 @@ struct GeneralTab: View {
             Section(L10n.text("settings.reset.title")) {
                 LabeledContent(L10n.text("settings.reset.description")) {
                     Button(L10n.text("settings.reset.action")) {
-                        let defaults = UserDefaults.standard
-                        KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
-                        defaults.removeObject(forKey: "browserDataAccess")
-                        Self.settingsKeys.forEach { key in
-                            defaults.removeObject(forKey: key)
-                        }
+                        resetPresented = true
                     }
+                }
+                .confirmationDialog(
+                    L10n.text("settings.reset.confirmation"),
+                    isPresented: $resetPresented
+                ) {
+                    Button(L10n.text("settings.reset.confirm"), role: .destructive) {
+                        resetSettings()
+                    }
+                } message: {
+                    Text(verbatim: L10n.text("settings.reset.confirmation_message"))
                 }
             }
         }
         .formStyle(.grouped)
         .modifier(FitsSettingsHeight(fit: fitSettingsHeight))
-        .onAppear {
-            isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+        .onAppear(perform: refreshIsDefault)
+        // The default browser can change in System Settings while this pane is open.
+        .onReceive(NotificationCenter.default.publisher(for: NSApplication.didBecomeActiveNotification)) { _ in
+            refreshIsDefault()
         }
         .fileExporter(
             isPresented: $showingExportPicker,
@@ -202,11 +220,8 @@ struct GeneralTab: View {
             contentType: .json,
             defaultFilename: "lotsen-settings"
         ) { result in
-            switch result {
-            case .success(let url):
-                print("Settings exported to: \(url)")
-            case .failure(let error):
-                print("Export failed: \(error.localizedDescription)")
+            if case .failure(let error) = result {
+                BrowserUtil.presentError(error, title: L10n.text("errors.export_settings.title"))
             }
         }
         .fileImporter(
@@ -220,7 +235,7 @@ struct GeneralTab: View {
                     importSettings(from: url)
                 }
             case .failure(let error):
-                print("Import failed: \(error.localizedDescription)")
+                BrowserUtil.presentError(error, title: L10n.text("errors.import_settings.title"))
             }
         }
     }

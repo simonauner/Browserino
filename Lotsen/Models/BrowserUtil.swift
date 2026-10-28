@@ -190,9 +190,9 @@ class BrowserUtil {
         return alert.runModal()
     }
 
-    static func presentError(_ error: Error) {
+    static func presentError(_ error: Error, title: String? = nil) {
         let alert = NSAlert()
-        alert.messageText = L10n.text("errors.open_link.title")
+        alert.messageText = title ?? L10n.text("errors.open_link.title")
         alert.informativeText = error.localizedDescription
         alert.addButton(withTitle: L10n.text("common.ok"))
         runAlert(alert)
