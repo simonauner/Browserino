@@ -76,19 +76,10 @@ struct RuleForm: View {
         return RegexGenerator.regex(from: testUrls.components(separatedBy: .newlines))
     }
     
-    private var attributtedText: AttributedString {
-        var string = AttributedString(testUrls)
-        guard let compiledRegex else {
-            return string
+    private var testLines: [(line: String, matches: Bool)] {
+        testUrls.split(separator: "\n").map { line in
+            (String(line), compiledRegex.map { line.firstMatch(of: $0) != nil } ?? false)
         }
-        
-        for line in testUrls.split(separator: "\n") {
-            if line.firstMatch(of: compiledRegex) != nil, let range = string.range(of: line) {
-                string[range].foregroundColor = .red
-            }
-        }
-        
-        return string
     }
     
     var body: some View {
@@ -130,10 +121,20 @@ struct RuleForm: View {
                 }
                 .disabled(generatedRegex == nil)
                 
-                Text(attributtedText)
-                    .font(
-                        .system(size: 14)
-                    )
+                VStack(alignment: .leading, spacing: 2) {
+                    ForEach(Array(testLines.enumerated()), id: \.offset) { _, testLine in
+                        HStack(spacing: 6) {
+                            // Hidden rather than removed, so all URLs stay aligned.
+                            Image(systemName: "checkmark")
+                                .foregroundStyle(.green)
+                                .opacity(testLine.matches ? 1 : 0)
+                            Text(verbatim: testLine.line)
+                        }
+                    }
+                }
+                .font(
+                    .system(size: 14)
+                )
             }
             
             Spacer()
