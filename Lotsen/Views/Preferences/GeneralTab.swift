@@ -89,7 +89,7 @@ struct GeneralTab: View {
             let settings = try JSONSerialization.jsonObject(with: data) as? [String: Any]
 
             guard let settings = settings else {
-                BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
+                BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]), title: L10n.text("errors.import_settings.title"))
                 return
             }
 
@@ -101,10 +101,8 @@ struct GeneralTab: View {
                     KeyboardShortcuts.setShortcut(shortcut, for: .moveCurrentTab)
                 } else { defaults.set(value, forKey: key) }
             }
-
-            print("Settings imported successfully")
         } catch {
-            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]))
+            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 2, userInfo: [NSLocalizedDescriptionKey: L10n.text("errors.invalid_settings_format")]), title: L10n.text("errors.import_settings.title"))
         }
     }
 
@@ -217,11 +215,8 @@ struct GeneralTab: View {
             contentType: .json,
             defaultFilename: "lotsen-settings"
         ) { result in
-            switch result {
-            case .success(let url):
-                print("Settings exported to: \(url)")
-            case .failure(let error):
-                print("Export failed: \(error.localizedDescription)")
+            if case .failure(let error) = result {
+                BrowserUtil.presentError(error, title: L10n.text("errors.export_settings.title"))
             }
         }
         .fileImporter(
@@ -235,7 +230,7 @@ struct GeneralTab: View {
                     importSettings(from: url)
                 }
             case .failure(let error):
-                print("Import failed: \(error.localizedDescription)")
+                BrowserUtil.presentError(error, title: L10n.text("errors.import_settings.title"))
             }
         }
     }

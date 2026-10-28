@@ -1502,61 +1502,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Export"
+            "value": "Export…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Экспорт"
+            "value": "Экспорт…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportieren"
+            "value": "Exportieren…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exporter"
+            "value": "Exporter…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar"
+            "value": "Exportar…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportar"
+            "value": "Exportar…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Esporta"
+            "value": "Esporta…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "書き出す"
+            "value": "書き出す…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "내보내기"
+            "value": "내보내기…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导出"
+            "value": "导出…"
           }
         }
       }
@@ -1632,61 +1632,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Import"
+            "value": "Import…"
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Импорт"
+            "value": "Импорт…"
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importieren"
+            "value": "Importieren…"
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importer"
+            "value": "Importer…"
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importar"
+            "value": "Importar…"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importar"
+            "value": "Importar…"
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Importa"
+            "value": "Importa…"
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "読み込む"
+            "value": "読み込む…"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "가져오기"
+            "value": "가져오기…"
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "导入"
+            "value": "导入…"
           }
         }
       }
@@ -7537,6 +7537,136 @@
           "stringUnit": {
             "state": "translated",
             "value": "重置"
+          }
+        }
+      }
+    },
+    "errors.import_settings.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not import settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось импортировать настройки"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen konnten nicht importiert werden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’importer les réglages"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron importar los ajustes"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível importar os ajustes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile importare le impostazioni"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を読み込めませんでした"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정을 가져올 수 없습니다"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法导入设置"
+          }
+        }
+      }
+    },
+    "errors.export_settings.title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Could not export settings"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось экспортировать настройки"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Einstellungen konnten nicht exportiert werden"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossible d’exporter les réglages"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron exportar los ajustes"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível exportar os ajustes"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Impossibile esportare le impostazioni"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "設定を書き出せませんでした"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "설정을 내보낼 수 없습니다"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "无法导出设置"
           }
         }
       }
