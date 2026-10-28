@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct PromptItem: View {
-    var target: BrowserTarget
-    var title: String
+    var presentation: BrowserTargetPresentation
     var shortcut: String?
     /// Off while a text field has focus, so typing there does not open a browser.
     var shortcutsEnabled = true
@@ -18,7 +17,7 @@ struct PromptItem: View {
     var body: some View {
         Button(action: action) {
             HStack {
-                Text(title)
+                Text(presentation.displayName)
                     .font(
                         .system(size: 12, weight: .bold)
                     )
@@ -40,7 +39,7 @@ struct PromptItem: View {
                 Spacer()
                     .frame(width: 8)
                 
-                BrowserTargetIcon(target: target, badgeSize: 11)
+                BrowserTargetIcon(presentation, badgeSize: 11)
                     .frame(width: 24, height: 24)
             }
             .padding(8)

@@ -8,22 +8,82 @@
 import AppKit
 import SwiftUI
 
-struct PromptView: View {
-    @AppStorage("browsers") private var browsers: [BrowserTarget] = []
-    @AppStorage("hiddenBrowsers") private var hiddenBrowsers: [BrowserTarget] = []
-    @AppStorage("apps") private var apps: [App] = []
-    @AppStorage("shortcuts") private var shortcuts: [String: String] = [:]
+/// One row of the picker: a browser, or an app mapped to the link's host.
+@MainActor
+struct PromptRow {
+    let presentation: BrowserTargetPresentation
+    let app: App?
+    let shortcut: String?
 
+    var target: BrowserTarget { presentation.target }
+}
+
+/// Everything the picker lists, resolved once when it opens. The rows are read
+/// on every render and every arrow key, and resolving them touches app bundles,
+/// stored JSON settings and the browsers' profile data.
+@MainActor
+struct PromptRows {
+    let apps: [PromptRow]
+    let browsers: [PromptRow]
+    let appsAtTop: Bool
+    /// In display order, so a selection index maps straight onto a row.
+    let all: [PromptRow]
+
+    init(urls: [URL], sourceTab: SourceTabSnapshot?, defaults: UserDefaults = .standard) {
+        let browsers = [BrowserTarget](rawValue: defaults.string(forKey: "browsers") ?? "") ?? []
+        let hidden = [BrowserTarget](rawValue: defaults.string(forKey: "hiddenBrowsers") ?? "") ?? []
+        let apps = [App](rawValue: defaults.string(forKey: "apps") ?? "") ?? []
+        let shortcuts = [String: String](rawValue: defaults.string(forKey: "shortcuts") ?? "") ?? [:]
+        let profilesEnabled = defaults.object(forKey: "profilesEnabled") as? Bool ?? true
+        let appsAtTop = defaults.object(forKey: "apps_atTop") as? Bool ?? true
+
+        func shortcut(for presentation: BrowserTargetPresentation) -> String? {
+            presentation.bundleIdentifier.flatMap {
+                shortcuts[presentation.target.shortcutKey(bundleIdentifier: $0)] ?? shortcuts[$0]
+            }
+        }
+
+        // A row whose bundle no longer resolves renders as nothing, so leaving it
+        // out keeps the keyboard selection indices in step with what is on screen.
+        let appRows: [PromptRow] = (sourceTab == nil ? urls : []).flatMap { url in
+            apps.filter { url.matchesHost($0.host) }
+        }
+        .filter { !browsers.contains($0.target) }
+        .compactMap { app in
+            BrowserTargetPresentation(app.target).map {
+                PromptRow(presentation: $0, app: app, shortcut: shortcut(for: $0))
+            }
+        }
+
+        let browserRows: [PromptRow] = TargetPolicy.visible(browsers, hidden: hidden, profilesEnabled: profilesEnabled)
+            .compactMap(BrowserTargetPresentation.init)
+            .filter { $0.bundleIdentifier != sourceTab?.bundleIdentifier }
+            .map { PromptRow(presentation: $0, app: nil, shortcut: shortcut(for: $0)) }
+
+        self.apps = appRows
+        self.browsers = browserRows
+        self.appsAtTop = appsAtTop
+        self.all = appsAtTop ? appRows + browserRows : browserRows + appRows
+    }
+}
+
+struct PromptView: View {
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
-    @AppStorage("profilesEnabled") private var profilesEnabled = true
-    @AppStorage("apps_atTop") private var appsAtTop: Bool = true
     @AppStorage("rules") private var rules: [Rule] = []
     @AppStorage("rules_showInPicker") private var showRuleOption: Bool = true
 
     let urls: [URL]
     var sourceTab: SourceTabSnapshot? = nil
     @AppStorage("switch_closeSourceTab") private var closeSourceTab = false
+
+    private let rows: PromptRows
+
+    init(urls: [URL], sourceTab: SourceTabSnapshot? = nil) {
+        self.urls = urls
+        self.sourceTab = sourceTab
+        self.rows = PromptRows(urls: urls, sourceTab: sourceTab)
+    }
 
     private func open(_ urls: [URL], target: BrowserTarget, isIncognito: Bool, savingRule: Bool = true) {
         if savingRule {
@@ -53,16 +113,9 @@ struct PromptView: View {
         showRuleOption && sourceTab == nil && urls.count == 1
     }
 
-    /// The highlighted row, with its app mapping when it is an app row.
-    var selectedItem: (target: BrowserTarget, app: App?)? {
-        let browserIndex = appsAtTop ? selected - appsForUrls.count : selected
-        if visibleBrowsers.indices.contains(browserIndex) {
-            return (visibleBrowsers[browserIndex], nil)
-        }
-
-        let appIndex = appsAtTop ? selected : selected - visibleBrowsers.count
-        guard appsForUrls.indices.contains(appIndex) else { return nil }
-        return (appsForUrls[appIndex].target, appsForUrls[appIndex])
+    /// The highlighted row.
+    var selectedItem: PromptRow? {
+        rows.all.indices.contains(selected) ? rows.all[selected] : nil
     }
 
     /// A rule opens the link unchanged, so an app that rewrites the scheme cannot get one.
@@ -77,38 +130,33 @@ struct PromptView: View {
 
     func openSelected(isIncognito: Bool) {
         guard let item = selectedItem else { return }
-        if let app = item.app {
+        activate(item, isIncognito: isIncognito)
+    }
+
+    func activate(_ row: PromptRow, isIncognito: Bool) {
+        if let app = row.app {
             openUrlsInApp(app: app)
         } else {
-            open(urls, target: item.target, isIncognito: isIncognito)
+            open(urls, target: row.target, isIncognito: isIncognito)
         }
     }
 
-    var appsForUrls: [App] {
-        (sourceTab == nil ? urls : []).flatMap { url in
-            return apps.filter { app in
-                url.matchesHost(app.host)
+    /// The rows from `offset` on in `rows.all`, which is what selection indices count.
+    func items(_ section: [PromptRow], offset: Int) -> some View {
+        ForEach(Array(section.enumerated()), id: \.offset) { index, row in
+            PromptItem(
+                presentation: row.presentation,
+                shortcut: row.shortcut,
+                shortcutsEnabled: !patternFocused
+            ) {
+                activate(row, isIncognito: NSEvent.modifierFlags.contains(.shift))
             }
-        }
-        .filter {
-            !browsers.contains($0.target)
-        }
-        // A row whose bundle no longer resolves renders as nothing, so excluding it
-        // here keeps the keyboard selection indices in step with what is on screen.
-        .filter {
-            Bundle(url: $0.app) != nil
-        }
-    }
-
-    var visibleBrowsers: [BrowserTarget] {
-        TargetPolicy.visible(browsers, hidden: hiddenBrowsers, profilesEnabled: profilesEnabled).filter {
-            Bundle(url: $0.app) != nil && Bundle(url: $0.app)?.bundleIdentifier != sourceTab?.bundleIdentifier
-        }
-    }
-
-    func shortcut(for target: BrowserTarget) -> String? {
-        Bundle(url: target.app)?.bundleIdentifier.flatMap {
-            shortcuts[target.shortcutKey(bundleIdentifier: $0)] ?? shortcuts[$0]
+            .id(offset + index)
+            .buttonStyle(
+                SelectButtonStyle(
+                    selected: selected == offset + index
+                )
+            )
         }
     }
 
@@ -137,68 +185,18 @@ struct PromptView: View {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 2) {
-                        if !appsForUrls.isEmpty && appsAtTop {
-                            ForEach(Array(appsForUrls.enumerated()), id: \.offset) { index, app in
-                                PromptItem(
-                                    target: app.target,
-                                    title: app.target.displayName,
-                                    shortcut: shortcut(for: app.target),
-                                    shortcutsEnabled: !patternFocused
-                                ) {
-                                    openUrlsInApp(app: app)
-                                }
-                                .id(index)
-                                .buttonStyle(
-                                    SelectButtonStyle(
-                                        selected: selected == index
-                                    )
-                                )
-                            }
+                        if !rows.apps.isEmpty && rows.appsAtTop {
+                            items(rows.apps, offset: 0)
 
                             Divider()
                         }
-                        
-                        ForEach(Array(visibleBrowsers.enumerated()), id: \.offset) {
-                            index, browser in
-                            PromptItem(
-                                target: browser,
-                                title: browser.displayName,
-                                shortcut: shortcut(for: browser),
-                                shortcutsEnabled: !patternFocused
-                            ) {
-                                open(
-                                    urls,
-                                    target: browser,
-                                    isIncognito: NSEvent.modifierFlags.contains(.shift)
-                                )
-                            }
-                            .id(index + (appsAtTop ? appsForUrls.count : 0))
-                            .buttonStyle(
-                                SelectButtonStyle(
-                                    selected: selected == index + (appsAtTop ? appsForUrls.count : 0)
-                                )
-                            )
-                        }
 
-                        if !appsForUrls.isEmpty && !appsAtTop {
+                        items(rows.browsers, offset: rows.appsAtTop ? rows.apps.count : 0)
+
+                        if !rows.apps.isEmpty && !rows.appsAtTop {
                             Divider()
 
-                            ForEach(Array(appsForUrls.enumerated()), id: \.offset) { index, app in
-                                PromptItem(
-                                    target: app.target,
-                                    title: app.target.displayName,
-                                    shortcut: shortcut(for: app.target),
-                                    shortcutsEnabled: !patternFocused
-                                ) {
-                                    openUrlsInApp(app: app)
-                                }
-                                .id(visibleBrowsers.count + index)
-                                .buttonStyle(
-                                    SelectButtonStyle(
-                                        selected: selected == visibleBrowsers.count + index
-                                    )
-                                )
-                            }
+                            items(rows.apps, offset: rows.browsers.count)
                         }
                     }
                 }
@@ -210,7 +208,7 @@ struct PromptView: View {
                         selected = max(0, selected - 1)
                         scrollViewProxy.scrollTo(selected, anchor: .center)
                     } else if command == .down {
-                        selected = min(visibleBrowsers.count + appsForUrls.count - 1, selected + 1)
+                        selected = min(rows.all.count - 1, selected + 1)
                         scrollViewProxy.scrollTo(selected, anchor: .center)
                     }
                 }
@@ -252,7 +250,7 @@ struct PromptView: View {
             if offersRule {
                 VStack(alignment: .leading, spacing: 6) {
                     Toggle(isOn: $alwaysOpen) {
-                        Text(verbatim: L10n.format("rules.picker.always_open", selectedItem?.target.displayName ?? ""))
+                        Text(verbatim: L10n.format("rules.picker.always_open", selectedItem?.presentation.displayName ?? ""))
                     }
                     .disabled(!canSaveRule(for: selectedItem?.app))
 
