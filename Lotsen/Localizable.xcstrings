@@ -2607,7 +2607,7 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Host"
+            "value": "Domain"
           }
         },
         "ru": {
@@ -2997,61 +2997,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Links to these domains also offer the chosen app in the picker. Double-click a domain to edit it."
+            "value": "Links to these domains also offer the chosen app in the picker. To open links without showing the picker, add a rule under Rules. Double-click a domain to edit it."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Для ссылок на эти домены в окне выбора также появится выбранное приложение. Дважды щёлкните домен, чтобы изменить его."
+            "value": "Для ссылок на эти домены в окне выбора также появится выбранное приложение. Чтобы открывать ссылки без окна выбора, добавьте правило в разделе «Правила». Дважды щёлкните домен, чтобы изменить его."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Für Links zu diesen Domains bietet die Auswahl auch die gewählte App an. Doppelklicke auf eine Domain, um sie zu bearbeiten."
+            "value": "Für Links zu diesen Domains bietet die Auswahl auch die gewählte App an. Um Links ohne Auswahl zu öffnen, füge unter „Regeln“ eine Regel hinzu. Doppelklicke auf eine Domain, um sie zu bearbeiten."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Pour les liens vers ces domaines, le sélecteur propose aussi l’app choisie. Double-cliquez sur un domaine pour le modifier."
+            "value": "Pour les liens vers ces domaines, le sélecteur propose aussi l’app choisie. Pour ouvrir des liens sans afficher le sélecteur, ajoutez une règle dans Règles. Double-cliquez sur un domaine pour le modifier."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Para los enlaces a estos dominios, el selector también ofrece la app elegida. Haz doble clic en un dominio para editarlo."
+            "value": "Para los enlaces a estos dominios, el selector también ofrece la app elegida. Para abrir enlaces sin mostrar el selector, añade una regla en Reglas. Haz doble clic en un dominio para editarlo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Para links destes domínios, o seletor também oferece o app escolhido. Clique duas vezes em um domínio para editá-lo."
+            "value": "Para links destes domínios, o seletor também oferece o app escolhido. Para abrir links sem mostrar o seletor, adicione uma regra em Regras. Clique duas vezes em um domínio para editá-lo."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Per i link a questi domini, il selettore propone anche l’app scelta. Fai doppio clic su un dominio per modificarlo."
+            "value": "Per i link a questi domini, il selettore propone anche l’app scelta. Per aprire i link senza mostrare il selettore, aggiungi una regola in Regole. Fai doppio clic su un dominio per modificarlo."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "これらのドメインへのリンクでは、選択画面に指定したアプリも表示されます。ドメインをダブルクリックすると編集できます。"
+            "value": "これらのドメインへのリンクでは、選択画面に指定したアプリも表示されます。選択画面を表示せずに開くには、「ルール」でルールを追加してください。ドメインをダブルクリックすると編集できます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "이 도메인의 링크를 열 때 선택 창에 지정한 앱도 표시됩니다. 도메인을 이중 클릭하여 편집하세요."
+            "value": "이 도메인의 링크를 열 때 선택 창에 지정한 앱도 표시됩니다. 선택 창 없이 링크를 열려면 규칙에서 규칙을 추가하세요. 도메인을 이중 클릭하여 편집하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "打开这些域名的链接时，选择器中也会显示所选应用。双击域名即可编辑。"
+            "value": "打开这些域名的链接时，选择器中也会显示所选应用。若要不显示选择器直接打开链接，请在“规则”中添加规则。双击域名即可编辑。"
           }
         }
       }
@@ -7862,6 +7862,331 @@
           "stringUnit": {
             "state": "translated",
             "value": "在选择器中显示"
+          }
+        }
+      }
+    },
+    "apps.list.all_domains": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "All domains"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Все домены"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Domains"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tous les domaines"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos los dominios"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos os domínios"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tutti i domini"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "すべてのドメイン"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "모든 도메인"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "所有域名"
+          }
+        }
+      }
+    },
+    "apps.list.opens_as": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens as %@://"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывается как %@://"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet als %@://"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "S’ouvre en %@://"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Se abre como %@://"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre como %@://"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Si apre come %@://"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@:// として開く"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@://(으)로 열기"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "以 %@:// 打开"
+          }
+        }
+      }
+    },
+    "apps.editor.host_help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subdomains match too. Leave it empty to offer the app for every link."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Поддомены тоже подходят. Оставьте поле пустым, чтобы предлагать приложение для всех ссылок."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subdomains passen ebenfalls. Leer lassen, um die App für alle Links anzubieten."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les sous-domaines correspondent aussi. Laissez vide pour proposer l’application pour tous les liens."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Los subdominios también coinciden. Déjalo vacío para ofrecer la aplicación en todos los enlaces."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Subdomínios também correspondem. Deixe vazio para oferecer o aplicativo em todos os links."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Anche i sottodomini corrispondono. Lascia vuoto per proporre l’app per tutti i link."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "サブドメインも対象です。空欄にすると、すべてのリンクでこのアプリを表示します。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "하위 도메인도 포함됩니다. 비워 두면 모든 링크에 이 앱을 표시합니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "子域名也会匹配。留空则对所有链接提供此应用。"
+          }
+        }
+      }
+    },
+    "apps.editor.replace_scheme_help": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opens the link with this scheme instead of http or https, so an app such as Figma receives it directly. Leave it empty to keep the link as it is."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Открывает ссылку с этой схемой вместо http или https, чтобы приложение, например Figma, получило её напрямую. Оставьте поле пустым, чтобы не менять ссылку."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Öffnet den Link mit diesem Schema statt http oder https, damit eine App wie Figma ihn direkt erhält. Leer lassen, um den Link unverändert zu lassen."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvre le lien avec ce schéma au lieu de http ou https, pour qu’une application comme Figma le reçoive directement. Laissez vide pour garder le lien tel quel."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre el enlace con este esquema en lugar de http o https, para que una aplicación como Figma lo reciba directamente. Déjalo vacío para mantener el enlace tal cual."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Abre o link com este esquema em vez de http ou https, para que um aplicativo como o Figma o receba diretamente. Deixe vazio para manter o link como está."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apre il link con questo schema invece di http o https, così un’app come Figma lo riceve direttamente. Lascia vuoto per mantenere il link invariato."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "http や https の代わりにこのスキームでリンクを開き、Figma などのアプリが直接受け取れるようにします。空欄ならリンクはそのままです。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "http 또는 https 대신 이 스킴으로 링크를 열어 Figma 같은 앱이 직접 받도록 합니다. 비워 두면 링크를 그대로 둡니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "用此协议代替 http 或 https 打开链接，让 Figma 等应用直接接收。留空则保持链接不变。"
+          }
+        }
+      }
+    },
+    "apps.editor.invalid_scheme": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "A scheme starts with a letter and contains only letters, digits, +, - and ."
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Схема начинается с буквы и содержит только буквы, цифры, +, - и ."
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ein Schema beginnt mit einem Buchstaben und enthält nur Buchstaben, Ziffern, +, - und ."
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un schéma commence par une lettre et ne contient que des lettres, des chiffres, +, - et ."
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un esquema empieza por una letra y solo contiene letras, dígitos, +, - y ."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um esquema começa com uma letra e contém apenas letras, dígitos, +, - e ."
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Uno schema inizia con una lettera e contiene solo lettere, cifre, +, - e ."
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "スキームは英字で始まり、英数字と + - . のみを使用できます。"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "스킴은 영문자로 시작하며 영문자, 숫자, +, -, . 만 사용할 수 있습니다."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "协议须以字母开头，只能包含字母、数字、+、- 和 ."
           }
         }
       }
