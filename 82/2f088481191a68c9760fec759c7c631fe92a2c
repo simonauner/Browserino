@@ -1,0 +1,60 @@
+Browserino/Views/Preferences/ShortcutButton.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 13
+Browserino/Views/Preferences/EditAppForm.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 14
+Browserino/BrowserinoApp.swift
+  s_da0f2b0a419d7b::t_47e5aa9ec31cff 124-125,177
+Browserino/Views/Preferences/EditRuleForm.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 14,39
+Browserino/Views/Preferences/BrowsersTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 11-12,14-15
+Browserino/Models/BrowserUtil.swift
+  s_da0f2b0a419d7b::t_bfc54e6df8c2a8 12,15-16,26,28,31,61,63,166
+Browserino/Views/Prompt/PromptView.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 78
+  s_da0f2b0a419d7b::t_47e5aa9ec31cff 32-41
+Browserino/Models/BrowserTargetPresentation.swift
+  s_da0f2b0a419d7b::t_47e5aa9ec31cff 35
+Browserino.xcodeproj/project.pbxproj
+  s_da0f2b0a419d7b::t_4af2e94fa18839 16-17,62-63,139-140,330-331
+Browserino/Models/AppSettings.swift
+  s_da0f2b0a419d7b::t_a44fd3466cb5ed 1-101
+Browserino/Models/BrowserSwitchService.swift
+  s_da0f2b0a419d7b::t_47e5aa9ec31cff 177
+Browserino/Models/JSONDefaults.swift
+  s_da0f2b0a419d7b::t_dc69217cac94f1 1-29
+Browserino/Models/ChromiumProfile.swift
+  s_da0f2b0a419d7b::t_bfc54e6df8c2a8 43-46
+Browserino/Views/Preferences/AppsTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 22,142
+Browserino/Views/Preferences/RulesTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 105
+Browserino/Views/Preferences/ShortcutsTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 12-14
+Browserino/Views/Preferences/GeneralTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 47
+Browserino/Views/Preferences/LocationsTab.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 75
+Browserino/Views/Preferences/BrowserTargetPicker.swift
+  s_da0f2b0a419d7b::t_ee91ec4b3011d6 15
+Browserino/Models/BrowserTarget.swift
+  s_da0f2b0a419d7b::t_47e5aa9ec31cff 22-23
+scripts/test-integration.sh
+  s_da0f2b0a419d7b::t_c667fae52c4609 6
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "822f088481191a68c9760fec759c7c631fe92a2c",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
