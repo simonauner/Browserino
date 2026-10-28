@@ -10,8 +10,6 @@ import SwiftUI
 struct PromptItem: View {
     var presentation: BrowserTargetPresentation
     var shortcut: String?
-    /// Off while a text field has focus, so typing there does not open a browser.
-    var shortcutsEnabled = true
     var action: () -> Void
 
     var body: some View {
@@ -54,9 +52,9 @@ struct PromptItem: View {
         }
     }
 
-    /// The recorded key, while shortcuts are enabled.
+    /// The recorded key.
     private var key: KeyEquivalent? {
-        guard shortcutsEnabled, let character = shortcut?.lowercased().first else {
+        guard let character = shortcut?.lowercased().first else {
             return nil
         }
 

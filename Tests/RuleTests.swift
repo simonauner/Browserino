@@ -26,6 +26,20 @@ struct RuleTests {
         #expect(Rule.addingPattern("   ", target: chrome, to: [legacy]) == [legacy], "blank picker pattern adds no rule")
     }
 
+    @Test("picker suggests a pattern for the link's whole host")
+    func hostPattern() throws {
+        let pattern = Rule.hostPattern(for: try #require(URL(string: "https://user@github.com/AlexStrNik/Browserino/pull/1?tab=files#diff")))
+        let rule = try #require(Rule.addingPattern(pattern, target: chrome, to: []).first)
+        let matches = { (url: String) in rule.compiledRegex.map { url.firstMatch(of: $0) != nil } == true }
+
+        #expect(pattern == "https://github.com/*")
+        #expect(matches("https://github.com/simonauner/Lotsen/issues"), "other pages on the host match")
+        #expect(!matches("https://github.com.example.com/"), "a host that only starts with it does not match")
+        #expect(!matches("http://github.com/"), "another scheme does not match")
+        #expect(Rule.hostPattern(for: try #require(URL(string: "http://localhost:8080/a"))) == "http://localhost:8080/*", "the port is kept")
+        #expect(Rule.hostPattern(for: try #require(URL(string: "mailto:someone@example.com"))) == "mailto:someone@example.com", "a link without a host is matched exactly")
+    }
+
     @Test("exact picker URL matches itself")
     func exactURLMatchesItself() {
         let rule = Rule.addingPattern("https://example.com/a?b=1", target: chrome, to: []).first

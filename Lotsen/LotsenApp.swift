@@ -150,6 +150,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     }
 
     @objc func openPreferences() {
+        showPreferences()
+    }
+
+    /// Opens Settings on the Rules pane with a new rule filled in from `draft`.
+    func openRuleEditor(_ draft: RuleDraft) {
+        showPreferences(ruleDraft: draft)
+    }
+
+    private func showPreferences(ruleDraft: RuleDraft? = nil) {
+        // Rebuilding the window's content would reset its pane and close a rule
+        // being edited, so an open window is only brought forward.
+        if ruleDraft == nil, let window = preferencesWindow, window.isVisible {
+            NSApplication.shared.activate()
+            window.makeKeyAndOrderFront(nil)
+            return
+        }
         if preferencesWindow == nil {
             preferencesWindow = NSWindow(
                 contentRect: NSRect(origin: .zero, size: preferencesMinSize),
@@ -168,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             self?.fitPreferencesHeight(overflow: overflow)
         }
         preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
-            PreferencesView()
+            PreferencesView(ruleDraft: ruleDraft)
                 .environment(\.fitSettingsHeight, fitHeight)
         })
         

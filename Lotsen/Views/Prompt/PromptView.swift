@@ -107,8 +107,6 @@ struct PromptView: View {
     @State private var selected = 0
     @FocusState private var focused: Bool
     @State private var alwaysOpen = false
-    @State private var rulePattern = ""
-    @FocusState private var patternFocused: Bool
 
     /// Rules only apply to a single opened link, so moving a tab or opening
     /// several links offers no rule.
@@ -126,9 +124,27 @@ struct PromptView: View {
         app?.schemeOverride.isEmpty ?? true
     }
 
+    /// What the rule row matches: the link's whole host, rather than the one link.
+    var rulePattern: String {
+        urls.first.map(Rule.hostPattern(for:)) ?? ""
+    }
+
     private func saveRuleIfRequested(for target: BrowserTarget) {
         guard offersRule, alwaysOpen else { return }
         rules = Rule.addingPattern(rulePattern, target: target, to: rules)
+    }
+
+    /// Opens Settings with a rule for the link filled in, so a pattern can be
+    /// adjusted and tested before it is saved. The link opens once the form
+    /// closes: a browser opened alongside it takes the focus from Settings.
+    func editRule() {
+        guard let item = selectedItem, let url = urls.first else { return }
+        let draft = RuleDraft(
+            rule: Rule(regex: rulePattern, app: item.target.app, profile: item.target.profile, kind: .pattern),
+            link: url
+        )
+
+        (NSApp.delegate as? AppDelegate)?.openRuleEditor(draft)
     }
 
     func openSelected(isIncognito: Bool) {
@@ -149,8 +165,7 @@ struct PromptView: View {
         ForEach(Array(section.enumerated()), id: \.offset) { index, row in
             PromptItem(
                 presentation: row.presentation,
-                shortcut: row.shortcut,
-                shortcutsEnabled: !patternFocused
+                shortcut: row.shortcut
             ) {
                 activate(row, isIncognito: NSEvent.modifierFlags.contains(.shift))
             }
@@ -221,21 +236,18 @@ struct PromptView: View {
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.defaultAction)
-                    .disabled(patternFocused)
 
                     Button(action: {
                         openSelected(isIncognito: true)
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.return, modifiers: [.shift])
-                    .disabled(patternFocused)
 
                     Button(action: {
                         NSApplication.shared.keyWindow?.close()
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.cancelAction)
-                    .disabled(patternFocused)
                 }
                 .onAppear {
                     focused.toggle()
@@ -253,27 +265,22 @@ struct PromptView: View {
             if offersRule {
                 VStack(alignment: .leading, spacing: 6) {
                     Toggle(isOn: $alwaysOpen) {
-                        Text(verbatim: L10n.format("rules.picker.always_open", selectedItem?.presentation.displayName ?? ""))
+                        Text(verbatim: L10n.format(
+                            "rules.picker.always_open_host",
+                            urls.first?.host() ?? rulePattern,
+                            selectedItem?.presentation.displayName ?? ""
+                        ))
                     }
-                    .disabled(!canSaveRule(for: selectedItem?.app))
 
-                    TextField(L10n.text("rules.picker.pattern"), text: $rulePattern)
-                        .textFieldStyle(.roundedBorder)
-                        .disabled(!alwaysOpen || !canSaveRule(for: selectedItem?.app))
-                        .focused($patternFocused)
-                        .onSubmit {
-                            openSelected(isIncognito: NSEvent.modifierFlags.contains(.shift))
-                        }
-                        .onExitCommand {
-                            focused = true
-                        }
+                    Button(L10n.text("rules.picker.edit_rule"), action: editRule)
+                        .buttonStyle(.link)
                 }
+                .disabled(!canSaveRule(for: selectedItem?.app))
                 .font(.callout)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: alwaysOpen) {
-                    if !alwaysOpen {
-                        focused = true
-                    }
+                    // Keeps the arrow keys and Return on the browser list.
+                    focused = true
                 }
 
                 Divider()
@@ -307,9 +314,6 @@ struct PromptView: View {
             maxHeight: .infinity
         )
         .modifier(SelectorSurface())
-        .onAppear {
-            rulePattern = urls.first?.absoluteString ?? ""
-        }
         .opacity(opacityAnimation)
         .ignoresSafeArea()
     }
