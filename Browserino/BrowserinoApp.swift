@@ -45,7 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             // thread, so hop rather than assuming isolation.
             Task { @MainActor in
                 self?.setupStatusBar()
-                NSApp.setActivationPolicy(.accessory)
+                self?.updateActivationPolicy()
             }
         }
         
@@ -163,8 +163,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         preferencesWindow!.contentMinSize = preferencesMinSize
         
         preferencesWindow!.collectionBehavior = [.moveToActiveSpace, .fullScreenNone]
-        
+        preferencesWindow!.delegate = self
+
         preferencesHiddenForSelector = false
+        updateActivationPolicy(preferencesOpen: true)
         NSApplication.shared.activate()
         
         preferencesWindow!.makeKeyAndOrderFront(nil)
@@ -245,7 +247,19 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         }
     }
     
+    /// An accessory app never appears in Cmd-Tab, so the settings window would be
+    /// unreachable from the keyboard once another app is in front. Run as a regular
+    /// app while it is open and go back to living in the menu bar when it closes.
+    private func updateActivationPolicy(preferencesOpen: Bool? = nil) {
+        let open = preferencesOpen ?? (preferencesWindow?.isVisible == true || preferencesHiddenForSelector)
+        NSApp.setActivationPolicy(open ? .regular : .accessory)
+    }
+
     func windowWillClose(_ notification: Notification) {
+        if notification.object as? NSWindow === preferencesWindow {
+            updateActivationPolicy(preferencesOpen: false)
+            return
+        }
         guard notification.object as? NSWindow === selectorWindow, preferencesHiddenForSelector else { return }
         preferencesHiddenForSelector = false
         preferencesWindow?.orderBack(nil)
