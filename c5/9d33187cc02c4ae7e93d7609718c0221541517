@@ -1,0 +1,36 @@
+Browserino/Models/Rule.swift
+  s_ba5d5dffd28369::t_c5a74c35433240 68-77
+Tests/Integration/main.swift
+  s_ba5d5dffd28369::t_2f2858944558b5 80-90
+Browserino/Localizable.xcstrings
+  s_ba5d5dffd28369::t_98d7cb30129f7f 5528,5536-5537,5542-5543,5548-5549,5554-5555,5560-5561,5566-5567,5572-5573,5578-5579,5584-5585,5590-5593,5601-5602,5607-5608,5613-5614,5619-5620,5625-5626,5631-5632,5637-5638,5643-5644,5649-5650,5655-5658,5666-5667,5672-5673,5678-5679,5684-5685,5690-5691,5696-5697,5702-5703,5708-5709,5714-5715,5720-5722
+  s_ba5d5dffd28369::t_a136a476b9d9e6 5529-5535,5538-5541,5544-5547,5550-5553,5556-5559,5562-5565,5568-5571,5574-5577,5580-5583,5586-5589,5594-5600,5603-5606,5609-5612,5615-5618,5621-5624,5627-5630,5633-5636,5639-5642,5645-5648,5651-5654,5659-5665,5668-5671,5674-5677,5680-5683,5686-5689,5692-5695,5698-5701,5704-5707,5710-5713,5716-5719
+Browserino/Views/Prompt/PromptView.swift
+  s_ba5d5dffd28369::t_063b325914061e 46-85
+  s_ba5d5dffd28369::t_5b813a1ed1eca0 145-146,166-167,190-191,219,223,226,230,237,252-280,309-311
+  s_ba5d5dffd28369::t_000520fbbad7ce 130-131
+  s_ba5d5dffd28369::t_a9fefb9ec48fc1 247-248
+  s_ba5d5dffd28369::t_f0d51b78fe5033 21-22,28-31
+Browserino/Models/SettingsPolicy.swift
+  s_ba5d5dffd28369::t_984f8f9ebf3505 5
+Browserino/Views/Prompt/PromptItem.swift
+  s_ba5d5dffd28369::t_39df8c900a73da 14-15,48
+Browserino/Views/Preferences/RulesTab.swift
+  s_ba5d5dffd28369::t_4618abf5d918bf 106-107,110-115
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c59d33187cc02c4ae7e93d7609718c0221541517",
+  "prompts": {},
+  "sessions": {
+    "s_ba5d5dffd28369": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3d62cc52-2dac-48ae-849e-18e79c857d1a",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
