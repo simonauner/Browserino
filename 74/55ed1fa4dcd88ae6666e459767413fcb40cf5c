@@ -1,0 +1,19 @@
+Lotsen/Views/Preferences/AboutTab.swift
+  s_eb457d96d3ce1a::t_486a86b176f740 24,32,42,56
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "7455ed1fa4dcd88ae6666e459767413fcb40cf5c",
+  "prompts": {},
+  "sessions": {
+    "s_eb457d96d3ce1a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61e9d917-73f5-4da1-a86f-49813d2e9382",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
