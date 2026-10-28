@@ -2997,61 +2997,61 @@
         "en": {
           "stringUnit": {
             "state": "translated",
-            "value": "Type domain and choose app in which links will be opened"
+            "value": "Links to these domains also offer the chosen app in the picker. Double-click a domain to edit it."
           }
         },
         "ru": {
           "stringUnit": {
             "state": "translated",
-            "value": "Укажите домен и выберите приложение для открытия ссылок"
+            "value": "Для ссылок на эти домены в окне выбора также появится выбранное приложение. Дважды щёлкните домен, чтобы изменить его."
           }
         },
         "de": {
           "stringUnit": {
             "state": "translated",
-            "value": "Domain eingeben und App zum Öffnen der Links auswählen"
+            "value": "Für Links zu diesen Domains bietet die Auswahl auch die gewählte App an. Doppelklicke auf eine Domain, um sie zu bearbeiten."
           }
         },
         "fr": {
           "stringUnit": {
             "state": "translated",
-            "value": "Saisissez un domaine et choisissez l’application pour ouvrir les liens"
+            "value": "Pour les liens vers ces domaines, le sélecteur propose aussi l’app choisie. Double-cliquez sur un domaine pour le modifier."
           }
         },
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Escribe un dominio y elige la aplicación para abrir los enlaces"
+            "value": "Para los enlaces a estos dominios, el selector también ofrece la app elegida. Haz doble clic en un dominio para editarlo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Digite um domínio e escolha o aplicativo para abrir os links"
+            "value": "Para links destes domínios, o seletor também oferece o app escolhido. Clique duas vezes em um domínio para editá-lo."
           }
         },
         "it": {
           "stringUnit": {
             "state": "translated",
-            "value": "Inserisci un dominio e scegli l’app per aprire i link"
+            "value": "Per i link a questi domini, il selettore propone anche l’app scelta. Fai doppio clic su un dominio per modificarlo."
           }
         },
         "ja": {
           "stringUnit": {
             "state": "translated",
-            "value": "ドメインを入力し、リンクを開くアプリを選択"
+            "value": "これらのドメインへのリンクでは、選択画面に指定したアプリも表示されます。ドメインをダブルクリックすると編集できます。"
           }
         },
         "ko": {
           "stringUnit": {
             "state": "translated",
-            "value": "도메인을 입력하고 링크를 열 앱을 선택하세요"
+            "value": "이 도메인의 링크를 열 때 선택 창에 지정한 앱도 표시됩니다. 도메인을 이중 클릭하여 편집하세요."
           }
         },
         "zh-Hans": {
           "stringUnit": {
             "state": "translated",
-            "value": "输入域名并选择打开链接的应用"
+            "value": "打开这些域名的链接时，选择器中也会显示所选应用。双击域名即可编辑。"
           }
         }
       }
@@ -7797,6 +7797,71 @@
           "stringUnit": {
             "state": "translated",
             "value": "编辑…"
+          }
+        }
+      }
+    },
+    "apps.editor.new_title": {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New Domain"
+          }
+        },
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Новый домен"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Neue Domain"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nouveau domaine"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuevo dominio"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Novo domínio"
+          }
+        },
+        "it": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nuovo dominio"
+          }
+        },
+        "ja": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新規ドメイン"
+          }
+        },
+        "ko": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "새 도메인"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建域名"
           }
         }
       }
