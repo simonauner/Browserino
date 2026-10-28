@@ -3,7 +3,7 @@ import Testing
 
 /// Existing settings and exported files depend on this exact storage format.
 struct StoredSettingsTests {
-    private let suiteName = "BrowserinoJSONDefaultsChecks-" + UUID().uuidString
+    private let suiteName = "LotsenJSONDefaultsChecks-" + UUID().uuidString
 
     private func withDefaults(_ body: (UserDefaults) throws -> Void) throws {
         let defaults = try #require(UserDefaults(suiteName: suiteName))

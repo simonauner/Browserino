@@ -5,7 +5,7 @@ import Testing
 /// a rule or a browser.
 struct IncomingURLTests {
     private func wrapped(_ value: String) -> URL {
-        var components = URLComponents(string: "browserino://open")!
+        var components = URLComponents(string: "lotsen://open")!
         components.queryItems = [URLQueryItem(name: "url", value: Data(value.utf8).base64EncodedString())]
         return components.url!
     }
@@ -14,34 +14,41 @@ struct IncomingURLTests {
 
     @Test("preserves HTTPS")
     func preservesHTTPS() {
-        #expect(web.browserinoIncomingURL == web)
+        #expect(web.lotsenIncomingURL == web)
     }
 
     @Test("decodes wrapper")
     func decodesWrapper() {
-        #expect(wrapped(web.absoluteString).browserinoIncomingURL == web)
+        #expect(wrapped(web.absoluteString).lotsenIncomingURL == web)
     }
 
     @Test("rejects wrapped non-web URLs", arguments: [
-        "javascript:alert(1)", "file:///etc/passwd", "data:text/html,test", "browserino://open", "https:", "https:///path",
+        "javascript:alert(1)", "file:///etc/passwd", "data:text/html,test", "lotsen://open", "https:", "https:///path",
     ])
     func rejectsWrapped(_ value: String) {
-        #expect(wrapped(value).browserinoIncomingURL == nil)
+        #expect(wrapped(value).lotsenIncomingURL == nil)
+    }
+
+    @Test("decodes wrapper with the pre-rename scheme")
+    func decodesLegacyWrapper() {
+        var components = URLComponents(string: "browserino://open")!
+        components.queryItems = [URLQueryItem(name: "url", value: Data(web.absoluteString.utf8).base64EncodedString())]
+        #expect(components.url!.lotsenIncomingURL == web)
     }
 
     @Test("preserves local HTML documents")
     func preservesLocalDocuments() {
-        #expect(URL(string: "file:///tmp/page.html")!.browserinoIncomingURL != nil)
+        #expect(URL(string: "file:///tmp/page.html")!.lotsenIncomingURL != nil)
     }
 
     @Test("rejects unknown command")
     func rejectsUnknownCommand() {
-        #expect(URL(string: "browserino://other")!.browserinoIncomingURL == nil)
+        #expect(URL(string: "lotsen://other")!.lotsenIncomingURL == nil)
     }
 
     @Test("rejects malformed base64")
     func rejectsMalformedBase64() {
-        #expect(URL(string: "browserino://open?url=invalid")!.browserinoIncomingURL == nil)
+        #expect(URL(string: "lotsen://open?url=invalid")!.lotsenIncomingURL == nil)
     }
 
     @Test("matches domain")

@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1024" viewBox="0 0 1024 1024">
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d4680"/>
+      <stop offset="1" stop-color="#0d2346"/>
+    </linearGradient>
+    <linearGradient id="hull" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ff7a36"/>
+      <stop offset="1" stop-color="#e0541c"/>
+    </linearGradient>
+    <clipPath id="body">
+      <rect x="100" y="100" width="824" height="824" rx="185"/>
+    </clipPath>
+  </defs>
+  <!-- Soft shadow under the icon body, per the macOS icon grid. -->
+  <rect x="100" y="112" width="824" height="824" rx="185" fill="#000000" opacity="0.18"/>
+  <rect x="100" y="106" width="824" height="824" rx="185" fill="#000000" opacity="0.12"/>
+  <g clip-path="url(#body)">
+    <rect x="100" y="100" width="824" height="824" fill="url(#sky)"/>
+    <circle cx="300" cy="270" r="5" fill="#ffffff" opacity="0.7"/>
+    <circle cx="745" cy="235" r="4" fill="#ffffff" opacity="0.6"/>
+    <circle cx="820" cy="360" r="3" fill="#ffffff" opacity="0.5"/>
+    <circle cx="215" cy="390" r="3" fill="#ffffff" opacity="0.5"/>
+    <!-- Far sea -->
+    <path d="M100 640 Q170 615 240 640 T380 640 T520 640 T660 640 T800 640 T940 640 V924 H100Z" fill="#1c568f"/>
+    <g transform="translate(530 560) scale(1.14) translate(-530 -560)">
+    <!-- Mast with the pilot flag H: white at the hoist, red at the fly -->
+    <rect x="503" y="292" width="16" height="152" rx="6" fill="#f4f6f9"/>
+    <circle cx="511" cy="286" r="14" fill="#ffd166"/>
+    <rect x="519" y="306" width="34" height="78" fill="#ffffff"/>
+    <rect x="553" y="306" width="34" height="78" fill="#d7263d"/>
+    <!-- Wheelhouse -->
+    <rect x="384" y="424" width="262" height="34" rx="14" fill="#dfe7f1"/>
+    <rect x="400" y="446" width="230" height="126" rx="16" fill="#ffffff"/>
+    <rect x="422" y="474" width="54" height="52" rx="9" fill="#14315c"/>
+    <rect x="488" y="474" width="54" height="52" rx="9" fill="#14315c"/>
+    <rect x="554" y="474" width="54" height="52" rx="9" fill="#14315c"/>
+    <!-- Hull, bow to the right -->
+    <path d="M290 566 L782 546 L728 668 L330 668 Q306 620 290 566Z" fill="url(#hull)"/>
+    <path d="M290 566 L782 546 L774 566 L295 586Z" fill="#ffffff"/>
+    <text x="528" y="642" text-anchor="middle" font-family="Helvetica Neue, Helvetica, Arial, sans-serif" font-weight="bold" font-size="60" letter-spacing="8" fill="#ffffff">LOTS</text>
+    </g>
+    <!-- Near sea, hiding the waterline -->
+    <path d="M100 676 Q170 650 240 676 T380 676 T520 676 T660 676 T800 676 T940 676 V924 H100Z" fill="#2a74b9"/>
+    <path d="M100 760 Q180 735 260 760 T420 760 T580 760 T740 760 T900 760 T1060 760 V924 H100Z" fill="#205f9e"/>
+    <!-- Bow wave and wake -->
+    <path d="M740 684 Q800 648 846 668" fill="none" stroke="#ffffff" stroke-width="16" stroke-linecap="round"/>
+    <path d="M276 696 Q220 706 164 696" fill="none" stroke="#ffffff" stroke-width="14" stroke-linecap="round" opacity="0.85"/>
+    <path d="M262 730 Q198 742 134 730" fill="none" stroke="#ffffff" stroke-width="12" stroke-linecap="round" opacity="0.6"/>
+  </g>
+</svg>
