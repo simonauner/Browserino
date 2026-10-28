@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AboutTab: View {
-    private let repository = URL(string: "https://github.com/simonauner/Browserino")!
+    private let repository = URL(string: "https://github.com/simonauner/lotsen")!
     private let browserino = URL(string: "https://github.com/AlexStrNik/Browserino")!
     private let license = URL(string: "https://www.gnu.org/licenses/gpl-3.0.html")!
 
