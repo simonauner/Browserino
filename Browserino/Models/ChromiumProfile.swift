@@ -14,7 +14,6 @@ struct ChromiumProfile: Hashable {
     let avatar: URL?
 }
 
-@MainActor
 enum ChromiumProfileService {
     /// Chromium locates its user data directory from CrProductDirName in its own
     /// Info.plist. Stable Chrome omits the key and relies on a compiled-in default,

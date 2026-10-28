@@ -9,7 +9,6 @@ import AppKit
 import SwiftUI
 
 /// One row of the picker: a browser, or an app mapped to the link's host.
-@MainActor
 struct PromptRow {
     let presentation: BrowserTargetPresentation
     let app: App?
@@ -21,7 +20,6 @@ struct PromptRow {
 /// Everything the picker lists, resolved once when it opens. The rows are read
 /// on every render and every arrow key, and resolving them touches app bundles,
 /// stored JSON settings and the browsers' profile data.
-@MainActor
 struct PromptRows {
     let apps: [PromptRow]
     let browsers: [PromptRow]

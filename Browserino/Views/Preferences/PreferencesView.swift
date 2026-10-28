@@ -36,7 +36,7 @@ enum SettingsPane: CaseIterable, Identifiable {
         }
     }
 
-    @MainActor @ViewBuilder
+    @ViewBuilder
     var content: some View {
         switch self {
         case .general: GeneralTab()

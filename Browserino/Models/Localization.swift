@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-@MainActor @Observable
+@Observable
 final class Localization {
     static let shared = Localization()
     private(set) var activeLanguage: String
@@ -49,7 +49,6 @@ final class Localization {
     }
 }
 
-@MainActor
 enum L10n {
     static func text(_ key: String) -> String { Localization.shared.text(key) }
     static func format(_ key: String, _ value: String) -> String { Localization.shared.format(key, value) }

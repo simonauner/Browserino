@@ -12,7 +12,6 @@ extension KeyboardShortcuts.Name {
     static let moveCurrentTab = Self("moveCurrentTab")
 }
 
-@MainActor
 protocol BrowserSwitchPresenting: AnyObject {
     func presentMovePrompt(snapshot: SourceTabSnapshot)
 }
@@ -26,7 +25,6 @@ enum BrowserSwitchError: Error {
     case closeFailed
 }
 
-@MainActor
 final class BrowserSwitchService {
     static let shared = BrowserSwitchService()
 

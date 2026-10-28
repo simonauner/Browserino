@@ -11,7 +11,7 @@ import SwiftUI
 /// Each value is written back as it changes, and everything is read again when
 /// UserDefaults changes underneath, which is how an imported settings file or a
 /// migration reaches views that are already open.
-@MainActor @Observable
+@Observable
 final class AppSettings {
     static let shared = AppSettings()
 
@@ -82,7 +82,7 @@ final class AppSettings {
 
 /// A view's handle on one of `AppSettings`' values, used the way @AppStorage is:
 /// assign to it, or pass `$name` where a binding is needed.
-@MainActor @propertyWrapper
+@propertyWrapper
 struct Setting<Value>: DynamicProperty {
     private let keyPath: ReferenceWritableKeyPath<AppSettings, Value>
 

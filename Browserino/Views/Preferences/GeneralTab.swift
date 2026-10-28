@@ -12,7 +12,8 @@ import CoreFoundation
 import KeyboardShortcuts
 import Combine
 
-struct SettingsDocument: FileDocument {
+/// SwiftUI reads and writes documents on a background thread, so this stays off the main actor.
+nonisolated struct SettingsDocument: FileDocument {
     static let readableContentTypes: [UTType] = [.json]
 
     // Serialized on the way in: [String: Any] cannot cross a Sendable boundary.
@@ -357,7 +358,6 @@ struct LocalizedShortcutRecorder: NSViewRepresentable {
     func updateNSView(_ view: KeyboardShortcuts.RecorderCocoa, context: Context) {
         context.coordinator.refresh()
     }
-    @MainActor
     final class Coordinator {
         weak var view: KeyboardShortcuts.RecorderCocoa?
         private var observations: [AnyCancellable] = []

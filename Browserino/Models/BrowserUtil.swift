@@ -7,7 +7,6 @@
 import AppKit
 import Foundation
 
-@MainActor
 class BrowserUtil {
     private static var settings: AppSettings { .shared }
 

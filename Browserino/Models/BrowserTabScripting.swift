@@ -18,7 +18,6 @@ enum BrowserTabScriptingError: Error, Sendable, Equatable {
     case denied, unavailable, changed, unsafeClose, failed(String)
 }
 
-@MainActor
 enum BrowserTabScripting {
     /// AppleScript returns mixed-up results and spurious errors when scripts run on
     /// several threads at once, which two quick tab moves, or a close still running
