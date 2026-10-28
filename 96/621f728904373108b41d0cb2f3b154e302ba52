@@ -1,0 +1,20 @@
+.github/workflows/swift.yml
+  s_269ca4a6a14f7e::t_832be8cbec35e3 1,20,23-24
+  s_269ca4a6a14f7e::t_b1c03d925cc243 22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "96621f728904373108b41d0cb2f3b154e302ba52",
+  "prompts": {},
+  "sessions": {
+    "s_269ca4a6a14f7e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "92ae2636-b506-480a-aa70-c86d3db2db26",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
