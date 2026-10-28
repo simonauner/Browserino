@@ -1,0 +1,58 @@
+.github/workflows/swift.yml
+  s_da0f2b0a419d7b::t_22d13b5831260e 19
+  s_da0f2b0a419d7b::t_f0879b1a8806c8 20
+Browserino.xcodeproj/project.pbxproj
+  s_da0f2b0a419d7b::t_347eee930f29d7 15,26-40,48,53-57,69-75,83,92,123-142,156-158,189,202-208,219-225,421-450,472-480
+Tests/IncomingURLTests.swift
+  s_da0f2b0a419d7b::t_e1791b1a1c9ee8 1-56
+Browserino.xcodeproj/xcshareddata/xcschemes/Browserino.xcscheme
+  s_3d22975d098ee7::t_6af8e82c72d767 1-90
+SECURITY_REVIEW.md
+  s_da0f2b0a419d7b::t_1b9811730dbcc5 20
+Tests/BrowserTargetTests.swift
+  s_da0f2b0a419d7b::t_55536837138c2e 2,4-44
+Tests/PolicyTests.swift
+  s_da0f2b0a419d7b::t_e3431d3fb1b447 1-85
+Tests/ProfileDiscoveryTests.swift
+  s_725b3878bf8755::t_2e755462626ae0 1-32
+Tests/RuleTests.swift
+  s_725b3878bf8755::t_17eee0d605200a 2,4-33
+Tests/SettingsImportTests.swift
+  s_725b3878bf8755::t_8f7d30a1ac70ca 1-91
+Tests/StoredSettingsTests.swift
+  s_725b3878bf8755::t_271af179a55e72 1-45
+Tests/TargetPolicyTests.swift
+  s_725b3878bf8755::t_d70fecd9f9257b 1-40
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "240579c8e060c540cae6ca0b8077552906b9639d",
+  "prompts": {},
+  "sessions": {
+    "s_3d22975d098ee7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "c295a0dd-4738-4d88-aa2b-463ebd861b8b",
+        "model": "unknown"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    },
+    "s_725b3878bf8755": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "ccc1c19a-574d-4779-87a3-4420d3f159fa",
+        "model": "unknown"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    },
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
