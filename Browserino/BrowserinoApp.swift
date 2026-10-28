@@ -155,7 +155,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         
         preferencesWindow!.collectionBehavior = [.moveToActiveSpace, .fullScreenNone]
         
-        NSApplication.shared.activateCompat()
+        NSApplication.shared.activate()
         
         preferencesWindow!.makeKeyAndOrderFront(nil)
         preferencesWindow!.orderFrontRegardless()
@@ -205,7 +205,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             )
         )
         
-        NSApplication.shared.activateCompat()
+        NSApplication.shared.activate()
         selectorWindow!.deactivateDelay()
         
         selectorWindow!.contentView = NSHostingView(
