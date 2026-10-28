@@ -12,12 +12,23 @@ Lotsen started as a fork of [Browserino](https://github.com/AlexStrNik/Browserin
 
 On top of Browserino, Lotsen adds:
 
-- **Browser profiles**: Chromium profiles show up as separate targets, with custom names, visibility and shortcuts (Browserino PRs [#48](https://github.com/AlexStrNik/Browserino/pull/48) and [#65](https://github.com/AlexStrNik/Browserino/pull/65)).
-- **Move current tab**: send the open tab to another browser from the menu bar or a global shortcut ([#61](https://github.com/AlexStrNik/Browserino/pull/61)).
-- **Missing apps** stay visible and editable instead of disappearing ([#63](https://github.com/AlexStrNik/Browserino/pull/63)).
+- **Browser profiles**: Chromium profiles show up as separate targets, with custom names, visibility and shortcuts (Browserino PRs [#48](https://github.com/AlexStrNik/Browserino/pull/48) by Moti Levy and [#65](https://github.com/AlexStrNik/Browserino/pull/65) by Matija Zezelj).
+- **Move current tab**: send the open tab to another browser from the menu bar or a global shortcut ([#61](https://github.com/AlexStrNik/Browserino/pull/61) by Lukas Wolfsteiner).
+- **Missing apps** stay visible and editable instead of disappearing ([#63](https://github.com/AlexStrNik/Browserino/pull/63) by Matija Zezelj).
 - **Localization** in ten languages, with a manual language picker.
 - **Rules**: write a rule as a simple wildcard pattern such as `https://example.com*` instead of a regex, or generate a regex from the URLs in Test URLs.
-- **Modern macOS**: Swift 6, macOS 14 minimum ([#64](https://github.com/AlexStrNik/Browserino/pull/64)), Liquid Glass on macOS 26 and builds with the Xcode 27 SDK.
+- **Modern macOS**: Swift 6, macOS 14 minimum ([#64](https://github.com/AlexStrNik/Browserino/pull/64) by Matija Zezelj), Liquid Glass on macOS 26 and builds with the Xcode 27 SDK.
+
+### Thanks to the Browserino contributors
+
+Several of these features started as pull requests to Browserino that are still open there. Lotsen builds on that work, so the credit for it goes to:
+
+- [Matija Zezelj](https://github.com/matijazezelj) for opening links in a specific Chromium profile ([#65](https://github.com/AlexStrNik/Browserino/pull/65)), Swift 6 and the macOS 14 baseline ([#64](https://github.com/AlexStrNik/Browserino/pull/64)), and keeping rules working when their target app is uninstalled ([#63](https://github.com/AlexStrNik/Browserino/pull/63)).
+- [Moti Levy](https://github.com/motilevy) for Chrome profile support in the picker and rules ([#48](https://github.com/AlexStrNik/Browserino/pull/48)).
+- [Lukas Wolfsteiner](https://github.com/dotWee) for moving the current tab to another browser ([#61](https://github.com/AlexStrNik/Browserino/pull/61)).
+- [Ninad P. Chaudhari](https://github.com/ninadpchaudhari) for dropping the deprecated `--no-quarantine` flag from the install instructions ([#55](https://github.com/AlexStrNik/Browserino/pull/55)).
+
+The [integration notes](docs/UPSTREAM_REVIEW.md) describe what was taken from each pull request and what changed along the way.
 
 Lotsen has no Homebrew cask and no prebuilt releases yet, so you build it from source. If you want the original app, install it from [the Browserino repository](https://github.com/AlexStrNik/Browserino#installation).
 
