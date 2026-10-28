@@ -1,0 +1,29 @@
+Browserino/Extensions/URLExtensions.swift
+  s_da0f2b0a419d7b::t_32e55c76f6e606 10,23
+Browserino.xcodeproj/project.pbxproj
+  s_da0f2b0a419d7b::t_52f9dacfe430a0 380,418,434,450
+Browserino/Models/Localization.swift
+  s_da0f2b0a419d7b::t_26e6419008d283 4
+Browserino/Models/AppSettings.swift
+  s_da0f2b0a419d7b::t_26e6419008d283 14,85
+Browserino/Views/Preferences/PreferencesView.swift
+  s_da0f2b0a419d7b::t_26e6419008d283 39
+Browserino/Views/Preferences/GeneralTab.swift
+  s_da0f2b0a419d7b::t_9685bf0eca4105 15-16
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c453ab24e43296d683ff8e76e25c88a685bae21b",
+  "prompts": {},
+  "sessions": {
+    "s_da0f2b0a419d7b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "76c1dbae-dc41-4504-961f-34f7c994ec93",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
