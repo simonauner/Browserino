@@ -65,11 +65,16 @@ struct RuleForm: View {
     @State private var openWithPresented = false
     
     @State private var regex: String = ""
-    @State private var testUrls: String = "https://github.com/AlexStrNik/Browserino\nhttps://x.com/alexstrnik"
+    @State private var kind: Rule.Kind = .regex
+    @State private var testUrls: String = ""
     @State private var url: URL?
     
     private var compiledRegex: Regex<AnyRegexOutput>? {
-        return try? Regex(regex).ignoresCase()
+        return Rule.compile(regex, kind: kind)
+    }
+    
+    private var generatedRegex: String? {
+        return RegexGenerator.regex(from: testUrls.components(separatedBy: .newlines))
     }
     
     private var attributtedText: AttributedString {
@@ -93,10 +98,23 @@ struct RuleForm: View {
                 header: Text("General")
                     .font(.headline)
             ) {
-                TextField("Regex:", text: $regex)
+                Picker("Type:", selection: $kind) {
+                    Text("Regex").tag(Rule.Kind.regex)
+                    Text("Pattern").tag(Rule.Kind.pattern)
+                }
+                .pickerStyle(.segmented)
+                .fixedSize()
+                
+                TextField(kind == .regex ? "Regex:" : "Pattern:", text: $regex)
                     .font(
                         .system(size: 14)
                     )
+                
+                if kind == .pattern {
+                    Text("Matches the whole URL. Use * for any text, e.g. https://tradera.com*")
+                        .font(.callout)
+                        .foregroundStyle(.secondary)
+                }
                 
                 LabeledContent("Test URLs:") {
                     TextEditor(text: $testUrls)
@@ -104,6 +122,14 @@ struct RuleForm: View {
                             .system(size: 14)
                         )
                 }
+                
+                Button(action: {
+                    kind = .regex
+                    regex = generatedRegex ?? regex
+                }) {
+                    Text("Generate regex from test URLs")
+                }
+                .disabled(generatedRegex == nil)
                 
                 Text(attributtedText)
                     .font(
@@ -162,7 +188,8 @@ struct RuleForm: View {
                     onSave(
                         Rule(
                             regex: regex,
-                            app: url
+                            app: url,
+                            kind: kind
                         )
                     )
                 }) {
@@ -176,6 +203,7 @@ struct RuleForm: View {
         .frame(minWidth: 500)
         .onAppear {
             regex = rule?.regex ?? ""
+            kind = rule?.kind ?? .regex
             url = rule?.app
         }
     }
