@@ -1,0 +1,21 @@
+Lotsen/Localizable.xcstrings
+  s_eb457d96d3ce1a::t_3cb1720df09e90 1830,1836,1842,1848,1854,1860,1866,1872,1878,1884,7348-7542
+Lotsen/Views/Preferences/GeneralTab.swift
+  s_eb457d96d3ce1a::t_3cb1720df09e90 48,75-83,194-202,204-205
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "01da18647c5a47f1a549914bca387823a57b8476",
+  "prompts": {},
+  "sessions": {
+    "s_eb457d96d3ce1a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "61e9d917-73f5-4da1-a86f-49813d2e9382",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
