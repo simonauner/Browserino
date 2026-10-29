@@ -10,7 +10,9 @@ import AppKit
 
 class LotsenWindow: NSPanel {
     var presentingAlert = false
-    static let selectorWidth: CGFloat = 250
+    /// Wide enough for "Always open … in …" and its Edit Rule button on one line.
+    static let selectorWidth: CGFloat = 360
+    /// A starting height only: the picker's content sets the real one.
     static let selectorHeight: CGFloat = 200
 
     /// .nonactivatingPanel would otherwise refuse key status, which the
@@ -27,7 +29,7 @@ class LotsenWindow: NSPanel {
         
         self.titlebarAppearsTransparent = true
         self.titleVisibility = .hidden
-        self.minSize = NSSize(width: Self.selectorWidth, height: Self.selectorHeight)
+        self.minSize = NSSize(width: Self.selectorWidth, height: 0)
         
         self.standardWindowButton(.miniaturizeButton)?.isHidden = true
         self.standardWindowButton(.closeButton)?.isHidden = true
@@ -43,6 +45,20 @@ class LotsenWindow: NSPanel {
         self.deactivateDelay()
     }
     
+    /// Fits the window to the picker's height, keeping its top edge in place
+    /// and the whole window on screen.
+    func fitContentHeight(_ height: CGFloat) {
+        // The content runs under the hidden title bar, so it fills the whole frame.
+        guard abs(height - self.frame.height) >= 1 else { return }
+        var frame = self.frame
+        frame.origin.y = frame.maxY - height
+        frame.size.height = height
+        if let visible = screen?.visibleFrame, frame.minY < visible.minY + 20 {
+            frame.origin.y = visible.minY + 20
+        }
+        setFrame(frame, display: true)
+    }
+
     func deactivateDelay() {
         self.hidesOnDeactivate = false
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) {

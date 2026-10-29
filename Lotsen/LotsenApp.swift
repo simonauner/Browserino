@@ -252,6 +252,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if selectorWindow == nil {
             selectorWindow = LotsenWindow()
         }
+        // A width saved before the picker was widened would cut off the rule row.
+        if selectorWindow!.frame.width < LotsenWindow.selectorWidth {
+            selectorWindow!.setContentSize(NSSize(width: LotsenWindow.selectorWidth, height: selectorWindow!.frame.height))
+        }
         
         guard let screen = (getScreenWithMouse() ?? NSScreen.main ?? NSScreen.screens.first)?.visibleFrame else { return }
         
@@ -280,9 +284,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         NSApplication.shared.activate()
         selectorWindow!.deactivateDelay()
         
-        selectorWindow!.contentView = NSHostingView(
+        let prompt = NSHostingView(
             rootView: LocalizedRoot { PromptView(urls: urls, sourceTab: sourceTab) }
         )
+        // The picker sets its own height, which a minimum size taken from the
+        // SwiftUI content would hold the window above.
+        prompt.sizingOptions = []
+        selectorWindow!.contentView = prompt
         
         selectorWindow!.makeKeyAndOrderFront(nil)
         selectorWindow!.isReleasedWhenClosed = false
