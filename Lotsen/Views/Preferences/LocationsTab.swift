@@ -6,10 +6,6 @@
 
 import SwiftUI
 
-struct Directory: Codable, Hashable {
-    var directoryPath: String
-}
-
 struct BrowserSearchLocationsTab: View {
     @Setting(\.directories) private var directories
     @State private var explorerPresented = false

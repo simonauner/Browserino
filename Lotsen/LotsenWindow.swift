@@ -42,7 +42,6 @@ class LotsenWindow: NSPanel {
         self.backgroundColor = .clear
         self.level = .floating
         self.isMovable = false
-        self.deactivateDelay()
     }
     
     /// Fits the window to the picker's height, keeping its top edge in place

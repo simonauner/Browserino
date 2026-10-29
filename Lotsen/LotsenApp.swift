@@ -141,9 +141,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
 
     func presentMovePrompt(snapshot: SourceTabSnapshot) {
         loadBrowsersIfEmpty()
-        let targets = AppSettings.shared.browsers
-        let hidden = AppSettings.shared.hiddenBrowsers
-        guard TargetPolicy.visible(targets, hidden: hidden, profilesEnabled: UserDefaults.standard.object(forKey: "profilesEnabled") as? Bool != false).contains(where: { Bundle(url: $0.app) != nil && Bundle(url: $0.app)?.bundleIdentifier != snapshot.bundleIdentifier }) else {
+        guard !PromptRows(urls: [snapshot.url], sourceTab: snapshot).browsers.isEmpty else {
             BrowserSwitchService.shared.presentNoDestinationAlert(); return
         }
         presentSelector(urls: [snapshot.url], sourceTab: snapshot)

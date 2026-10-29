@@ -57,13 +57,16 @@ struct Rule: Hashable, Codable {
         }
     }
 
-    /// A pattern matches the whole URL, where `*` stands for any text.
+    /// A pattern matches the whole URL, where `*` stands for any text. A trailing
+    /// `/*` also matches nothing at all, so `https://example.com/*` covers the
+    /// bare `https://example.com`, which has no slash after the host.
     static func regex(fromPattern pattern: String) -> String {
-        let parts = pattern
+        let optionalTail = pattern.hasSuffix("/*")
+        let parts = (optionalTail ? String(pattern.dropLast(2)) : pattern)
             .split(separator: "*", omittingEmptySubsequences: false)
             .map { NSRegularExpression.escapedPattern(for: String($0)) }
 
-        return "^" + parts.joined(separator: ".*") + "$"
+        return "^" + parts.joined(separator: ".*") + (optionalTail ? "(/.*)?" : "") + "$"
     }
 
     /// The pattern the picker suggests for a link: everything on its scheme, host
