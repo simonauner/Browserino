@@ -28,6 +28,7 @@ struct RuleForm: View {
     /// Nil for a rule that isn't saved yet, which has nothing to delete.
     var onDelete: (() -> Void)?
     var onCancel: (() -> Void)?
+    var precedingRules: [Rule]
 
     @Environment(\.dismiss) private var dismiss
 
@@ -38,7 +39,8 @@ struct RuleForm: View {
     @State private var profile: String?
     @State private var deletePresented = false
 
-    init(rule: Rule?, onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
+    init(rule: Rule?, precedingRules: [Rule] = [], onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
+        self.precedingRules = precedingRules
         isNew = rule == nil
         self.onSave = onSave
         self.onDelete = onDelete
@@ -48,8 +50,8 @@ struct RuleForm: View {
         _profile = State(initialValue: rule?.profile)
     }
 
-    init(draft: RuleDraft, onSave: @escaping (Rule) -> Void, onCancel: @escaping () -> Void) {
-        self.init(rule: draft.rule, onSave: onSave)
+    init(draft: RuleDraft, precedingRules: [Rule] = [], onSave: @escaping (Rule) -> Void, onCancel: @escaping () -> Void) {
+        self.init(rule: draft.rule, precedingRules: precedingRules, onSave: onSave)
         self.onCancel = onCancel
         isNew = true
         _testUrls = State(initialValue: draft.link.absoluteString)
@@ -130,6 +132,10 @@ struct RuleForm: View {
                             .foregroundStyle(result.matches ? .green : .secondary)
                     }
                     .accessibilityValue(L10n.text(result.matches ? "rules.editor.matches" : "rules.editor.no_match"))
+                    if result.matches, let winner = Rule.firstMatch(in: precedingRules, for: result.line) {
+                        Label(L10n.format("rules.editor.shadowed", winner.target.displayName), systemImage: "exclamationmark.triangle")
+                            .foregroundStyle(.secondary)
+                    }
                 }
             } header: {
                 HStack {

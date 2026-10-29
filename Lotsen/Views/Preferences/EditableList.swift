@@ -20,6 +20,7 @@ struct EditableList<Row: View>: View {
     var add: () -> Void
     var edit: ((Int) -> Void)?
     var remove: (IndexSet) -> Void
+    var move: ((IndexSet, Int) -> Void)?
     /// Rows that can't be removed, such as a built-in default.
     var isRemovable: (Int) -> Bool = { _ in true }
     @ViewBuilder var row: (Int) -> Row
@@ -37,12 +38,30 @@ struct EditableList<Row: View>: View {
         remove(rows)
     }
 
+    private var selectedIndex: Int? {
+        selection.count == 1 ? selection.first.flatMap { (0..<count).contains($0) ? $0 : nil } : nil
+    }
+
+    private func moveSelection(by offset: Int) {
+        guard let index = selectedIndex, (0..<count).contains(index + offset) else { return }
+        moveRows(IndexSet(integer: index), to: index + (offset > 0 ? 2 : -1))
+    }
+
+    private func moveRows(_ rows: IndexSet, to destination: Int) {
+        guard let move else { return }
+        move(rows, destination)
+        let start = destination - rows.filter { $0 < destination }.count
+        selection = Set(start..<(start + rows.count))
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             List(selection: $selection) {
                 ForEach(0..<count, id: \.self) { index in
                     row(index)
                 }
+                .onMove(perform: moveRows)
+                .moveDisabled(move == nil)
             }
             .listStyle(.plain)
             .alternatingRowBackgrounds()
@@ -87,6 +106,22 @@ struct EditableList<Row: View>: View {
                 .disabled(removable.isEmpty)
                 .help(L10n.text("common.remove"))
                 .accessibilityLabel(L10n.text("common.remove"))
+
+                if move != nil {
+                    Divider().frame(height: 14)
+                    Button { moveSelection(by: -1) } label: {
+                        Image(systemName: "arrow.up").frame(width: 24, height: 20)
+                    }
+                    .disabled(selectedIndex == nil || selectedIndex == 0)
+                    .help(L10n.text("common.move_up"))
+                    .accessibilityLabel(L10n.text("common.move_up"))
+                    Button { moveSelection(by: 1) } label: {
+                        Image(systemName: "arrow.down").frame(width: 24, height: 20)
+                    }
+                    .disabled(selectedIndex == nil || selectedIndex == count - 1)
+                    .help(L10n.text("common.move_down"))
+                    .accessibilityLabel(L10n.text("common.move_down"))
+                }
 
                 Spacer()
             }

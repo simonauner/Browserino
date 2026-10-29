@@ -242,14 +242,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if processedUrls.count == 1 {
             let urlString = processedUrls.first!.absoluteString
 
-            for rule in AppSettings.shared.rules {
-                if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
-                    // A rule's browser may be uninstalled; the picker keeps the link.
-                    BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
-                        if error != nil { self.presentSelector(urls: processedUrls) }
-                    }
-                    return
+            if let rule = Rule.firstMatch(in: AppSettings.shared.rules, for: urlString) {
+                // A rule's browser may be uninstalled; the picker keeps the link.
+                BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
+                    if error != nil { self.presentSelector(urls: processedUrls) }
                 }
+                return
             }
         }
         

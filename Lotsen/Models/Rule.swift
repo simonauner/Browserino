@@ -48,6 +48,12 @@ struct Rule: Hashable, Codable {
         Rule.compile(regex, kind: kind)
     }
 
+    static func firstMatch(in rules: [Rule], for url: String) -> Rule? {
+        rules.first { rule in
+            rule.compiledRegex.map { url.firstMatch(of: $0) != nil } ?? false
+        }
+    }
+
     static func compile(_ expression: String, kind: Kind) -> Regex<AnyRegexOutput>? {
         switch kind {
         case .regex:

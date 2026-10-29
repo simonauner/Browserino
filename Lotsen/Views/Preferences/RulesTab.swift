@@ -74,6 +74,9 @@ struct RulesTab: View {
                 },
                 remove: { rows in
                     rules.remove(atOffsets: rows)
+                },
+                move: { rows, destination in
+                    rules.move(fromOffsets: rows, toOffset: destination)
                 }
             ) { index in
                 RuleRow(rule: rules[index])
@@ -81,10 +84,12 @@ struct RulesTab: View {
             
             Text(verbatim: L10n.text("rules.list.instructions"))
                 .foregroundStyle(.secondary)
+            Text(verbatim: L10n.text("rules.list.priority"))
+                .foregroundStyle(.secondary)
         }
         .padding(20)
         .sheet(isPresented: $addPresented) {
-            RuleForm(rule: nil) {
+            RuleForm(rule: nil, precedingRules: rules) {
                 rules.append($0)
             }
         }
@@ -93,6 +98,7 @@ struct RulesTab: View {
             // saved rule's browser, or the one picked there.
             RuleForm(
                 draft: draft,
+                precedingRules: rules,
                 onSave: { rule in
                     rules.append(rule)
                     draft.open(with: rule)
@@ -105,6 +111,7 @@ struct RulesTab: View {
         .sheet(item: $editing) { row in
             RuleForm(
                 rule: row.value,
+                precedingRules: Array(rules.prefix(row.id)),
                 onSave: { rule in
                     if rules.indices.contains(row.id) {
                         rules[row.id] = rule
