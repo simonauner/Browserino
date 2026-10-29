@@ -33,6 +33,11 @@ struct SettingsImportTests {
         #expect((try? SettingsPolicy.validate(["rules": #"[{"app":"file:///Applications/Safari.app","regex":".*","profile":7}]"#])) == nil)
     }
 
+    @Test("unknown rule kind cannot erase rules")
+    func unknownRuleKindRejected() {
+        #expect((try? SettingsPolicy.validate(["rules": #"[{"app":"file:///Applications/Safari.app","regex":".*","kind":"glob"}]"#])) == nil)
+    }
+
     @Test("object app profile cannot erase mappings")
     func objectAppProfileRejected() {
         #expect((try? SettingsPolicy.validate(["apps": #"[{"app":"file:///Applications/Safari.app","host":"","schemeOverride":"","profile":{}}]"#])) == nil)

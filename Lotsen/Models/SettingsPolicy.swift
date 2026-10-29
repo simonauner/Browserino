@@ -95,9 +95,9 @@ enum SettingsPolicy {
                 guard targets.allSatisfy({ $0.app.isFileURL && $0.app.pathExtension == "app" && ($0.profile.map(ProfilePathPolicy.isSafeComponent) ?? true) }) else { throw CocoaError(.fileReadCorruptFile) }
             case "apps", "rules":
                 struct Mapping: Decodable { let host: String; let schemeOverride: String; let app: URL; let profile: String? }
-                struct Pattern: Decodable { let regex: String; let app: URL; let profile: String?; let profileDirectory: String? }
                 let targets: [BrowserTarget]
-                if key == "rules" { targets = try JSONDecoder().decode([Pattern].self, from: data).map { BrowserTarget(app: $0.app, profile: $0.profile ?? $0.profileDirectory) } }
+                // Decoded as the app reads them, since a rule it can't read empties the whole list.
+                if key == "rules" { targets = try JSONDecoder().decode([Rule].self, from: data).map(\.target) }
                 else { targets = try JSONDecoder().decode([Mapping].self, from: data).map { BrowserTarget(app: $0.app, profile: $0.profile) } }
                 guard targets.allSatisfy({ $0.app.isFileURL && $0.app.pathExtension == "app" && ($0.profile.map(ProfilePathPolicy.isSafeComponent) ?? true) }) else { throw CocoaError(.fileReadCorruptFile) }
             case "KeyboardShortcuts_moveCurrentTab":
