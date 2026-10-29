@@ -52,14 +52,6 @@ struct GeneralTab: View {
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     @AppStorage("apps_atTop") private var appsAtTop: Bool = true
 
-    func defaultBrowser() -> String? {
-        guard let browserUrl = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https:")!) else {
-            return nil
-        }
-
-        return Bundle(url: browserUrl)?.bundleIdentifier
-    }
-
     func makeDefaultBrowser() async {
         defer { refreshIsDefault() }
         // Throws when the user declines the system prompt, which needs no alert
@@ -71,7 +63,11 @@ struct GeneralTab: View {
     }
 
     func refreshIsDefault() {
-        isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+        isDefault = ["http:", "https:"].allSatisfy { scheme in
+            guard let url = URL(string: scheme),
+                  let application = NSWorkspace.shared.urlForApplication(toOpen: url) else { return false }
+            return Bundle(url: application)?.bundleIdentifier == Bundle.main.bundleIdentifier
+        }
     }
 
     func exportSettings() {
@@ -122,6 +118,23 @@ struct GeneralTab: View {
 
     var body: some View {
         Form {
+            Section(L10n.text("settings.default_browser.title")) {
+                if isDefault {
+                    Label(L10n.text("settings.default_browser.active"), systemImage: "checkmark.circle.fill")
+                } else {
+                    LabeledContent(L10n.text("settings.default_browser.description")) {
+                        Button(L10n.text("settings.default_browser.make_default")) {
+                            Task { await makeDefaultBrowser() }
+                        }
+                    }
+                }
+                LabeledContent(L10n.text("settings.default_browser.test_description")) {
+                    Button(L10n.text("settings.default_browser.test")) {
+                        (NSApp.delegate as? AppDelegate)?.testBrowserPicker()
+                    }
+                }
+            }
+
             Section {
                 Picker(L10n.text("settings.language.title"), selection: $localization.selectedLanguage) {
                     Text(verbatim: L10n.text("settings.language.system_default")).tag("")
@@ -138,17 +151,6 @@ struct GeneralTab: View {
                 Toggle(L10n.text("tabs.transfer.close_source"), isOn: $closeSourceTab)
             } footer: {
                 Text(verbatim: L10n.text("tabs.transfer.safari_keep_source"))
-            }
-
-            Section(L10n.text("settings.default_browser.title")) {
-                LabeledContent(L10n.text("settings.default_browser.description")) {
-                    Button(L10n.text("settings.default_browser.make_default")) {
-                        Task {
-                            await makeDefaultBrowser()
-                        }
-                    }
-                    .disabled(isDefault)
-                }
             }
 
             Section(L10n.text("settings.copy_url.title")) {

@@ -163,6 +163,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         showPreferences()
     }
 
+    func testBrowserPicker() {
+        presentSelector(urls: [URL(string: "https://example.com/")!])
+    }
+
     func openBrowserPreferences(urls: [URL]) {
         linksAwaitingBrowserSettings = urls
         showPreferences(pane: .browsers)
