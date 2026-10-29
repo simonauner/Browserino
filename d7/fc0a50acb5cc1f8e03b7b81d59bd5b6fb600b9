@@ -1,0 +1,19 @@
+Lotsen/Views/Preferences/BrowsersTab.swift
+  s_24ea1c816d0f3a::t_bea10e03c07c73 106-109
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d7fc0a50acb5cc1f8e03b7b81d59bd5b6fb600b9",
+  "prompts": {},
+  "sessions": {
+    "s_24ea1c816d0f3a": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "0c6e143b-9318-4c09-a4c3-1757e2a2ef07",
+        "model": "unknown"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
