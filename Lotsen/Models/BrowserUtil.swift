@@ -22,11 +22,6 @@ class BrowserUtil {
     static func loadBrowsers(
         oldBrowsers: [BrowserTarget]
     ) -> [BrowserTarget] {
-        if settings.directories.isEmpty {
-            let defaultDirectory = Directory(directoryPath: "/Applications")
-            settings.directories.append(defaultDirectory)
-        }
-        
         let validDirectories = settings.directories.map { $0.directoryPath }
 
         guard let url = URL(string: "https:") else {
