@@ -17,6 +17,16 @@ struct TargetPolicyTests {
         #expect(TargetPolicy.moveShortcutsToProfiles([p1], shortcuts: ["com.a": "C"], keeping: [base], bundleIdentifier: id) == ["com.a": "C"], "an app row opening the browser keeps it")
     }
 
+    @Test("a rescan keeps the user's order and places new profiles beside their browser")
+    func mergeKeepsOrder() {
+        let safari = BrowserTarget(app: URL(string: "file:///Applications/Safari.app/")!)
+        let firefox = BrowserTarget(app: URL(string: "file:///Applications/Firefox.app/")!)
+        let p3 = BrowserTarget(app: base.app, profile: "Profile 3")
+        #expect(TargetPolicy.merge(discovered: [p1, p2, safari, firefox], into: [safari, base]) == [safari, p1, p2, firefox], "profiles replace their browser where it was")
+        #expect(TargetPolicy.merge(discovered: [p1, p2, p3, safari], into: [p2, safari, p1]) == [p2, safari, p1, p3], "a new profile goes after its browser's last row")
+        #expect(TargetPolicy.merge(discovered: [safari], into: [safari, firefox]) == [safari], "an uninstalled browser is dropped")
+    }
+
     @Test("legacy hidden browser stays hidden after expansion")
     func hiddenAfterExpansion() {
         #expect(TargetPolicy.visible([p1, p2], hidden: [base], profilesEnabled: true).isEmpty)

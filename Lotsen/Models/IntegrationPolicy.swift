@@ -72,6 +72,46 @@ enum TargetPolicy {
         }
         return result
     }
+    /// Keeps the order the user arranged, and drops anything newly discovered next
+    /// to its own browser rather than at the end.
+    static func merge(
+        discovered: [BrowserTarget],
+        into oldBrowsers: [BrowserTarget]
+    ) -> [BrowserTarget] {
+        let discoveredTargets = Set(discovered)
+
+        var merged: [BrowserTarget] = []
+        var placed: Set<BrowserTarget> = []
+
+        for old in oldBrowsers {
+            if discoveredTargets.contains(old) {
+                if placed.insert(old).inserted {
+                    merged.append(old)
+                }
+            } else {
+                // This exact entry is gone, but the same browser may now be
+                // represented differently — profiles replacing the plain row on
+                // first run. Those belong where the user had put the browser, not
+                // at the bottom of the list.
+                for target in discovered
+                where target.app == old.app && placed.insert(target).inserted {
+                    merged.append(target)
+                }
+            }
+        }
+
+        for target in discovered where !placed.contains(target) {
+            if let last = merged.lastIndex(where: { $0.app == target.app }) {
+                merged.insert(target, at: last + 1)
+            } else {
+                merged.append(target)
+            }
+
+            placed.insert(target)
+        }
+
+        return merged
+    }
     static func toggle(_ target: BrowserTarget, targets: [BrowserTarget], hidden: [BrowserTarget]) -> [BrowserTarget] {
         var result = hidden
         if target.profile == nil {
