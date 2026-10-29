@@ -1,0 +1,21 @@
+Lotsen.xcodeproj/project.pbxproj
+  s_b0a04e005d424b::t_86c87b40415769 362,380,400,418,432,435,448,451
+Lotsen/LotsenApp.swift
+  s_b0a04e005d424b::t_6a245f5991f964 258-262
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d0c1764c0bdace6176cd0f1c72b88f135149cd61",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,49 @@
+Tests/RuleTests.swift
+  s_b0a04e005d424b::t_003bf313020056 5-14
+Lotsen/Localizable.xcstrings
+  s_b0a04e005d424b::t_7f1138bd2ef628 8063-8322,8521
+  s_b0a04e005d424b::t_2d24bc7837ba3a 8323-8517
+Lotsen/Views/Preferences/RuleForm.swift
+  s_b0a04e005d424b::t_003bf313020056 31,42-43,53-54,135-138
+Lotsen/Models/Rule.swift
+  s_b0a04e005d424b::t_003bf313020056 51-56
+Lotsen/Views/Preferences/EditableList.swift
+  s_b0a04e005d424b::t_003bf313020056 23,41-45,55-56,64,110-124
+  s_b0a04e005d424b::t_350c3598afbf7e 125
+Lotsen/LotsenApp.swift
+  s_b0a04e005d424b::t_003bf313020056 251
+  s_b0a04e005d424b::t_ac66cb3ad5d07d 168-170,176,179,202
+  s_b0a04e005d424b::t_f11174c037d263 29,166-167,318,341-344
+Lotsen/Views/Preferences/RulesTab.swift
+  s_b0a04e005d424b::t_003bf313020056 77-79,87-88,92,101,114
+Lotsen/Views/Prompt/PromptView.swift
+  s_b0a04e005d424b::t_f11174c037d263 157
+  s_b0a04e005d424b::t_ac66cb3ad5d07d 10,49,150-156,158-163,280-282
+  s_c202e2ec3e2d12::t_3dafbe1541136c 283-284
+Lotsen/Views/Preferences/PreferencesView.swift
+  s_b0a04e005d424b::t_ac66cb3ad5d07d 88-89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1aaccc17d833d3b97ddbc6b3e900be479a7df774",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    },
+    "s_c202e2ec3e2d12": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1895a-63f3-7b32-bc9f-8616abd80857",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}

@@ -1,0 +1,21 @@
+Lotsen/Views/Preferences/GeneralTab.swift
+  s_b0a04e005d424b::t_034dea24d47d66 66-70,121-132,134-137
+Lotsen/Localizable.xcstrings
+  s_b0a04e005d424b::t_69b974181b4fad 8518-8712
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "625e9eb27b7487e4c6605668f41d15f75bb335c0",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
