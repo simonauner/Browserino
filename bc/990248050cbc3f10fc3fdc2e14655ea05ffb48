@@ -1,0 +1,19 @@
+Lotsen/Views/Preferences/EditableList.swift
+  s_b0a04e005d424b::t_74c2bd22ea4940 67
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bc990248050cbc3f10fc3fdc2e14655ea05ffb48",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
