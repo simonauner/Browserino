@@ -103,9 +103,10 @@ struct BrowsersTab: View {
 
                             if profilesEnabled && isFirstOfApp && needsProfileAccess(browser) {
                                 Button(L10n.text("browsers.profiles.enable")) {
-                                    if ChromiumProfileService.requestAccess(forAppAt: browser.app) {
-                                        if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
-                                    }
+                                    // Rescan whatever the result: picking the folder grants access even
+                                    // when no bookmark could be saved, and the rescan is idempotent.
+                                    ChromiumProfileService.requestAccess(forAppAt: browser.app)
+                                    if let refreshed = BrowserUtil.rescanBrowsers(oldBrowsers: browsers) { browsers = refreshed }
                                 }
                             }
 
