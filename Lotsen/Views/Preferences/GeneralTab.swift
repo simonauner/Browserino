@@ -47,18 +47,11 @@ struct GeneralTab: View {
     @State private var exportDocument = SettingsDocument()
     @State private var resetPresented = false
     @Environment(\.fitSettingsHeight) private var fitSettingsHeight
+    private var undoManager: UndoManager? { (NSApp.delegate as? AppDelegate)?.settingsUndoManager }
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     @AppStorage("apps_atTop") private var appsAtTop: Bool = true
-
-    func defaultBrowser() -> String? {
-        guard let browserUrl = NSWorkspace.shared.urlForApplication(toOpen: URL(string: "https:")!) else {
-            return nil
-        }
-
-        return Bundle(url: browserUrl)?.bundleIdentifier
-    }
 
     func makeDefaultBrowser() async {
         defer { refreshIsDefault() }
@@ -71,7 +64,11 @@ struct GeneralTab: View {
     }
 
     func refreshIsDefault() {
-        isDefault = defaultBrowser() == Bundle.main.bundleIdentifier
+        isDefault = ["http:", "https:"].allSatisfy { scheme in
+            guard let url = URL(string: scheme),
+                  let application = NSWorkspace.shared.urlForApplication(toOpen: url) else { return false }
+            return Bundle(url: application)?.bundleIdentifier == Bundle.main.bundleIdentifier
+        }
     }
 
     func exportSettings() {
@@ -87,6 +84,7 @@ struct GeneralTab: View {
     private static let settingsKeys = SettingsPolicy.keys
 
     func resetSettings() {
+        undoManager?.removeAllActions()
         let defaults = UserDefaults.standard
         KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
         defaults.removeObject(forKey: "browserDataAccess")
@@ -109,6 +107,7 @@ struct GeneralTab: View {
 
             let defaults = UserDefaults.standard
             let accepted = try SettingsPolicy.validate(settings)
+            undoManager?.removeAllActions()
             for (key, value) in accepted {
                 if key == "KeyboardShortcuts_moveCurrentTab", let raw = value as? String {
                     let shortcut = try JSONDecoder().decode(KeyboardShortcuts.Shortcut.self, from: Data(raw.utf8))
@@ -122,6 +121,23 @@ struct GeneralTab: View {
 
     var body: some View {
         Form {
+            Section(L10n.text("settings.default_browser.title")) {
+                if isDefault {
+                    Label(L10n.text("settings.default_browser.active"), systemImage: "checkmark.circle.fill")
+                } else {
+                    LabeledContent(L10n.text("settings.default_browser.description")) {
+                        Button(L10n.text("settings.default_browser.make_default")) {
+                            Task { await makeDefaultBrowser() }
+                        }
+                    }
+                }
+                LabeledContent(L10n.text("settings.default_browser.test_description")) {
+                    Button(L10n.text("settings.default_browser.test")) {
+                        (NSApp.delegate as? AppDelegate)?.testBrowserPicker()
+                    }
+                }
+            }
+
             Section {
                 Picker(L10n.text("settings.language.title"), selection: $localization.selectedLanguage) {
                     Text(verbatim: L10n.text("settings.language.system_default")).tag("")
@@ -138,17 +154,6 @@ struct GeneralTab: View {
                 Toggle(L10n.text("tabs.transfer.close_source"), isOn: $closeSourceTab)
             } footer: {
                 Text(verbatim: L10n.text("tabs.transfer.safari_keep_source"))
-            }
-
-            Section(L10n.text("settings.default_browser.title")) {
-                LabeledContent(L10n.text("settings.default_browser.description")) {
-                    Button(L10n.text("settings.default_browser.make_default")) {
-                        Task {
-                            await makeDefaultBrowser()
-                        }
-                    }
-                    .disabled(isDefault)
-                }
             }
 
             Section(L10n.text("settings.copy_url.title")) {

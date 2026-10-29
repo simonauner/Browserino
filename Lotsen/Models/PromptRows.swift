@@ -49,7 +49,7 @@ struct PromptRows {
         // out keeps the keyboard selection indices in step with what is on screen.
         // A mapping to a hidden browser still shows: the domain asked for it.
         let appRows: [PromptRow] = apps.filter { app in
-            sourceTab == nil && urls.contains { $0.matchesHost(app.host) }
+            sourceTab == nil && !urls.isEmpty && urls.allSatisfy { $0.matchesHost(app.host) }
         }
         .filter { !visible.contains($0.target) }
         .compactMap { app in

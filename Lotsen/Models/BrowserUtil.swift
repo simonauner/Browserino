@@ -127,8 +127,19 @@ class BrowserUtil {
             arguments.append("--profile-directory=\(profile)")
         }
         if isIncognito {
-            guard let privateArg = settings.privateArgs[identifier], !privateArg.isEmpty else {
+            guard let privateArg = PrivateBrowsingPolicy.argument(for: identifier, overrides: settings.privateArgs) else {
                 fail("errors.private_argument_missing")
+                return
+            }
+            if urls.count > 1, !PrivateBrowsingPolicy.acceptsMultipleURLs(argument: privateArg) {
+                openURL([urls[0]], target: target, isIncognito: true) { _, error in
+                    if let error {
+                        if let completionHandler { completionHandler(nil, error) }
+                        else { presentError(error) }
+                    } else {
+                        openURL(Array(urls.dropFirst()), target: target, isIncognito: true, completionHandler: completionHandler)
+                    }
+                }
                 return
             }
             arguments.append(privateArg)

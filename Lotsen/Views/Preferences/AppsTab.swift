@@ -54,31 +54,54 @@ struct AppsTab: View {
     @Setting(\.apps) private var apps
     @State private var addPresented = false
     @State private var editing: EditedRow<App>?
+    private var undoManager: UndoManager? { (NSApp.delegate as? AppDelegate)?.settingsUndoManager }
+
+    private func update(_ value: [App], action: String) {
+        AppSettings.shared.replace(\.apps, with: value, undoManager: undoManager, actionName: L10n.text(action))
+    }
     
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             EditableList(
-                count: apps.count,
+                items: apps,
                 add: {
                     addPresented = true
                 },
                 edit: { index in
-                    editing = EditedRow(id: index, value: apps[index])
+                    if apps.indices.contains(index) {
+                        editing = EditedRow(id: index, value: apps[index])
+                    }
                 },
                 remove: { rows in
-                    apps.remove(atOffsets: rows)
+                    var value = apps
+                    value.remove(atOffsets: rows)
+                    update(value, action: "common.delete")
                 }
-            ) { index in
-                AppRow(app: apps[index])
+            ) { app in
+                AppRow(app: app)
+            }
+            .overlay {
+                if apps.isEmpty {
+                    ContentUnavailableView {
+                        Label(L10n.text("apps.empty.title"), systemImage: "square.grid.2x2")
+                    } description: {
+                        Text(verbatim: L10n.text("apps.empty.description"))
+                    } actions: {
+                        Button(L10n.text("apps.empty.add")) { addPresented = true }
+                    }
+                    .padding(.bottom, 30)
+                }
             }
             
             Text(verbatim: L10n.text("apps.list.instructions"))
+                .foregroundStyle(.secondary)
+            Text(verbatim: L10n.text("settings.list.undo_hint"))
                 .foregroundStyle(.secondary)
         }
         .padding(20)
         .sheet(isPresented: $addPresented) {
             AppForm(app: nil) {
-                apps.append($0)
+                update(apps + [$0], action: "common.add")
             }
         }
         .sheet(item: $editing) { row in
@@ -86,12 +109,16 @@ struct AppsTab: View {
                 app: row.value,
                 onSave: { app in
                     if apps.indices.contains(row.id) {
-                        apps[row.id] = app
+                        var value = apps
+                        value[row.id] = app
+                        update(value, action: "common.edit")
                     }
                 },
                 onDelete: {
-                    apps.removeAll {
-                        $0 == row.value
+                    if apps.indices.contains(row.id), apps[row.id] == row.value {
+                        var value = apps
+                        value.remove(at: row.id)
+                        update(value, action: "common.delete")
                     }
                 }
             )

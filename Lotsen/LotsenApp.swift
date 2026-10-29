@@ -26,6 +26,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     /// Set once the user resizes the settings window by hand, so the height
     /// fitted to its content stops overriding their choice.
     private var preferencesResizedByUser = false
+    private var linksAwaitingBrowserSettings: [URL]?
+    let settingsUndoManager = UndoManager()
     
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     
@@ -162,15 +164,24 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         showPreferences()
     }
 
+    func testBrowserPicker() {
+        presentSelector(urls: [URL(string: "https://example.com/")!])
+    }
+
+    func openBrowserPreferences(urls: [URL]) {
+        linksAwaitingBrowserSettings = urls
+        showPreferences(pane: .browsers)
+    }
+
     /// Opens Settings on the Rules pane with a new rule filled in from `draft`.
     func openRuleEditor(_ draft: RuleDraft) {
         showPreferences(ruleDraft: draft)
     }
 
-    private func showPreferences(ruleDraft: RuleDraft? = nil) {
+    private func showPreferences(pane: SettingsPane? = nil, ruleDraft: RuleDraft? = nil) {
         // Rebuilding the window's content would reset its pane and close a rule
         // being edited, so an open window is only brought forward.
-        if ruleDraft == nil, let window = preferencesWindow, window.isVisible {
+        if ruleDraft == nil, pane == nil, let window = preferencesWindow, window.isVisible {
             NSApplication.shared.activate()
             window.makeKeyAndOrderFront(nil)
             return
@@ -185,6 +196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         }
         
         preferencesWindow!.center()
+        settingsUndoManager.removeAllActions()
         preferencesWindow!.title = L10n.text("settings.window.title")
         preferencesResizedByUser = false
         // Made out here so the root view's closure captures the action, not self:
@@ -193,7 +205,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             self?.fitPreferencesHeight(overflow: overflow)
         }
         preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
-            PreferencesView(ruleDraft: ruleDraft)
+            PreferencesView(pane: pane ?? .general, ruleDraft: ruleDraft)
                 .environment(\.fitSettingsHeight, fitHeight)
         })
         
@@ -242,14 +254,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if processedUrls.count == 1 {
             let urlString = processedUrls.first!.absoluteString
 
-            for rule in AppSettings.shared.rules {
-                if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
-                    // A rule's browser may be uninstalled; the picker keeps the link.
-                    BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
-                        if error != nil { self.presentSelector(urls: processedUrls) }
-                    }
-                    return
+            if let rule = Rule.firstMatch(in: AppSettings.shared.rules, for: urlString) {
+                // A rule's browser may be uninstalled; the picker keeps the link.
+                BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
+                    if error != nil { self.presentSelector(urls: processedUrls) }
                 }
+                return
             }
         }
         
@@ -311,7 +321,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     }
     
     func windowDidResignKey(_ notification: Notification) {
-        if notification.object as? NSWindow === selectorWindow, selectorWindow?.hidesOnDeactivate == true, selectorWindow?.presentingAlert == false {
+        if notification.object as? NSWindow === selectorWindow, selectorWindow?.hidesOnDeactivate == true, selectorWindow?.presentingAlert == false, selectorWindow?.attachedSheet == nil {
             selectorWindow!.contentView = nil
             selectorWindow!.close()
         }
@@ -331,9 +341,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         }
     }
 
+    func windowWillReturnUndoManager(_ window: NSWindow) -> UndoManager? {
+        window === preferencesWindow ? settingsUndoManager : nil
+    }
+
     func windowWillClose(_ notification: Notification) {
         if notification.object as? NSWindow === preferencesWindow {
             updateActivationPolicy(preferencesOpen: false)
+            if let urls = linksAwaitingBrowserSettings {
+                linksAwaitingBrowserSettings = nil
+                Task { @MainActor in self.presentSelector(urls: urls) }
+            }
             return
         }
         guard notification.object as? NSWindow === selectorWindow, preferencesHiddenForSelector else { return }

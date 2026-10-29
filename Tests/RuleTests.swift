@@ -2,6 +2,16 @@ import Foundation
 import Testing
 
 struct RuleTests {
+    @Test("routing follows priority and skips invalid rules")
+    func priority() {
+        let broad = Rule(regex: "https://example.com/*", app: URL(fileURLWithPath: "/Applications/A.app"), kind: .pattern)
+        let specific = Rule(regex: "https://example.com/work/*", app: URL(fileURLWithPath: "/Applications/B.app"), kind: .pattern)
+        let invalid = Rule(regex: "[", app: broad.app)
+        let url = "https://example.com/work/task"
+        #expect(Rule.firstMatch(in: [invalid, broad, specific], for: url) == broad)
+        #expect(Rule.firstMatch(in: [specific, broad], for: url) == specific)
+        #expect(Rule.firstMatch(in: [specific], for: "https://other.com/") == nil)
+    }
     private let chrome = BrowserTarget(app: URL(fileURLWithPath: "/Applications/Google Chrome.app"), profile: "Profile 1")
 
     private func legacyRule() throws -> Rule {

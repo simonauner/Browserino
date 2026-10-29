@@ -13,6 +13,12 @@ struct BrowsersTab: View {
     @AppStorage("profilesEnabled") private var profilesEnabled = true
     @Setting(\.profileNames) private var profileNames
     @Setting(\.privateArgs) private var privateArgs
+    @State private var advancedExpanded = false
+
+    private var applications: [BrowserTarget] {
+        var seen = Set<URL>()
+        return browsers.filter { seen.insert($0.app).inserted }
+    }
 
     private var displayed: [(offset: Int, element: BrowserTarget)] {
         var seen = Set<URL>()
@@ -28,7 +34,7 @@ struct BrowsersTab: View {
 
     private func privateArg(for key: String) -> Binding<String> {
         return .init(
-            get: { self.privateArgs[key, default: ""] },
+            get: { PrivateBrowsingPolicy.argument(for: key, overrides: self.privateArgs) ?? "" },
             set: { self.privateArgs[key] = $0 })
     }
 
@@ -70,12 +76,14 @@ struct BrowsersTab: View {
                                 .frame(width: 24, height: 24)
 
                             if let profile = browser.profile, let identifier = presentation.bundleIdentifier {
+                                Text(browser.app.appDisplayName + " —")
                                 TextField(profile, text: Binding(
                                     get: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] ?? presentation.profile?.name ?? profile },
                                     set: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] = $0 }
                                 ))
                                 .textFieldStyle(.roundedBorder)
                                 .frame(minWidth: 100, maxWidth: 200)
+                                .accessibilityLabel(L10n.text("browsers.profiles.name"))
                             } else {
                                 Text(presentation.displayName)
                             }
@@ -83,19 +91,6 @@ struct BrowsersTab: View {
                             Spacer()
 
                             if let browserId = presentation.bundleIdentifier {
-                                // Incognito is a property of the browser, not of one
-                                // profile, so it stays on the plain row and every
-                                // profile of that browser inherits it.
-                                if !profilesEnabled || isFirstOfApp {
-                                    TextField(L10n.text("browsers.private_argument.placeholder"),
-                                        text: privateArg(for: browserId)
-                                    )
-                                    .textFieldStyle(.roundedBorder)
-                                    .monospaced()
-                                    .autocorrectionDisabled()
-                                    .frame(width: 180)
-                                }
-
                                 ShortcutButton(
                                     shortcutKey: browser.shortcutKey(bundleIdentifier: browserId)
                                 )
@@ -122,6 +117,7 @@ struct BrowsersTab: View {
                             .accessibilityLabel(L10n.text(isHidden ? "browsers.visibility.show" : "browsers.visibility.hide"))
                         }
                         .padding(.vertical, 4)
+                        .accessibilityElement(children: .contain)
                     }
                 }
                 .onMove(perform: move)
@@ -141,6 +137,34 @@ struct BrowsersTab: View {
             Text(verbatim: L10n.text("browsers.list.instructions"))
                 .foregroundStyle(.secondary)
                 .padding(.horizontal, 20)
+
+            DisclosureGroup(L10n.text("settings.section.advanced"), isExpanded: $advancedExpanded) {
+                ScrollView {
+                    VStack(alignment: .leading, spacing: 12) {
+                        Text(verbatim: L10n.text("browsers.private_argument.help"))
+                            .font(.callout)
+                            .foregroundStyle(.secondary)
+                        ForEach(applications, id: \.app) { browser in
+                            if let identifier = Bundle(url: browser.app)?.bundleIdentifier {
+                                LabeledContent(browser.app.appDisplayName) {
+                                    TextField(L10n.text("browsers.private_argument.placeholder"), text: privateArg(for: identifier))
+                                        .textFieldStyle(.roundedBorder)
+                                        .monospaced()
+                                        .autocorrectionDisabled()
+                                        .frame(maxWidth: 240)
+                                }
+                            }
+                        }
+                        Button(L10n.text("browsers.private_argument.restore")) {
+                            privateArgs = [:]
+                        }
+                        .disabled(privateArgs.isEmpty)
+                    }
+                    .padding(.top, 8)
+                }
+                .frame(maxHeight: 220)
+            }
+            .padding(.horizontal, 20)
         }
         .padding(.bottom, 20)
     }

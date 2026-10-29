@@ -28,6 +28,7 @@ struct RuleForm: View {
     /// Nil for a rule that isn't saved yet, which has nothing to delete.
     var onDelete: (() -> Void)?
     var onCancel: (() -> Void)?
+    var precedingRules: [Rule]
 
     @Environment(\.dismiss) private var dismiss
 
@@ -36,20 +37,20 @@ struct RuleForm: View {
     @State private var testUrls: String = ""
     @State private var url: URL?
     @State private var profile: String?
-    @State private var deletePresented = false
 
-    init(rule: Rule?, onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
+    init(rule: Rule?, precedingRules: [Rule] = [], onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
+        self.precedingRules = precedingRules
         isNew = rule == nil
         self.onSave = onSave
         self.onDelete = onDelete
         _regex = State(initialValue: rule?.regex ?? "")
-        _kind = State(initialValue: rule?.kind ?? .regex)
+        _kind = State(initialValue: rule?.kind ?? .pattern)
         _url = State(initialValue: rule?.app)
         _profile = State(initialValue: rule?.profile)
     }
 
-    init(draft: RuleDraft, onSave: @escaping (Rule) -> Void, onCancel: @escaping () -> Void) {
-        self.init(rule: draft.rule, onSave: onSave)
+    init(draft: RuleDraft, precedingRules: [Rule] = [], onSave: @escaping (Rule) -> Void, onCancel: @escaping () -> Void) {
+        self.init(rule: draft.rule, precedingRules: precedingRules, onSave: onSave)
         self.onCancel = onCancel
         isNew = true
         _testUrls = State(initialValue: draft.link.absoluteString)
@@ -82,8 +83,8 @@ struct RuleForm: View {
         Form {
             Section {
                 Picker(L10n.text("rules.editor.type"), selection: $kind) {
-                    Text(verbatim: L10n.text("rules.kind.regex")).tag(Rule.Kind.regex)
                     Text(verbatim: L10n.text("rules.kind.pattern")).tag(Rule.Kind.pattern)
+                    Text(verbatim: L10n.text("rules.kind.regex_advanced")).tag(Rule.Kind.regex)
                 }
                 .pickerStyle(.segmented)
 
@@ -130,6 +131,10 @@ struct RuleForm: View {
                             .foregroundStyle(result.matches ? .green : .secondary)
                     }
                     .accessibilityValue(L10n.text(result.matches ? "rules.editor.matches" : "rules.editor.no_match"))
+                    if result.matches, let winner = Rule.firstMatch(in: precedingRules, for: result.line) {
+                        Label(L10n.format("rules.editor.shadowed", winner.target.displayName), systemImage: "exclamationmark.triangle")
+                            .foregroundStyle(.secondary)
+                    }
                 }
             } header: {
                 HStack {
@@ -160,7 +165,8 @@ struct RuleForm: View {
             if onDelete != nil {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(L10n.text("common.delete"), role: .destructive) {
-                        deletePresented = true
+                        onDelete?()
+                        dismiss()
                     }
                 }
             }
@@ -191,15 +197,6 @@ struct RuleForm: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(compiledRegex == nil || url == nil)
-            }
-        }
-        .confirmationDialog(
-            L10n.text("rules.editor.delete_confirmation"),
-            isPresented: $deletePresented
-        ) {
-            Button(L10n.text("common.delete"), role: .destructive) {
-                onDelete?()
-                dismiss()
             }
         }
     }

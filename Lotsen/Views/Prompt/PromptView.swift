@@ -7,11 +7,13 @@
 
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct PromptView: View {
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @Setting(\.rules) private var rules
+    @Setting(\.privateArgs) private var privateArgs
     @AppStorage("rules_showInPicker") private var showRuleOption: Bool = true
 
     let urls: [URL]
@@ -45,6 +47,7 @@ struct PromptView: View {
     @State private var selected = 0
     @FocusState private var focused: Bool
     @State private var alwaysOpen = false
+    @State private var otherApplicationPresented = false
     /// The rows' full height, which the picker shrinks to fit.
     @State private var listHeight: CGFloat = 0
     /// Past this the rows scroll rather than the picker growing.
@@ -53,7 +56,7 @@ struct PromptView: View {
     /// Rules only apply to a single opened link, so moving a tab or opening
     /// several links offers no rule.
     var offersRule: Bool {
-        showRuleOption && sourceTab == nil && urls.count == 1
+        showRuleOption && sourceTab == nil && urls.count == 1 && !rows.all.isEmpty
     }
 
     /// The highlighted row.
@@ -73,7 +76,11 @@ struct PromptView: View {
 
     private func saveRuleIfRequested(for target: BrowserTarget) {
         guard offersRule, alwaysOpen else { return }
-        rules = Rule.addingPattern(rulePattern, target: target, to: rules)
+        AppSettings.shared.replace(
+            \.rules, with: Rule.addingPattern(rulePattern, target: target, to: rules),
+            undoManager: (NSApp.delegate as? AppDelegate)?.settingsUndoManager,
+            actionName: L10n.text("common.add")
+        )
     }
 
     /// Opens Settings with a rule for the link filled in, so a pattern can be
@@ -95,11 +102,19 @@ struct PromptView: View {
     }
 
     func activate(_ row: PromptRow, isIncognito: Bool) {
+        guard !isIncognito || supportsPrivate(row) else {
+            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 1, userInfo: [NSLocalizedDescriptionKey: L10n.text("picker.private.unavailable")]))
+            return
+        }
         if let app = row.app {
-            openUrlsInApp(app: app)
+            openUrlsInApp(app: app, isIncognito: isIncognito)
         } else {
             open(urls, target: row.target, isIncognito: isIncognito)
         }
+    }
+
+    private func supportsPrivate(_ row: PromptRow) -> Bool {
+        PrivateBrowsingPolicy.canOpen(identifier: row.presentation.bundleIdentifier, overrides: privateArgs, schemeOverride: row.app?.schemeOverride ?? "")
     }
 
     /// The rows from `offset` on in `rows.all`, which is what selection indices count.
@@ -107,11 +122,16 @@ struct PromptView: View {
         ForEach(Array(section.enumerated()), id: \.offset) { index, row in
             PromptItem(
                 presentation: row.presentation,
-                shortcut: row.shortcut
+                shortcut: row.shortcut,
+                supportsPrivate: supportsPrivate(row)
             ) {
                 activate(row, isIncognito: NSEvent.modifierFlags.contains(.shift))
             }
             .id(offset + index)
+            .contextMenu {
+                Button(L10n.text("picker.private.open")) { activate(row, isIncognito: true) }
+                    .disabled(!supportsPrivate(row))
+            }
             .buttonStyle(
                 SelectButtonStyle(
                     selected: selected == offset + index
@@ -120,7 +140,7 @@ struct PromptView: View {
         }
     }
 
-    func openUrlsInApp(app: App) {
+    func openUrlsInApp(app: App, isIncognito: Bool) {
         let urls: [URL] =
             if app.schemeOverride.isEmpty {
                 urls
@@ -135,16 +155,65 @@ struct PromptView: View {
         open(
             urls,
             target: app.target,
-            isIncognito: false,
+            isIncognito: isIncognito,
             savingRule: canSaveRule(for: app)
         )
     }
 
     var body: some View {
         VStack {
+            if urls.count > 1 {
+                DisclosureGroup {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(Array(urls.enumerated()), id: \.offset) { _, url in
+                                Text(verbatim: url.absoluteString)
+                                    .font(.caption)
+                                    .textSelection(.enabled)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                    }
+                    .frame(height: 100)
+                } label: {
+                    Text(verbatim: L10n.format("picker.batch.title", String(urls.count)))
+                        .font(.headline)
+                }
+                HStack(alignment: .firstTextBaseline) {
+                    Text(verbatim: L10n.text("picker.batch.description"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer(minLength: 4)
+                    Button {
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(urls.map(\.absoluteString).joined(separator: "\n"), forType: .string)
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                    }
+                    .buttonStyle(.borderless)
+                    .help(L10n.text("picker.batch.copy"))
+                    .accessibilityLabel(L10n.text("picker.batch.copy"))
+                    .keyboardShortcut(KeyEquivalent("c"), modifiers: alternativeShortcut ? [.command] : [.command, .option])
+                }
+                Divider()
+            }
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 2) {
+                        if rows.all.isEmpty {
+                            ContentUnavailableView {
+                                Label(L10n.text("picker.empty.title"), systemImage: "globe")
+                            } description: {
+                                Text(verbatim: L10n.text("picker.empty.description"))
+                            } actions: {
+                                Button(L10n.text("picker.empty.manage")) {
+                                    (NSApp.delegate as? AppDelegate)?.openBrowserPreferences(urls: urls)
+                                }
+                                Button(L10n.text("browsers.target.other_application")) {
+                                    otherApplicationPresented = true
+                                }
+                            }
+                        }
                         if !rows.apps.isEmpty && rows.appsAtTop {
                             items(rows.apps, offset: 0)
 
@@ -239,7 +308,7 @@ struct PromptView: View {
                 Divider()
             }
 
-            if let host = urls.first?.host() {
+            if urls.count == 1, let host = urls.first?.host() {
                 Button(action: {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
@@ -259,6 +328,11 @@ struct PromptView: View {
                     modifiers: alternativeShortcut ? [.command] : [.command, .option]
                 )
                 .help(urls.first?.absoluteString ?? "")
+            }
+        }
+        .fileImporter(isPresented: $otherApplicationPresented, allowedContentTypes: [.application]) { result in
+            if case .success(let application) = result {
+                open(urls, target: BrowserTarget(app: application), isIncognito: false, savingRule: false)
             }
         }
         .padding(12)

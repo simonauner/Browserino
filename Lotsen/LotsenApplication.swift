@@ -12,8 +12,12 @@ class LotsenApplication: NSApplication {
         if event.type == .keyDown {
             if event.modifierFlags.contains(.command) {
                 if event.modifierFlags.contains(.shift) {
-                    if event.charactersIgnoringModifiers == "Z" {
+                    if event.charactersIgnoringModifiers?.lowercased() == "z" {
                         if NSApp.sendAction(Selector(("redo:")), to: nil, from: self) { return }
+                        if let manager = (delegate as? AppDelegate)?.settingsUndoManager, manager.canRedo {
+                            manager.redo()
+                            return
+                        }
                     }
                 }
                 guard let key = event.charactersIgnoringModifiers else {
@@ -28,6 +32,10 @@ class LotsenApplication: NSApplication {
                     if NSApp.sendAction(#selector(NSText.paste(_:)), to: nil, from: self) { return }
                 case "z":
                     if NSApp.sendAction(Selector(("undo:")), to: nil, from: self) { return }
+                    if let manager = (delegate as? AppDelegate)?.settingsUndoManager, manager.canUndo {
+                        manager.undo()
+                        return
+                    }
                 case "a":
                     if NSApp.sendAction(
                         #selector(NSStandardKeyBindingResponding.selectAll(_:)), to: nil, from: self

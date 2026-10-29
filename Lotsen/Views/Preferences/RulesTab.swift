@@ -53,9 +53,14 @@ struct RulesTab: View {
     @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
     @State private var addPresented = false
     @State private var editing: EditedRow<Rule>?
+    private var undoManager: UndoManager? { (NSApp.delegate as? AppDelegate)?.settingsUndoManager }
     /// Owned by the settings window, so the draft shows once rather than every
     /// time the Rules pane is reopened.
     @Binding var draft: RuleDraft?
+
+    private func update(_ value: [Rule], action: String) {
+        AppSettings.shared.replace(\.rules, with: value, undoManager: undoManager, actionName: L10n.text(action))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -65,27 +70,52 @@ struct RulesTab: View {
             }
 
             EditableList(
-                count: rules.count,
+                items: rules,
                 add: {
                     addPresented = true
                 },
                 edit: { index in
-                    editing = EditedRow(id: index, value: rules[index])
+                    if rules.indices.contains(index) {
+                        editing = EditedRow(id: index, value: rules[index])
+                    }
                 },
                 remove: { rows in
-                    rules.remove(atOffsets: rows)
+                    var value = rules
+                    value.remove(atOffsets: rows)
+                    update(value, action: "common.delete")
+                },
+                move: { rows, destination in
+                    var value = rules
+                    value.move(fromOffsets: rows, toOffset: destination)
+                    update(value, action: "rules.list.reorder")
                 }
-            ) { index in
-                RuleRow(rule: rules[index])
+            ) { rule in
+                RuleRow(rule: rule)
+            }
+            .overlay {
+                if rules.isEmpty {
+                    ContentUnavailableView {
+                        Label(L10n.text("rules.empty.title"), systemImage: "arrow.triangle.branch")
+                    } description: {
+                        Text(verbatim: L10n.text("rules.empty.description"))
+                    } actions: {
+                        Button(L10n.text("rules.empty.add")) { addPresented = true }
+                    }
+                    .padding(.bottom, 30)
+                }
             }
             
             Text(verbatim: L10n.text("rules.list.instructions"))
                 .foregroundStyle(.secondary)
+            Text(verbatim: L10n.text("rules.list.priority"))
+                .foregroundStyle(.secondary)
+            Text(verbatim: L10n.text("settings.list.undo_hint"))
+                .foregroundStyle(.secondary)
         }
         .padding(20)
         .sheet(isPresented: $addPresented) {
-            RuleForm(rule: nil) {
-                rules.append($0)
+            RuleForm(rule: nil, precedingRules: rules) {
+                update(rules + [$0], action: "common.add")
             }
         }
         .sheet(item: $draft) { draft in
@@ -93,8 +123,9 @@ struct RulesTab: View {
             // saved rule's browser, or the one picked there.
             RuleForm(
                 draft: draft,
+                precedingRules: rules,
                 onSave: { rule in
-                    rules.append(rule)
+                    update(rules + [rule], action: "common.add")
                     draft.open(with: rule)
                 },
                 onCancel: {
@@ -105,14 +136,19 @@ struct RulesTab: View {
         .sheet(item: $editing) { row in
             RuleForm(
                 rule: row.value,
+                precedingRules: Array(rules.prefix(row.id)),
                 onSave: { rule in
                     if rules.indices.contains(row.id) {
-                        rules[row.id] = rule
+                        var value = rules
+                        value[row.id] = rule
+                        update(value, action: "common.edit")
                     }
                 },
                 onDelete: {
-                    rules.removeAll {
-                        $0 == row.value
+                    if rules.indices.contains(row.id), rules[row.id] == row.value {
+                        var value = rules
+                        value.remove(at: row.id)
+                        update(value, action: "common.delete")
                     }
                 }
             )

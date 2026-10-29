@@ -10,6 +10,7 @@ import SwiftUI
 struct PromptItem: View {
     var presentation: BrowserTargetPresentation
     var shortcut: String?
+    var supportsPrivate: Bool
     var action: () -> Void
 
     var body: some View {
@@ -21,6 +22,11 @@ struct PromptItem: View {
                     )
                 
                 Spacer()
+
+                Image(systemName: supportsPrivate ? "lock" : "lock.slash")
+                    .foregroundStyle(.secondary)
+                    .help(L10n.text(supportsPrivate ? "picker.private.available" : "picker.private.unavailable"))
+                    .accessibilityLabel(L10n.text(supportsPrivate ? "picker.private.available" : "picker.private.unavailable"))
                 
                 if let shortcut {
                     Text(shortcut)
