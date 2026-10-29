@@ -42,22 +42,5 @@ struct PromptItem: View {
             }
             .padding(8)
         }
-        .keyboardShortcut(key.map { KeyboardShortcut($0, modifiers: [.shift]) })
-        .background {
-            if let key {
-                Button(action: action) {}
-                    .opacity(0)
-                    .keyboardShortcut(key, modifiers: [])
-            }
-        }
-    }
-
-    /// The recorded key.
-    private var key: KeyEquivalent? {
-        guard let character = shortcut?.lowercased().first else {
-            return nil
-        }
-
-        return KeyEquivalent(character)
     }
 }
