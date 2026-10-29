@@ -45,7 +45,7 @@ struct RuleForm: View {
         self.onSave = onSave
         self.onDelete = onDelete
         _regex = State(initialValue: rule?.regex ?? "")
-        _kind = State(initialValue: rule?.kind ?? .regex)
+        _kind = State(initialValue: rule?.kind ?? .pattern)
         _url = State(initialValue: rule?.app)
         _profile = State(initialValue: rule?.profile)
     }
@@ -84,8 +84,8 @@ struct RuleForm: View {
         Form {
             Section {
                 Picker(L10n.text("rules.editor.type"), selection: $kind) {
-                    Text(verbatim: L10n.text("rules.kind.regex")).tag(Rule.Kind.regex)
                     Text(verbatim: L10n.text("rules.kind.pattern")).tag(Rule.Kind.pattern)
+                    Text(verbatim: L10n.text("rules.kind.regex_advanced")).tag(Rule.Kind.regex)
                 }
                 .pickerStyle(.segmented)
 
