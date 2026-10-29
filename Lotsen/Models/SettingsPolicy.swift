@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import CoreFoundation
 
@@ -26,6 +27,19 @@ enum SettingsPolicy {
     }
 
     struct LegacyProfile: Codable { let directoryName: String; let displayName: String; let isHidden: Bool }
+
+    /// Moves Chrome profile names, shortcuts and hidden flags from the format used
+    /// before profiles were targets onto the profile targets.
+    private static func normalize(_ profiles: [LegacyProfile], chrome: URL, names: inout [String: String], shortcuts: inout [String: String], hidden: inout [BrowserTarget]) {
+        for profile in profiles {
+            let target = BrowserTarget(app: chrome, profile: profile.directoryName)
+            let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
+            if names[key] == nil { names[key] = profile.displayName }
+            if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
+            if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
+        }
+    }
+
     static func migrateLegacyProfiles(defaults: UserDefaults, chrome: URL) {
         guard !defaults.bool(forKey: "profileMigration48"),
               let raw = defaults.string(forKey: "chromeProfiles"),
@@ -38,13 +52,7 @@ enum SettingsPolicy {
         }
         var names = dictionary("profileNames"), shortcuts = dictionary("shortcuts")
         var hidden = defaults.string(forKey: "hiddenBrowsers").flatMap { $0.data(using: .utf8) }.flatMap { try? JSONDecoder().decode([BrowserTarget].self, from: $0) } ?? []
-        for profile in profiles {
-            let target = BrowserTarget(app: chrome, profile: profile.directoryName)
-            let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
-            if names[key] == nil { names[key] = profile.displayName }
-            if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
-            if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
-        }
+        normalize(profiles, chrome: chrome, names: &names, shortcuts: &shortcuts, hidden: &hidden)
         for (key, value) in [("profileNames", names), ("shortcuts", shortcuts)] {
             if let data = try? JSONEncoder().encode(value), let raw = String(data: data, encoding: .utf8) { defaults.set(raw, forKey: key) }
         }
@@ -67,14 +75,9 @@ enum SettingsPolicy {
             var names = try dictionary("profileNames"), shortcuts = try dictionary("shortcuts")
             var hidden: [BrowserTarget] = []
             if let raw = settings["hiddenBrowsers"] as? String { hidden = try JSONDecoder().decode([BrowserTarget].self, from: Data(raw.utf8)) }
-            let browser = URL(fileURLWithPath: "/Applications/Google Chrome.app")
-            for profile in profiles {
-                let target = BrowserTarget(app: browser, profile: profile.directoryName)
-                let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
-                if names[key] == nil { names[key] = profile.displayName }
-                if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
-                if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
-            }
+            let chrome = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.google.Chrome")
+                ?? URL(fileURLWithPath: "/Applications/Google Chrome.app")
+            normalize(profiles, chrome: chrome, names: &names, shortcuts: &shortcuts, hidden: &hidden)
             normalized["profileNames"] = String(decoding: try JSONEncoder().encode(names), as: UTF8.self)
             normalized["shortcuts"] = String(decoding: try JSONEncoder().encode(shortcuts), as: UTF8.self)
             normalized["hiddenBrowsers"] = String(decoding: try JSONEncoder().encode(hidden), as: UTF8.self)
