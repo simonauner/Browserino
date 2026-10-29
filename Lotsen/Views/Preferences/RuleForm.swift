@@ -72,10 +72,6 @@ struct RuleForm: View {
         }
     }
 
-    private var generatedRegex: String? {
-        RegexGenerator.regex(from: testLines)
-    }
-
     var body: some View {
         Form {
             Section {
@@ -143,19 +139,6 @@ struct RuleForm: View {
                         ))
                         .foregroundStyle(.secondary)
                     }
-                }
-            } footer: {
-                HStack(alignment: .firstTextBaseline) {
-                    Text(verbatim: L10n.text("rules.editor.generate_regex_help"))
-                        .foregroundStyle(.secondary)
-
-                    Spacer()
-
-                    Button(L10n.text("rules.editor.generate_regex")) {
-                        kind = .regex
-                        regex = generatedRegex ?? regex
-                    }
-                    .disabled(generatedRegex == nil)
                 }
             }
 
