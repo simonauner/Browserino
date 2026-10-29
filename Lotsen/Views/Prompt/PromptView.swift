@@ -7,6 +7,7 @@
 
 import AppKit
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct PromptView: View {
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
@@ -45,6 +46,7 @@ struct PromptView: View {
     @State private var selected = 0
     @FocusState private var focused: Bool
     @State private var alwaysOpen = false
+    @State private var otherApplicationPresented = false
     /// The rows' full height, which the picker shrinks to fit.
     @State private var listHeight: CGFloat = 0
     /// Past this the rows scroll rather than the picker growing.
@@ -53,7 +55,7 @@ struct PromptView: View {
     /// Rules only apply to a single opened link, so moving a tab or opening
     /// several links offers no rule.
     var offersRule: Bool {
-        showRuleOption && sourceTab == nil && urls.count == 1
+        showRuleOption && sourceTab == nil && urls.count == 1 && !rows.all.isEmpty
     }
 
     /// The highlighted row.
@@ -145,6 +147,20 @@ struct PromptView: View {
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 2) {
+                        if rows.all.isEmpty {
+                            ContentUnavailableView {
+                                Label(L10n.text("picker.empty.title"), systemImage: "globe")
+                            } description: {
+                                Text(verbatim: L10n.text("picker.empty.description"))
+                            } actions: {
+                                Button(L10n.text("picker.empty.manage")) {
+                                    (NSApp.delegate as? AppDelegate)?.openBrowserPreferences(urls: urls)
+                                }
+                                Button(L10n.text("browsers.target.other_application")) {
+                                    otherApplicationPresented = true
+                                }
+                            }
+                        }
                         if !rows.apps.isEmpty && rows.appsAtTop {
                             items(rows.apps, offset: 0)
 
@@ -259,6 +275,11 @@ struct PromptView: View {
                     modifiers: alternativeShortcut ? [.command] : [.command, .option]
                 )
                 .help(urls.first?.absoluteString ?? "")
+            }
+        }
+        .fileImporter(isPresented: $otherApplicationPresented, allowedContentTypes: [.application]) { result in
+            if case .success(let application) = result {
+                open(urls, target: BrowserTarget(app: application), isIncognito: false, savingRule: false)
             }
         }
         .padding(12)

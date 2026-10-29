@@ -85,8 +85,8 @@ struct PreferencesView: View {
     @State private var ruleDraft: RuleDraft?
 
     /// A rule draft opens on the Rules pane with the new rule's form already up.
-    init(ruleDraft: RuleDraft? = nil) {
-        _selection = State(initialValue: ruleDraft == nil ? .general : .rules)
+    init(pane: SettingsPane = .general, ruleDraft: RuleDraft? = nil) {
+        _selection = State(initialValue: ruleDraft == nil ? pane : .rules)
         _ruleDraft = State(initialValue: ruleDraft)
     }
 
