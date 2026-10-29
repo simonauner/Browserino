@@ -158,6 +158,41 @@ struct PromptView: View {
 
     var body: some View {
         VStack {
+            if urls.count > 1 {
+                DisclosureGroup {
+                    ScrollView {
+                        VStack(alignment: .leading, spacing: 6) {
+                            ForEach(Array(urls.enumerated()), id: \.offset) { _, url in
+                                Text(verbatim: url.absoluteString)
+                                    .font(.caption)
+                                    .textSelection(.enabled)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                        }
+                    }
+                    .frame(height: 100)
+                } label: {
+                    Text(verbatim: L10n.format("picker.batch.title", String(urls.count)))
+                        .font(.headline)
+                }
+                HStack(alignment: .firstTextBaseline) {
+                    Text(verbatim: L10n.text("picker.batch.description"))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    Spacer(minLength: 4)
+                    Button {
+                        NSPasteboard.general.clearContents()
+                        NSPasteboard.general.setString(urls.map(\.absoluteString).joined(separator: "\n"), forType: .string)
+                    } label: {
+                        Image(systemName: "doc.on.doc")
+                    }
+                    .buttonStyle(.borderless)
+                    .help(L10n.text("picker.batch.copy"))
+                    .accessibilityLabel(L10n.text("picker.batch.copy"))
+                    .keyboardShortcut(KeyEquivalent("c"), modifiers: alternativeShortcut ? [.command] : [.command, .option])
+                }
+                Divider()
+            }
             ScrollViewReader { scrollViewProxy in
                 ScrollView {
                     VStack(alignment: .leading, spacing: 2) {
@@ -269,7 +304,7 @@ struct PromptView: View {
                 Divider()
             }
 
-            if let host = urls.first?.host() {
+            if urls.count == 1, let host = urls.first?.host() {
                 Button(action: {
                     let pasteboard = NSPasteboard.general
                     pasteboard.clearContents()
