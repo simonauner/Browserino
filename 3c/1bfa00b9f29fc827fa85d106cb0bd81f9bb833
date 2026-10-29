@@ -1,0 +1,26 @@
+Lotsen/Models/AppSettings.swift
+  s_38e2c7ec2da3c5::t_eab6b3f4605ecd 37-44,69
+Tests/StoredSettingsTests.swift
+  s_38e2c7ec2da3c5::t_861ccabe70c242 39-43,48-50
+  s_38e2c7ec2da3c5::t_eab6b3f4605ecd 44-47
+Lotsen/Models/JSONDefaults.swift
+  s_38e2c7ec2da3c5::t_eab6b3f4605ecd 20-34
+SECURITY_REVIEW.md
+  s_38e2c7ec2da3c5::t_016e1131b9cdf8 7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3c1bfa00b9f29fc827fa85d106cb0bd81f9bb833",
+  "prompts": {},
+  "sessions": {
+    "s_38e2c7ec2da3c5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3a29d99-1de5-44dc-85c6-b3a3fba298c0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
