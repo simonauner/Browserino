@@ -1,0 +1,23 @@
+Lotsen/Models/BrowserUtil.swift
+  s_38e2c7ec2da3c5::t_c165f9b39a7ae5 58
+Tests/TargetPolicyTests.swift
+  s_38e2c7ec2da3c5::t_c165f9b39a7ae5 20-29
+Lotsen/Models/IntegrationPolicy.swift
+  s_38e2c7ec2da3c5::t_c165f9b39a7ae5 75-114
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "774e692359fef2425780fa633c22e8948ee11287",
+  "prompts": {},
+  "sessions": {
+    "s_38e2c7ec2da3c5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3a29d99-1de5-44dc-85c6-b3a3fba298c0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
