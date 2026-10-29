@@ -28,7 +28,7 @@ struct BrowsersTab: View {
 
     private func privateArg(for key: String) -> Binding<String> {
         return .init(
-            get: { self.privateArgs[key, default: ""] },
+            get: { PrivateBrowsingPolicy.argument(for: key, overrides: self.privateArgs) ?? "" },
             set: { self.privateArgs[key] = $0 })
     }
 

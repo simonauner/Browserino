@@ -1,5 +1,34 @@
 import Foundation
 
+enum PrivateBrowsingPolicy {
+    static func acceptsMultipleURLs(argument: String) -> Bool {
+        // Firefox's private-window flag consumes only the next URL.
+        argument != "--private-window" && argument != "-private-window"
+    }
+
+    static func argument(for identifier: String, overrides: [String: String]) -> String? {
+        if let value = overrides[identifier] {
+            return value.isEmpty ? nil : value
+        }
+        let incognito = ["com.google.Chrome", "org.chromium.Chromium", "com.brave.Browser"]
+        if incognito.contains(where: { identifier == $0 || identifier.hasPrefix($0 + ".") }) {
+            return "--incognito"
+        }
+        if identifier == "org.mozilla.firefox" || identifier == "org.mozilla.firefoxdeveloperedition" {
+            return "--private-window"
+        }
+        if identifier == "com.microsoft.edgemac" || identifier.hasPrefix("com.microsoft.edgemac.") {
+            return "--inprivate"
+        }
+        return nil
+    }
+
+    static func canOpen(identifier: String?, overrides: [String: String], schemeOverride: String = "") -> Bool {
+        guard schemeOverride.isEmpty, let identifier else { return false }
+        return argument(for: identifier, overrides: overrides) != nil
+    }
+}
+
 enum LanguagePolicy {
     static let options: [(id: String, name: String)] = [
         ("en", "English"), ("ru", "Русский"), ("de", "Deutsch"), ("fr", "Français"),

@@ -13,6 +13,7 @@ struct PromptView: View {
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @Setting(\.rules) private var rules
+    @Setting(\.privateArgs) private var privateArgs
     @AppStorage("rules_showInPicker") private var showRuleOption: Bool = true
 
     let urls: [URL]
@@ -97,11 +98,19 @@ struct PromptView: View {
     }
 
     func activate(_ row: PromptRow, isIncognito: Bool) {
+        guard !isIncognito || supportsPrivate(row) else {
+            BrowserUtil.presentError(NSError(domain: "Lotsen", code: 1, userInfo: [NSLocalizedDescriptionKey: L10n.text("picker.private.unavailable")]))
+            return
+        }
         if let app = row.app {
-            openUrlsInApp(app: app)
+            openUrlsInApp(app: app, isIncognito: isIncognito)
         } else {
             open(urls, target: row.target, isIncognito: isIncognito)
         }
+    }
+
+    private func supportsPrivate(_ row: PromptRow) -> Bool {
+        PrivateBrowsingPolicy.canOpen(identifier: row.presentation.bundleIdentifier, overrides: privateArgs, schemeOverride: row.app?.schemeOverride ?? "")
     }
 
     /// The rows from `offset` on in `rows.all`, which is what selection indices count.
@@ -109,11 +118,16 @@ struct PromptView: View {
         ForEach(Array(section.enumerated()), id: \.offset) { index, row in
             PromptItem(
                 presentation: row.presentation,
-                shortcut: row.shortcut
+                shortcut: row.shortcut,
+                supportsPrivate: supportsPrivate(row)
             ) {
                 activate(row, isIncognito: NSEvent.modifierFlags.contains(.shift))
             }
             .id(offset + index)
+            .contextMenu {
+                Button(L10n.text("picker.private.open")) { activate(row, isIncognito: true) }
+                    .disabled(!supportsPrivate(row))
+            }
             .buttonStyle(
                 SelectButtonStyle(
                     selected: selected == offset + index
@@ -122,7 +136,7 @@ struct PromptView: View {
         }
     }
 
-    func openUrlsInApp(app: App) {
+    func openUrlsInApp(app: App, isIncognito: Bool) {
         let urls: [URL] =
             if app.schemeOverride.isEmpty {
                 urls
@@ -137,7 +151,7 @@ struct PromptView: View {
         open(
             urls,
             target: app.target,
-            isIncognito: false,
+            isIncognito: isIncognito,
             savingRule: canSaveRule(for: app)
         )
     }
