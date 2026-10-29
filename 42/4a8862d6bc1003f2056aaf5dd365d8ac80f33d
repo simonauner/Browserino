@@ -1,0 +1,30 @@
+Lotsen/LotsenWindow.swift
+  s_aabd1f503a28b4::t_c2488fee6cac48 14,48-50,56-61
+  s_aabd1f503a28b4::t_4890fd30195f3c 13,15,32
+  s_aabd1f503a28b4::t_263f06ce34b240 51-55
+Lotsen/Views/Prompt/PromptView.swift
+  s_aabd1f503a28b4::t_e78403beffcd24 110-113,224,265,270,277,280-281,283,318-319
+  s_aabd1f503a28b4::t_c2488fee6cac48 320-323
+Lotsen/Localizable.xcstrings
+  s_aabd1f503a28b4::t_e78403beffcd24 5600
+Lotsen/LotsenApp.swift
+  s_aabd1f503a28b4::t_c3a6837a882222 255-256,258
+  s_aabd1f503a28b4::t_c2488fee6cac48 257
+  s_aabd1f503a28b4::t_c42ea3530b0f0f 287,290-293
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "424a8862d6bc1003f2056aaf5dd365d8ac80f33d",
+  "prompts": {},
+  "sessions": {
+    "s_aabd1f503a28b4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "bd6ace89-3b8c-46ca-a66d-cc0345fd4d82",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
