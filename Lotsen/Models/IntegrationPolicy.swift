@@ -57,6 +57,21 @@ enum TargetPolicy {
         }
         return result
     }
+    /// A shortcut recorded on a browser's own row moves to its first profile without
+    /// one once only its profiles are listed. Left on the browser, it would show on
+    /// no row in Settings while the picker had nothing to put it on. An app row
+    /// that still opens the browser itself keeps it.
+    static func moveShortcutsToProfiles(_ targets: [BrowserTarget], shortcuts: [String: String], keeping: [BrowserTarget], bundleIdentifier: (URL) -> String?) -> [String: String] {
+        var result = shortcuts
+        for target in targets where target.profile != nil {
+            let browser = BrowserTarget(app: target.app)
+            guard !targets.contains(browser), !keeping.contains(browser), let identifier = bundleIdentifier(target.app),
+                  let key = result[identifier], result[target.shortcutKey(bundleIdentifier: identifier)] == nil else { continue }
+            result[identifier] = nil
+            result[target.shortcutKey(bundleIdentifier: identifier)] = key
+        }
+        return result
+    }
     static func toggle(_ target: BrowserTarget, targets: [BrowserTarget], hidden: [BrowserTarget]) -> [BrowserTarget] {
         var result = hidden
         if target.profile == nil {

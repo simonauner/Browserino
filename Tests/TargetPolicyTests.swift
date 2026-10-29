@@ -7,6 +7,16 @@ struct TargetPolicyTests {
     private var p1: BrowserTarget { BrowserTarget(app: base.app, profile: "Profile 1") }
     private var p2: BrowserTarget { BrowserTarget(app: base.app, profile: "Profile 2") }
 
+    @Test("a browser's shortcut moves to its first profile without one")
+    func shortcutMovesToProfile() {
+        let id = { (_: URL) in Optional("com.a") }
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1, p2], shortcuts: ["com.a": "C"], keeping: [], bundleIdentifier: id) == ["com.a#Profile 1": "C"])
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1, p2], shortcuts: ["com.a": "C", "com.a#Profile 1": "W"], keeping: [], bundleIdentifier: id)
+            == ["com.a#Profile 1": "W", "com.a#Profile 2": "C"], "a profile's own shortcut is kept")
+        #expect(TargetPolicy.moveShortcutsToProfiles([base, p1], shortcuts: ["com.a": "C"], keeping: [], bundleIdentifier: id) == ["com.a": "C"], "a listed browser row keeps it")
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1], shortcuts: ["com.a": "C"], keeping: [base], bundleIdentifier: id) == ["com.a": "C"], "an app row opening the browser keeps it")
+    }
+
     @Test("legacy hidden browser stays hidden after expansion")
     func hiddenAfterExpansion() {
         #expect(TargetPolicy.visible([p1, p2], hidden: [base], profilesEnabled: true).isEmpty)

@@ -42,7 +42,7 @@ struct PromptRows {
 
         func shortcut(for presentation: BrowserTargetPresentation) -> String? {
             presentation.bundleIdentifier.flatMap {
-                shortcuts[presentation.target.shortcutKey(bundleIdentifier: $0)] ?? shortcuts[$0]
+                shortcuts[presentation.target.shortcutKey(bundleIdentifier: $0)]
             }
         }
 

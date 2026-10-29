@@ -55,7 +55,18 @@ class BrowserUtil {
         let hidden = settings.hiddenBrowsers
         let preserved = TargetPolicy.preserveHidden(oldTargets: oldBrowsers, newTargets: discovered, hidden: hidden)
         if preserved != hidden { settings.hiddenBrowsers = preserved }
-        return merge(discovered: discovered, into: oldBrowsers)
+        let merged = merge(discovered: discovered, into: oldBrowsers)
+        moveShortcutsToProfiles(merged)
+        return merged
+    }
+
+    /// Profiles that are turned off are listed as their browser, which then owns the shortcut.
+    static func moveShortcutsToProfiles(_ targets: [BrowserTarget]) {
+        guard UserDefaults.standard.object(forKey: "profilesEnabled") as? Bool != false else { return }
+        let moved = TargetPolicy.moveShortcutsToProfiles(
+            targets, shortcuts: settings.shortcuts, keeping: settings.apps.map(\.target)
+        ) { Bundle(url: $0)?.bundleIdentifier }
+        if moved != settings.shortcuts { settings.shortcuts = moved }
     }
 
     /// A browser with several profiles is represented by its profiles rather than

@@ -59,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             openPreferences()
         }
         loadBrowsersIfEmpty()
+        BrowserUtil.moveShortcutsToProfiles(AppSettings.shared.browsers)
     }
 
     /// The list is otherwise only filled when the Browsers pane appears, which a
