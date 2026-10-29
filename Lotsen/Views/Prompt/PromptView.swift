@@ -48,8 +48,8 @@ struct PromptRows {
 
         // A row whose bundle no longer resolves renders as nothing, so leaving it
         // out keeps the keyboard selection indices in step with what is on screen.
-        let appRows: [PromptRow] = (sourceTab == nil ? urls : []).flatMap { url in
-            apps.filter { url.matchesHost($0.host) }
+        let appRows: [PromptRow] = apps.filter { app in
+            sourceTab == nil && urls.contains { $0.matchesHost(app.host) }
         }
         .filter { !browsers.contains($0.target) }
         .compactMap { app in
