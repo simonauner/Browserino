@@ -1,0 +1,23 @@
+Tests/PolicyTests.swift
+  s_b0a04e005d424b::t_953003615d1978 5-12
+Lotsen/Models/IntegrationPolicy.swift
+  s_b0a04e005d424b::t_953003615d1978 4-8
+Lotsen/Models/BrowserUtil.swift
+  s_b0a04e005d424b::t_953003615d1978 134-144
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9a4e5d6a3cc8e5f1a09e93ce78003692cbaa22e7",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
