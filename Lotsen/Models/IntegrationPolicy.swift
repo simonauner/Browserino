@@ -57,6 +57,61 @@ enum TargetPolicy {
         }
         return result
     }
+    /// A shortcut recorded on a browser's own row moves to its first profile without
+    /// one once only its profiles are listed. Left on the browser, it would show on
+    /// no row in Settings while the picker had nothing to put it on. An app row
+    /// that still opens the browser itself keeps it.
+    static func moveShortcutsToProfiles(_ targets: [BrowserTarget], shortcuts: [String: String], keeping: [BrowserTarget], bundleIdentifier: (URL) -> String?) -> [String: String] {
+        var result = shortcuts
+        for target in targets where target.profile != nil {
+            let browser = BrowserTarget(app: target.app)
+            guard !targets.contains(browser), !keeping.contains(browser), let identifier = bundleIdentifier(target.app),
+                  let key = result[identifier], result[target.shortcutKey(bundleIdentifier: identifier)] == nil else { continue }
+            result[identifier] = nil
+            result[target.shortcutKey(bundleIdentifier: identifier)] = key
+        }
+        return result
+    }
+    /// Keeps the order the user arranged, and drops anything newly discovered next
+    /// to its own browser rather than at the end.
+    static func merge(
+        discovered: [BrowserTarget],
+        into oldBrowsers: [BrowserTarget]
+    ) -> [BrowserTarget] {
+        let discoveredTargets = Set(discovered)
+
+        var merged: [BrowserTarget] = []
+        var placed: Set<BrowserTarget> = []
+
+        for old in oldBrowsers {
+            if discoveredTargets.contains(old) {
+                if placed.insert(old).inserted {
+                    merged.append(old)
+                }
+            } else {
+                // This exact entry is gone, but the same browser may now be
+                // represented differently — profiles replacing the plain row on
+                // first run. Those belong where the user had put the browser, not
+                // at the bottom of the list.
+                for target in discovered
+                where target.app == old.app && placed.insert(target).inserted {
+                    merged.append(target)
+                }
+            }
+        }
+
+        for target in discovered where !placed.contains(target) {
+            if let last = merged.lastIndex(where: { $0.app == target.app }) {
+                merged.insert(target, at: last + 1)
+            } else {
+                merged.append(target)
+            }
+
+            placed.insert(target)
+        }
+
+        return merged
+    }
     static func toggle(_ target: BrowserTarget, targets: [BrowserTarget], hidden: [BrowserTarget]) -> [BrowserTarget] {
         var result = hidden
         if target.profile == nil {

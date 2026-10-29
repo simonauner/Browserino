@@ -44,6 +44,11 @@ enum ChromiumProfileService {
         set { UserDefaults.standard.setJSON(newValue, forKey: "browserDataAccess") }
     }
 
+    /// Resolving a bookmark is slow and the Browsers pane reads profiles on every
+    /// redraw, so each grant is resolved once. Keyed by the bookmark itself, so a
+    /// new grant or a reset is never answered from here.
+    private static var resolvedGrants: [Data: URL] = [:]
+
     @discardableResult
     static func requestAccess(forAppAt app: URL) -> Bool {
         guard let root = userDataDirectory(forAppAt: app) else {
@@ -87,17 +92,25 @@ enum ChromiumProfileService {
         }
 
         var isStale = false
+        let url: URL
 
-        guard let url = try? URL(
-            resolvingBookmarkData: data,
-            options: .withSecurityScope,
-            relativeTo: nil,
-            bookmarkDataIsStale: &isStale
-        ) else {
-            return body()
+        if let resolved = resolvedGrants[data] {
+            url = resolved
+        } else {
+            guard let resolved = try? URL(
+                resolvingBookmarkData: data,
+                options: .withSecurityScope,
+                relativeTo: nil,
+                bookmarkDataIsStale: &isStale
+            ) else {
+                return body()
+            }
+
+            guard resolved.standardizedFileURL.resolvingSymlinksInPath() == root.standardizedFileURL.resolvingSymlinksInPath() else { return nil }
+            resolvedGrants[data] = resolved
+            url = resolved
         }
 
-        guard url.standardizedFileURL.resolvingSymlinksInPath() == root.standardizedFileURL.resolvingSymlinksInPath() else { return nil }
         let opened = url.startAccessingSecurityScopedResource()
         if isStale, opened, let refreshed = try? url.bookmarkData(options: .withSecurityScope, includingResourceValuesForKeys: nil, relativeTo: nil) {
             bookmarks[root.path] = refreshed

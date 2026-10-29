@@ -55,8 +55,14 @@ struct RuleForm: View {
         _testUrls = State(initialValue: draft.link.absoluteString)
     }
 
+    /// A link never contains spaces, so a pasted one at either end would only
+    /// make the rule match nothing.
+    private var expression: String {
+        regex.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     private var compiledRegex: Regex<AnyRegexOutput>? {
-        regex.isEmpty ? nil : Rule.compile(regex, kind: kind)
+        expression.isEmpty ? nil : Rule.compile(expression, kind: kind)
     }
 
     private var testLines: [String] {
@@ -175,7 +181,7 @@ struct RuleForm: View {
 
                     onSave(
                         Rule(
-                            regex: regex,
+                            regex: expression,
                             app: url,
                             profile: profile,
                             kind: kind
@@ -200,7 +206,7 @@ struct RuleForm: View {
 
     @ViewBuilder
     private var expressionFooter: some View {
-        if !regex.isEmpty && compiledRegex == nil {
+        if !expression.isEmpty && compiledRegex == nil {
             Label(L10n.text("rules.editor.invalid_regex"), systemImage: "exclamationmark.triangle.fill")
                 .foregroundStyle(.red)
         } else if kind == .pattern {

@@ -4,7 +4,7 @@
 
 - Lotsen URL wrappers accept only HTTP(S) with a host; every incoming URL is validated. Direct Finder file URLs remain supported.
 - Launch requires a local `.app` with a bundle identifier and rejects Lotsen itself. Unknown profile access and unconfigured private mode fail with a visible error. Recoverable error alerts preserve the chooser.
-- Import/export/reset use an explicit application-setting allowlist. Imports validate nested model types, URLs, safe profile components, language identifiers, booleans and the move shortcut before writing. Security-scoped bookmarks are not exported. Malformed saved browser arrays are not silently replaced by rescanning.
+- Import/export/reset use an explicit application-setting allowlist. Imports validate nested model types, URLs, safe profile components, language identifiers, booleans and the move shortcut before writing. Security-scoped bookmarks are not exported. A saved list that no longer decodes is copied to `<key>.unreadable` before an empty list or a rescan replaces it.
 - Discovery uses directory component boundaries and canonical deduplication. Missing apps remain editable without bundle force unwraps.
 - Profile grants must match the expected canonical folder, stale bookmarks refresh while access is active, and scopes are balanced. Profile, Local State and avatar paths are checked against symlink/traversal escapes.
 - Tab transfer captures a Chromium window/tab identifier and original URL. Closing occurs only following successful destination launch and exact identity/URL revalidation. Ambiguous multiple-instance sources are rejected. Safari never auto-closes its source. URL parameters are passed as typed Apple Event arguments, not inserted into script source.

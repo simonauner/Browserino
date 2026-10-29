@@ -55,7 +55,18 @@ class BrowserUtil {
         let hidden = settings.hiddenBrowsers
         let preserved = TargetPolicy.preserveHidden(oldTargets: oldBrowsers, newTargets: discovered, hidden: hidden)
         if preserved != hidden { settings.hiddenBrowsers = preserved }
-        return merge(discovered: discovered, into: oldBrowsers)
+        let merged = TargetPolicy.merge(discovered: discovered, into: oldBrowsers)
+        moveShortcutsToProfiles(merged)
+        return merged
+    }
+
+    /// Profiles that are turned off are listed as their browser, which then owns the shortcut.
+    static func moveShortcutsToProfiles(_ targets: [BrowserTarget]) {
+        guard UserDefaults.standard.object(forKey: "profilesEnabled") as? Bool != false else { return }
+        let moved = TargetPolicy.moveShortcutsToProfiles(
+            targets, shortcuts: settings.shortcuts, keeping: settings.apps.map(\.target)
+        ) { Bundle(url: $0)?.bundleIdentifier }
+        if moved != settings.shortcuts { settings.shortcuts = moved }
     }
 
     /// A browser with several profiles is represented by its profiles rather than
@@ -89,47 +100,6 @@ class BrowserUtil {
         return profiles.map { BrowserTarget(app: app, profile: $0.directory) }
     }
 
-    /// Keeps the order the user arranged, and drops anything newly discovered next
-    /// to its own browser rather than at the end.
-    private static func merge(
-        discovered: [BrowserTarget],
-        into oldBrowsers: [BrowserTarget]
-    ) -> [BrowserTarget] {
-        let discoveredTargets = Set(discovered)
-
-        var merged: [BrowserTarget] = []
-        var placed: Set<BrowserTarget> = []
-
-        for old in oldBrowsers {
-            if discoveredTargets.contains(old) {
-                if placed.insert(old).inserted {
-                    merged.append(old)
-                }
-            } else {
-                // This exact entry is gone, but the same browser may now be
-                // represented differently — profiles replacing the plain row on
-                // first run. Those belong where the user had put the browser, not
-                // at the bottom of the list.
-                for target in discovered
-                where target.app == old.app && placed.insert(target).inserted {
-                    merged.append(target)
-                }
-            }
-        }
-
-        for target in discovered where !placed.contains(target) {
-            if let last = merged.lastIndex(where: { $0.app == target.app }) {
-                merged.insert(target, at: last + 1)
-            } else {
-                merged.append(target)
-            }
-
-            placed.insert(target)
-        }
-
-        return merged
-    }
-    
     static func openURL(
         _ urls: [URL], target: BrowserTarget, isIncognito: Bool,
         completionHandler: (@MainActor @Sendable (NSRunningApplication?, Error?) -> Void)? = nil

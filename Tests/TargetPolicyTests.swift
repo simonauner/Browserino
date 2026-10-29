@@ -7,6 +7,26 @@ struct TargetPolicyTests {
     private var p1: BrowserTarget { BrowserTarget(app: base.app, profile: "Profile 1") }
     private var p2: BrowserTarget { BrowserTarget(app: base.app, profile: "Profile 2") }
 
+    @Test("a browser's shortcut moves to its first profile without one")
+    func shortcutMovesToProfile() {
+        let id = { (_: URL) in Optional("com.a") }
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1, p2], shortcuts: ["com.a": "C"], keeping: [], bundleIdentifier: id) == ["com.a#Profile 1": "C"])
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1, p2], shortcuts: ["com.a": "C", "com.a#Profile 1": "W"], keeping: [], bundleIdentifier: id)
+            == ["com.a#Profile 1": "W", "com.a#Profile 2": "C"], "a profile's own shortcut is kept")
+        #expect(TargetPolicy.moveShortcutsToProfiles([base, p1], shortcuts: ["com.a": "C"], keeping: [], bundleIdentifier: id) == ["com.a": "C"], "a listed browser row keeps it")
+        #expect(TargetPolicy.moveShortcutsToProfiles([p1], shortcuts: ["com.a": "C"], keeping: [base], bundleIdentifier: id) == ["com.a": "C"], "an app row opening the browser keeps it")
+    }
+
+    @Test("a rescan keeps the user's order and places new profiles beside their browser")
+    func mergeKeepsOrder() {
+        let safari = BrowserTarget(app: URL(string: "file:///Applications/Safari.app/")!)
+        let firefox = BrowserTarget(app: URL(string: "file:///Applications/Firefox.app/")!)
+        let p3 = BrowserTarget(app: base.app, profile: "Profile 3")
+        #expect(TargetPolicy.merge(discovered: [p1, p2, safari, firefox], into: [safari, base]) == [safari, p1, p2, firefox], "profiles replace their browser where it was")
+        #expect(TargetPolicy.merge(discovered: [p1, p2, p3, safari], into: [p2, safari, p1]) == [p2, safari, p1, p3], "a new profile goes after its browser's last row")
+        #expect(TargetPolicy.merge(discovered: [safari], into: [safari, firefox]) == [safari], "an uninstalled browser is dropped")
+    }
+
     @Test("legacy hidden browser stays hidden after expansion")
     func hiddenAfterExpansion() {
         #expect(TargetPolicy.visible([p1, p2], hidden: [base], profilesEnabled: true).isEmpty)

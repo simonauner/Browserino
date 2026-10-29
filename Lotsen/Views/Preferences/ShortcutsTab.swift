@@ -25,7 +25,7 @@ struct ShortcutsTab: View {
             .compactMap(BrowserTargetPresentation.init)
             .compactMap { presentation in
                 guard let identifier = presentation.bundleIdentifier,
-                      let key = shortcuts[presentation.target.shortcutKey(bundleIdentifier: identifier)] ?? shortcuts[identifier],
+                      let key = shortcuts[presentation.target.shortcutKey(bundleIdentifier: identifier)],
                       !key.isEmpty else {
                     return nil
                 }
