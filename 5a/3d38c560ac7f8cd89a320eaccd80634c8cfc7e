@@ -1,0 +1,45 @@
+Lotsen/LotsenApplication.swift
+  s_b0a04e005d424b::t_721596126289fd 15,17-20,35-38
+Lotsen/Views/Prompt/PromptView.swift
+  s_b0a04e005d424b::t_721596126289fd 79-83
+Lotsen/Views/Preferences/AppForm.swift
+  s_b0a04e005d424b::t_4bd8c885113623 119-120
+Lotsen/Localizable.xcstrings
+  s_b0a04e005d424b::t_057c907aa1aa90 9168-9232
+Lotsen/LotsenApp.swift
+  s_b0a04e005d424b::t_4bd8c885113623 195,340-341
+  s_b0a04e005d424b::t_721596126289fd 30
+  s_b0a04e005d424b::t_4a4f1741c25d47 342-343
+Lotsen/Views/Preferences/AppsTab.swift
+  s_b0a04e005d424b::t_4bd8c885113623 57-61,74-76,84-85,90,98-100,104-107
+Lotsen/Models/AppSettings.swift
+  s_b0a04e005d424b::t_4bd8c885113623 80-92
+Tests/SettingsUndoTests.swift
+  s_b0a04e005d424b::t_25a89096872ad7 31
+  s_b0a04e005d424b::t_57740784154e3d 1-30,32-34
+Lotsen/Views/Preferences/RulesTab.swift
+  s_b0a04e005d424b::t_4bd8c885113623 56,61-64,81-83,86-88,98-99,104,114,128-130,134-137
+Lotsen/Views/Preferences/GeneralTab.swift
+  s_b0a04e005d424b::t_4bd8c885113623 50,87,110
+Lotsen/Views/Preferences/LocationsTab.swift
+  s_b0a04e005d424b::t_4bd8c885113623 12-16,26-28,49,59
+  s_b0a04e005d424b::t_fcdb84ef5154da 60
+Lotsen/Views/Preferences/RuleForm.swift
+  s_b0a04e005d424b::t_4bd8c885113623 168-169
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5a3d38c560ac7f8cd89a320eaccd80634c8cfc7e",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
