@@ -42,21 +42,15 @@ enum SettingsPolicy {
 
     static func migrateLegacyProfiles(defaults: UserDefaults, chrome: URL) {
         guard !defaults.bool(forKey: "profileMigration48"),
-              let raw = defaults.string(forKey: "chromeProfiles"),
-              let data = raw.data(using: .utf8),
-              let profiles = try? JSONDecoder().decode([LegacyProfile].self, from: data),
+              let profiles = defaults.json([LegacyProfile].self, forKey: "chromeProfiles"),
               profiles.allSatisfy({ ProfilePathPolicy.isSafeComponent($0.directoryName) }) else { return }
-        func dictionary(_ key: String) -> [String: String] {
-            guard let raw = defaults.string(forKey: key), let data = raw.data(using: .utf8) else { return [:] }
-            return (try? JSONDecoder().decode([String: String].self, from: data)) ?? [:]
-        }
-        var names = dictionary("profileNames"), shortcuts = dictionary("shortcuts")
-        var hidden = defaults.string(forKey: "hiddenBrowsers").flatMap { $0.data(using: .utf8) }.flatMap { try? JSONDecoder().decode([BrowserTarget].self, from: $0) } ?? []
+        var names: [String: String] = defaults.jsonKeepingUnreadable(forKey: "profileNames") ?? [:]
+        var shortcuts: [String: String] = defaults.jsonKeepingUnreadable(forKey: "shortcuts") ?? [:]
+        var hidden: [BrowserTarget] = defaults.jsonKeepingUnreadable(forKey: "hiddenBrowsers") ?? []
         normalize(profiles, chrome: chrome, names: &names, shortcuts: &shortcuts, hidden: &hidden)
-        for (key, value) in [("profileNames", names), ("shortcuts", shortcuts)] {
-            if let data = try? JSONEncoder().encode(value), let raw = String(data: data, encoding: .utf8) { defaults.set(raw, forKey: key) }
-        }
-        if let data = try? JSONEncoder().encode(hidden), let raw = String(data: data, encoding: .utf8) { defaults.set(raw, forKey: "hiddenBrowsers") }
+        defaults.setJSON(names, forKey: "profileNames")
+        defaults.setJSON(shortcuts, forKey: "shortcuts")
+        defaults.setJSON(hidden, forKey: "hiddenBrowsers")
         if defaults.object(forKey: "profilesEnabled") == nil, let enabled = defaults.object(forKey: "chromeProfilesEnabled") as? Bool { defaults.set(enabled, forKey: "profilesEnabled") }
         defaults.set(true, forKey: "profileMigration48")
     }
