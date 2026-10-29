@@ -245,11 +245,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
 
             for rule in AppSettings.shared.rules {
                 if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
-                    BrowserUtil.openURL(
-                        processedUrls,
-                        target: rule.target,
-                        isIncognito: false
-                    )
+                    // A rule's browser may be uninstalled; the picker keeps the link.
+                    BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
+                        if error != nil { self.presentSelector(urls: processedUrls) }
+                    }
                     return
                 }
             }
