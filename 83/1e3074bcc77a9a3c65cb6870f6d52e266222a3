@@ -1,0 +1,19 @@
+Lotsen.xcodeproj/project.pbxproj
+  s_e9c4e29553096e::t_588a68ede0bdad 362,380,400,418,432,435,448,451
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "831e3074bcc77a9a3c65cb6870f6d52e266222a3",
+  "prompts": {},
+  "sessions": {
+    "s_e9c4e29553096e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9d11be9e-2dcf-4299-bd00-b41940c2998d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
