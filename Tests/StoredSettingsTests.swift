@@ -36,6 +36,18 @@ struct StoredSettingsTests {
         }
     }
 
+    @Test("unreadable stored rules are kept aside before being replaced")
+    func unreadableRulesKept() throws {
+        try withDefaults { defaults in
+            let raw = #"[{"regex":"a","app":"file:///Applications/A.app/","kind":"future"}]"#
+            defaults.set(raw, forKey: "rules")
+            #expect(defaults.jsonKeepingUnreadable([Rule].self, forKey: "rules") == nil)
+            #expect(defaults.string(forKey: "rules.unreadable") == raw, "the unreadable rules are kept")
+            #expect(defaults.jsonKeepingUnreadable([Rule].self, forKey: "missing") == nil)
+            #expect(defaults.object(forKey: "missing.unreadable") == nil, "a missing setting leaves no backup")
+        }
+    }
+
     @Test("missing settings read as nil")
     func missingSettingsReadAsNil() throws {
         try withDefaults { defaults in

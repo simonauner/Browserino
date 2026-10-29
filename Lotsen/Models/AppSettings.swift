@@ -34,14 +34,14 @@ final class AppSettings {
 
     init(defaults: UserDefaults = .standard) {
         self.defaults = defaults
-        browsers = defaults.json(forKey: "browsers") ?? []
-        hiddenBrowsers = defaults.json(forKey: "hiddenBrowsers") ?? []
-        apps = defaults.json(forKey: "apps") ?? []
-        rules = defaults.json(forKey: "rules") ?? []
-        directories = defaults.json(forKey: "directories") ?? Self.defaultDirectories
-        shortcuts = defaults.json(forKey: "shortcuts") ?? [:]
-        profileNames = defaults.json(forKey: "profileNames") ?? [:]
-        privateArgs = defaults.json(forKey: "privateArgs") ?? [:]
+        browsers = defaults.jsonKeepingUnreadable(forKey: "browsers") ?? []
+        hiddenBrowsers = defaults.jsonKeepingUnreadable(forKey: "hiddenBrowsers") ?? []
+        apps = defaults.jsonKeepingUnreadable(forKey: "apps") ?? []
+        rules = defaults.jsonKeepingUnreadable(forKey: "rules") ?? []
+        directories = defaults.jsonKeepingUnreadable(forKey: "directories") ?? Self.defaultDirectories
+        shortcuts = defaults.jsonKeepingUnreadable(forKey: "shortcuts") ?? [:]
+        profileNames = defaults.jsonKeepingUnreadable(forKey: "profileNames") ?? [:]
+        privateArgs = defaults.jsonKeepingUnreadable(forKey: "privateArgs") ?? [:]
 
         observation = NotificationCenter.default.addObserver(
             forName: UserDefaults.didChangeNotification,
@@ -66,7 +66,7 @@ final class AppSettings {
         defer { reloading = false }
 
         func update<Value: Decodable & Equatable>(_ keyPath: ReferenceWritableKeyPath<AppSettings, Value>, _ key: String, empty: Value) {
-            let value = defaults.json(Value.self, forKey: key) ?? empty
+            let value = defaults.jsonKeepingUnreadable(Value.self, forKey: key) ?? empty
             if self[keyPath: keyPath] != value {
                 self[keyPath: keyPath] = value
             }
