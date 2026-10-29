@@ -1,0 +1,29 @@
+Tests/TargetPolicyTests.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 10-19
+Lotsen/Models/IntegrationPolicy.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 60-74
+Lotsen/Views/Prompt/PromptView.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 45
+Lotsen/Models/BrowserUtil.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 58-69
+Lotsen/Views/Preferences/ShortcutsTab.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 28
+Lotsen/LotsenApp.swift
+  s_38e2c7ec2da3c5::t_39b132d8e56a66 62
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4385bf55d0784fd939938086926278f9103cc7f4",
+  "prompts": {},
+  "sessions": {
+    "s_38e2c7ec2da3c5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "e3a29d99-1de5-44dc-85c6-b3a3fba298c0",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
