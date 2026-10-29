@@ -104,7 +104,8 @@ struct PreferencesView: View {
                     Color.clear.frame(height: 0)
                 }
             }
-            .navigationSplitViewColumnWidth(Self.sidebarWidth)
+            // Asks for a fixed width; macOS still lets the divider be dragged.
+            .navigationSplitViewColumnWidth(min: Self.sidebarWidth, ideal: Self.sidebarWidth, max: Self.sidebarWidth)
             // The panes are the window's only navigation; hiding the list leaves no way back.
             .toolbar(removing: .sidebarToggle)
         } detail: {
@@ -119,7 +120,10 @@ struct PreferencesView: View {
         }
         .frame(
             minWidth: Self.sidebarWidth + Self.contentMinSize.width,
-            minHeight: Self.contentMinSize.height
+            minHeight: Self.contentMinSize.height,
+            // The sidebar can still be dragged wider than the window's minimum allows;
+            // pin to the left so the overflow goes off the right edge, not both.
+            alignment: .topLeading
         )
     }
 }
