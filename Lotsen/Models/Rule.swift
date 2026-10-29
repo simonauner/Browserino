@@ -66,7 +66,24 @@ struct Rule: Hashable, Codable {
         return "^" + parts.joined(separator: ".*") + "$"
     }
 
-    /// Appends the pattern rule the picker saves for "Always open links like this in…".
+    /// The pattern the picker suggests for a link: everything on its scheme, host
+    /// and port, e.g. `https://github.com/*`. A link without a host, like a
+    /// `mailto:` address, gets only itself.
+    static func hostPattern(for url: URL) -> String {
+        guard let components = URLComponents(url: url, resolvingAgainstBaseURL: false),
+              let host = components.percentEncodedHost, !host.isEmpty else {
+            return url.absoluteString
+        }
+        var origin = URLComponents()
+        origin.scheme = components.scheme
+        origin.percentEncodedHost = host
+        origin.port = components.port
+        origin.path = "/"
+
+        return (origin.string ?? url.absoluteString) + "*"
+    }
+
+    /// Appends the pattern rule the picker saves for "Always open … in …".
     /// A blank pattern, or a rule that already exists, leaves `rules` as it was.
     static func addingPattern(_ pattern: String, target: BrowserTarget, to rules: [Rule]) -> [Rule] {
         let pattern = pattern.trimmingCharacters(in: .whitespacesAndNewlines)

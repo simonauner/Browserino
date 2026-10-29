@@ -107,8 +107,10 @@ struct PromptView: View {
     @State private var selected = 0
     @FocusState private var focused: Bool
     @State private var alwaysOpen = false
-    @State private var rulePattern = ""
-    @FocusState private var patternFocused: Bool
+    /// The rows' full height, which the picker shrinks to fit.
+    @State private var listHeight: CGFloat = 0
+    /// Past this the rows scroll rather than the picker growing.
+    private static let maxListHeight: CGFloat = 400
 
     /// Rules only apply to a single opened link, so moving a tab or opening
     /// several links offers no rule.
@@ -126,9 +128,27 @@ struct PromptView: View {
         app?.schemeOverride.isEmpty ?? true
     }
 
+    /// What the rule row matches: the link's whole host, rather than the one link.
+    var rulePattern: String {
+        urls.first.map(Rule.hostPattern(for:)) ?? ""
+    }
+
     private func saveRuleIfRequested(for target: BrowserTarget) {
         guard offersRule, alwaysOpen else { return }
         rules = Rule.addingPattern(rulePattern, target: target, to: rules)
+    }
+
+    /// Opens Settings with a rule for the link filled in, so a pattern can be
+    /// adjusted and tested before it is saved. The link opens once the form
+    /// closes: a browser opened alongside it takes the focus from Settings.
+    func editRule() {
+        guard let item = selectedItem, let url = urls.first else { return }
+        let draft = RuleDraft(
+            rule: Rule(regex: rulePattern, app: item.target.app, profile: item.target.profile, kind: .pattern),
+            link: url
+        )
+
+        (NSApp.delegate as? AppDelegate)?.openRuleEditor(draft)
     }
 
     func openSelected(isIncognito: Bool) {
@@ -149,8 +169,7 @@ struct PromptView: View {
         ForEach(Array(section.enumerated()), id: \.offset) { index, row in
             PromptItem(
                 presentation: row.presentation,
-                shortcut: row.shortcut,
-                shortcutsEnabled: !patternFocused
+                shortcut: row.shortcut
             ) {
                 activate(row, isIncognito: NSEvent.modifierFlags.contains(.shift))
             }
@@ -202,6 +221,7 @@ struct PromptView: View {
                             items(rows.apps, offset: rows.browsers.count)
                         }
                     }
+                    .onGeometryChange(for: CGFloat.self, of: \.size.height) { listHeight = $0 }
                 }
                 .focusable()
                 .focusEffectDisabled()
@@ -221,21 +241,18 @@ struct PromptView: View {
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.defaultAction)
-                    .disabled(patternFocused)
 
                     Button(action: {
                         openSelected(isIncognito: true)
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.return, modifiers: [.shift])
-                    .disabled(patternFocused)
 
                     Button(action: {
                         NSApplication.shared.keyWindow?.close()
                     }) {}
                     .opacity(0)
                     .keyboardShortcut(.cancelAction)
-                    .disabled(patternFocused)
                 }
                 .onAppear {
                     focused.toggle()
@@ -245,35 +262,31 @@ struct PromptView: View {
                 }
                 .scrollEdgeEffectDisabledCompat()
             }
-            // Grows a small picker to fit the rule row rather than leaving room for only one browser.
-            .frame(minHeight: offersRule ? 120 : nil)
+            .frame(height: min(listHeight, Self.maxListHeight))
 
             Divider()
 
             if offersRule {
-                VStack(alignment: .leading, spacing: 6) {
+                HStack(alignment: .firstTextBaseline) {
                     Toggle(isOn: $alwaysOpen) {
-                        Text(verbatim: L10n.format("rules.picker.always_open", selectedItem?.presentation.displayName ?? ""))
+                        Text(verbatim: L10n.format(
+                            "rules.picker.always_open_host",
+                            urls.first?.host() ?? rulePattern,
+                            selectedItem?.presentation.displayName ?? ""
+                        ))
+                        .fixedSize(horizontal: false, vertical: true)
                     }
-                    .disabled(!canSaveRule(for: selectedItem?.app))
 
-                    TextField(L10n.text("rules.picker.pattern"), text: $rulePattern)
-                        .textFieldStyle(.roundedBorder)
-                        .disabled(!alwaysOpen || !canSaveRule(for: selectedItem?.app))
-                        .focused($patternFocused)
-                        .onSubmit {
-                            openSelected(isIncognito: NSEvent.modifierFlags.contains(.shift))
-                        }
-                        .onExitCommand {
-                            focused = true
-                        }
+                    Spacer(minLength: 8)
+
+                    Button(L10n.text("rules.picker.edit_rule"), action: editRule)
+                        .controlSize(.small)
                 }
+                .disabled(!canSaveRule(for: selectedItem?.app))
                 .font(.callout)
-                .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: alwaysOpen) {
-                    if !alwaysOpen {
-                        focused = true
-                    }
+                    // Keeps the arrow keys and Return on the browser list.
+                    focused = true
                 }
 
                 Divider()
@@ -302,14 +315,13 @@ struct PromptView: View {
             }
         }
         .padding(12)
-        .frame(
-            maxWidth: .infinity,
-            maxHeight: .infinity
-        )
-        .modifier(SelectorSurface())
-        .onAppear {
-            rulePattern = urls.first?.absoluteString ?? ""
+        // As tall as its rows, so a short list leaves no gap above the rule row.
+        .fixedSize(horizontal: false, vertical: true)
+        .onGeometryChange(for: CGFloat.self, of: \.size.height) { height in
+            NSApp.windows.compactMap { $0 as? LotsenWindow }.first?.fitContentHeight(height)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .modifier(SelectorSurface())
         .opacity(opacityAnimation)
         .ignoresSafeArea()
     }

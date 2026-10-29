@@ -37,12 +37,12 @@ enum SettingsPane: CaseIterable, Identifiable {
     }
 
     @ViewBuilder
-    var content: some View {
+    func content(ruleDraft: Binding<RuleDraft?>) -> some View {
         switch self {
         case .general: GeneralTab()
         case .browsers: BrowsersTab()
         case .apps: AppsTab()
-        case .rules: RulesTab()
+        case .rules: RulesTab(draft: ruleDraft)
         case .locations: BrowserSearchLocationsTab()
         case .shortcuts: ShortcutsTab()
         case .about: AboutTab()
@@ -81,7 +81,14 @@ struct PreferencesView: View {
     static let sidebarWidth: CGFloat = 200
     static let contentMinSize = CGSize(width: 860, height: 500)
 
-    @State private var selection: SettingsPane = .general
+    @State private var selection: SettingsPane
+    @State private var ruleDraft: RuleDraft?
+
+    /// A rule draft opens on the Rules pane with the new rule's form already up.
+    init(ruleDraft: RuleDraft? = nil) {
+        _selection = State(initialValue: ruleDraft == nil ? .general : .rules)
+        _ruleDraft = State(initialValue: ruleDraft)
+    }
 
     var body: some View {
         NavigationSplitView {
@@ -101,7 +108,7 @@ struct PreferencesView: View {
             // The panes are the window's only navigation; hiding the list leaves no way back.
             .toolbar(removing: .sidebarToggle)
         } detail: {
-            selection.content
+            selection.content(ruleDraft: $ruleDraft)
                 // NavigationSplitView sizes the detail at a near-zero width when it
                 // works out the window's minimum height. Text that wraps without
                 // truncating, like the Rules toggle, then asks for hundreds of

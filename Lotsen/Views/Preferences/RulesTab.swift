@@ -53,6 +53,9 @@ struct RulesTab: View {
     @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
     @State private var addPresented = false
     @State private var editing: EditedRow<Rule>?
+    /// Owned by the settings window, so the draft shows once rather than every
+    /// time the Rules pane is reopened.
+    @Binding var draft: RuleDraft?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -85,6 +88,20 @@ struct RulesTab: View {
                 rules.append($0)
             }
         }
+        .sheet(item: $draft) { draft in
+            // The picker closed without opening the link, so it opens now: in the
+            // saved rule's browser, or the one picked there.
+            RuleForm(
+                draft: draft,
+                onSave: { rule in
+                    rules.append(rule)
+                    draft.open(with: rule)
+                },
+                onCancel: {
+                    draft.open(with: draft.rule)
+                }
+            )
+        }
         .sheet(item: $editing) { row in
             RuleForm(
                 rule: row.value,
@@ -104,5 +121,5 @@ struct RulesTab: View {
 }
 
 #Preview {
-    RulesTab()
+    RulesTab(draft: .constant(nil))
 }

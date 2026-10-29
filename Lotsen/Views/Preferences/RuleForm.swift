@@ -7,11 +7,27 @@
 
 import SwiftUI
 
+/// A new rule the picker hands to Settings, filled in from the link it was opening.
+struct RuleDraft: Identifiable {
+    let id = UUID()
+    /// The suggested rule, for the browser highlighted in the picker.
+    var rule: Rule
+    var link: URL
+
+    /// Opens the link the picker was showing, in `rule`'s browser.
+    func open(with rule: Rule) {
+        BrowserUtil.openURL([link], target: rule.target, isIncognito: false) { _, error in
+            if let error { BrowserSwitchService.shared.presentOpenFailedAlert(error) }
+        }
+    }
+}
+
 struct RuleForm: View {
     var isNew: Bool
     var onSave: (Rule) -> Void
     /// Nil for a rule that isn't saved yet, which has nothing to delete.
     var onDelete: (() -> Void)?
+    var onCancel: (() -> Void)?
 
     @Environment(\.dismiss) private var dismiss
 
@@ -30,6 +46,13 @@ struct RuleForm: View {
         _kind = State(initialValue: rule?.kind ?? .regex)
         _url = State(initialValue: rule?.app)
         _profile = State(initialValue: rule?.profile)
+    }
+
+    init(draft: RuleDraft, onSave: @escaping (Rule) -> Void, onCancel: @escaping () -> Void) {
+        self.init(rule: draft.rule, onSave: onSave)
+        self.onCancel = onCancel
+        isNew = true
+        _testUrls = State(initialValue: draft.link.absoluteString)
     }
 
     private var compiledRegex: Regex<AnyRegexOutput>? {
@@ -155,6 +178,7 @@ struct RuleForm: View {
 
             ToolbarItem(placement: .cancellationAction) {
                 Button(L10n.text("common.cancel"), role: .cancel) {
+                    onCancel?()
                     dismiss()
                 }
                 .keyboardShortcut(.cancelAction)

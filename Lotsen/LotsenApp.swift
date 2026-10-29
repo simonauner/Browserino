@@ -150,6 +150,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     }
 
     @objc func openPreferences() {
+        showPreferences()
+    }
+
+    /// Opens Settings on the Rules pane with a new rule filled in from `draft`.
+    func openRuleEditor(_ draft: RuleDraft) {
+        showPreferences(ruleDraft: draft)
+    }
+
+    private func showPreferences(ruleDraft: RuleDraft? = nil) {
+        // Rebuilding the window's content would reset its pane and close a rule
+        // being edited, so an open window is only brought forward.
+        if ruleDraft == nil, let window = preferencesWindow, window.isVisible {
+            NSApplication.shared.activate()
+            window.makeKeyAndOrderFront(nil)
+            return
+        }
         if preferencesWindow == nil {
             preferencesWindow = NSWindow(
                 contentRect: NSRect(origin: .zero, size: preferencesMinSize),
@@ -168,7 +184,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
             self?.fitPreferencesHeight(overflow: overflow)
         }
         preferencesWindow!.contentView = NSHostingView(rootView: LocalizedRoot {
-            PreferencesView()
+            PreferencesView(ruleDraft: ruleDraft)
                 .environment(\.fitSettingsHeight, fitHeight)
         })
         
@@ -236,6 +252,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if selectorWindow == nil {
             selectorWindow = LotsenWindow()
         }
+        // A width saved before the picker was widened would cut off the rule row.
+        if selectorWindow!.frame.width < LotsenWindow.selectorWidth {
+            selectorWindow!.setContentSize(NSSize(width: LotsenWindow.selectorWidth, height: selectorWindow!.frame.height))
+        }
         
         guard let screen = (getScreenWithMouse() ?? NSScreen.main ?? NSScreen.screens.first)?.visibleFrame else { return }
         
@@ -264,9 +284,13 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         NSApplication.shared.activate()
         selectorWindow!.deactivateDelay()
         
-        selectorWindow!.contentView = NSHostingView(
+        let prompt = NSHostingView(
             rootView: LocalizedRoot { PromptView(urls: urls, sourceTab: sourceTab) }
         )
+        // The picker sets its own height, which a minimum size taken from the
+        // SwiftUI content would hold the window above.
+        prompt.sizingOptions = []
+        selectorWindow!.contentView = prompt
         
         selectorWindow!.makeKeyAndOrderFront(nil)
         selectorWindow!.isReleasedWhenClosed = false
