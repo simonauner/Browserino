@@ -19,6 +19,12 @@ enum SettingsPolicy {
         }
     }
 
+    /// An app's scheme override. URLComponents traps on a scheme it can't
+    /// represent, so anything else is refused; empty means no override.
+    static func isValidScheme(_ scheme: String) -> Bool {
+        scheme.isEmpty || scheme.wholeMatch(of: /[A-Za-z][A-Za-z0-9+.\-]*/) != nil
+    }
+
     struct LegacyProfile: Codable { let directoryName: String; let displayName: String; let isHidden: Bool }
     static func migrateLegacyProfiles(defaults: UserDefaults, chrome: URL) {
         guard !defaults.bool(forKey: "profileMigration48"),
@@ -98,7 +104,11 @@ enum SettingsPolicy {
                 let targets: [BrowserTarget]
                 // Decoded as the app reads them, since a rule it can't read empties the whole list.
                 if key == "rules" { targets = try JSONDecoder().decode([Rule].self, from: data).map(\.target) }
-                else { targets = try JSONDecoder().decode([Mapping].self, from: data).map { BrowserTarget(app: $0.app, profile: $0.profile) } }
+                else {
+                    let mappings = try JSONDecoder().decode([Mapping].self, from: data)
+                    guard mappings.allSatisfy({ isValidScheme($0.schemeOverride) }) else { throw CocoaError(.fileReadCorruptFile) }
+                    targets = mappings.map { BrowserTarget(app: $0.app, profile: $0.profile) }
+                }
                 guard targets.allSatisfy({ $0.app.isFileURL && $0.app.pathExtension == "app" && ($0.profile.map(ProfilePathPolicy.isSafeComponent) ?? true) }) else { throw CocoaError(.fileReadCorruptFile) }
             case "KeyboardShortcuts_moveCurrentTab":
                 struct Shortcut: Decodable { let carbonKeyCode: Int; let carbonModifiers: Int }

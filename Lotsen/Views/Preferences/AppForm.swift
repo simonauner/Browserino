@@ -60,8 +60,7 @@ struct AppForm: View {
             scheme.removeLast()
         }
 
-        // URLComponents traps on a scheme it can't represent, so reject those here.
-        return scheme.isEmpty || scheme.wholeMatch(of: /[A-Za-z][A-Za-z0-9+.\-]*/) != nil ? scheme : nil
+        return SettingsPolicy.isValidScheme(scheme) ? scheme : nil
     }
 
     var body: some View {
