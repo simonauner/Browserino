@@ -37,7 +37,6 @@ struct RuleForm: View {
     @State private var testUrls: String = ""
     @State private var url: URL?
     @State private var profile: String?
-    @State private var deletePresented = false
 
     init(rule: Rule?, precedingRules: [Rule] = [], onSave: @escaping (Rule) -> Void, onDelete: (() -> Void)? = nil) {
         self.precedingRules = precedingRules
@@ -166,7 +165,8 @@ struct RuleForm: View {
             if onDelete != nil {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(L10n.text("common.delete"), role: .destructive) {
-                        deletePresented = true
+                        onDelete?()
+                        dismiss()
                     }
                 }
             }
@@ -197,15 +197,6 @@ struct RuleForm: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(compiledRegex == nil || url == nil)
-            }
-        }
-        .confirmationDialog(
-            L10n.text("rules.editor.delete_confirmation"),
-            isPresented: $deletePresented
-        ) {
-            Button(L10n.text("common.delete"), role: .destructive) {
-                onDelete?()
-                dismiss()
             }
         }
     }

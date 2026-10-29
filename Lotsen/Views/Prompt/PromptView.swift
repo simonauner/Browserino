@@ -76,7 +76,11 @@ struct PromptView: View {
 
     private func saveRuleIfRequested(for target: BrowserTarget) {
         guard offersRule, alwaysOpen else { return }
-        rules = Rule.addingPattern(rulePattern, target: target, to: rules)
+        AppSettings.shared.replace(
+            \.rules, with: Rule.addingPattern(rulePattern, target: target, to: rules),
+            undoManager: (NSApp.delegate as? AppDelegate)?.settingsUndoManager,
+            actionName: L10n.text("common.add")
+        )
     }
 
     /// Opens Settings with a rule for the link filled in, so a pattern can be

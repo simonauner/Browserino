@@ -77,6 +77,19 @@ final class AppSettings {
         defaults.setJSON(value, forKey: key)
     }
 
+    func replace<Value: Equatable>(
+        _ keyPath: ReferenceWritableKeyPath<AppSettings, Value>, with value: Value,
+        undoManager: UndoManager?, actionName: String
+    ) {
+        let previous = self[keyPath: keyPath]
+        guard previous != value else { return }
+        undoManager?.registerUndo(withTarget: self) { settings in
+            settings.replace(keyPath, with: previous, undoManager: undoManager, actionName: actionName)
+        }
+        self[keyPath: keyPath] = value
+        undoManager?.setActionName(actionName)
+    }
+
     /// Only assigns what actually changed, so views showing the rest stay put.
     private func reload() {
         reloading = true

@@ -9,25 +9,32 @@ import SwiftUI
 struct BrowserSearchLocationsTab: View {
     @Setting(\.directories) private var directories
     @State private var explorerPresented = false
+    private var undoManager: UndoManager? { (NSApp.delegate as? AppDelegate)?.settingsUndoManager }
+
+    private func update(_ value: [Directory], action: String) {
+        AppSettings.shared.replace(\.directories, with: value, undoManager: undoManager, actionName: L10n.text(action))
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             EditableList(
-                count: directories.count,
+                items: directories,
                 add: {
                     explorerPresented = true
                 },
                 remove: { rows in
-                    directories.remove(atOffsets: rows)
+                    var value = directories
+                    value.remove(atOffsets: rows)
+                    update(value, action: "common.delete")
                 },
-                isRemovable: { index in
-                    directories[index].directoryPath != "/Applications"
+                isRemovable: { directory in
+                    directory.directoryPath != "/Applications"
                 }
-            ) { index in
+            ) { directory in
                 Label {
-                    Text(verbatim: directories[index].directoryPath)
+                    Text(verbatim: directory.directoryPath)
                 } icon: {
-                    Image(nsImage: NSWorkspace.shared.icon(forFile: directories[index].directoryPath))
+                    Image(nsImage: NSWorkspace.shared.icon(forFile: directory.directoryPath))
                         .resizable()
                         .frame(width: 16, height: 16)
                 }
@@ -39,7 +46,7 @@ struct BrowserSearchLocationsTab: View {
                 if case let .success(dir) = result {
                     let newDirectory = Directory(directoryPath: dir.path)
                     if !directories.contains(newDirectory) {
-                        directories.append(newDirectory)
+                        update(directories + [newDirectory], action: "common.add")
                     }
                 }
             }
@@ -48,6 +55,8 @@ struct BrowserSearchLocationsTab: View {
                 .foregroundStyle(.secondary)
 
             Text(verbatim: L10n.text("locations.add.instructions"))
+                .foregroundStyle(.secondary)
+            Text(verbatim: L10n.text("settings.list.undo_hint"))
                 .foregroundStyle(.secondary)
         }
         .padding(20)

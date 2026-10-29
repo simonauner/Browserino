@@ -27,6 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     /// fitted to its content stops overriding their choice.
     private var preferencesResizedByUser = false
     private var linksAwaitingBrowserSettings: [URL]?
+    let settingsUndoManager = UndoManager()
     
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
     
@@ -195,6 +196,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         }
         
         preferencesWindow!.center()
+        settingsUndoManager.removeAllActions()
         preferencesWindow!.title = L10n.text("settings.window.title")
         preferencesResizedByUser = false
         // Made out here so the root view's closure captures the action, not self:
@@ -337,6 +339,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if notification.object as? NSWindow === preferencesWindow {
             preferencesResizedByUser = true
         }
+    }
+
+    func windowWillReturnUndoManager(_ window: NSWindow) -> UndoManager? {
+        window === preferencesWindow ? settingsUndoManager : nil
     }
 
     func windowWillClose(_ notification: Notification) {

@@ -15,20 +15,22 @@ struct EditedRow<Value>: Identifiable {
 /// A bordered list with + and − buttons underneath, like the lists in System
 /// Settings. Rows are selected by index; double-clicking one edits it, and the
 /// Delete key or − removes the selection.
-struct EditableList<Row: View>: View {
-    let count: Int
+struct EditableList<Item, Row: View>: View {
+    let items: [Item]
     var add: () -> Void
     var edit: ((Int) -> Void)?
     var remove: (IndexSet) -> Void
     var move: ((IndexSet, Int) -> Void)?
     /// Rows that can't be removed, such as a built-in default.
-    var isRemovable: (Int) -> Bool = { _ in true }
-    @ViewBuilder var row: (Int) -> Row
+    var isRemovable: (Item) -> Bool = { _ in true }
+    @ViewBuilder var row: (Item) -> Row
+
+    private var count: Int { items.count }
 
     @State private var selection = Set<Int>()
 
     private var removable: IndexSet {
-        IndexSet(selection.filter { $0 < count && isRemovable($0) })
+        IndexSet(selection.filter { items.indices.contains($0) && isRemovable(items[$0]) })
     }
 
     private func removeSelection() {
@@ -58,7 +60,9 @@ struct EditableList<Row: View>: View {
         VStack(spacing: 0) {
             List(selection: $selection) {
                 ForEach(0..<count, id: \.self) { index in
-                    row(index)
+                    // AppKit can render an old row while applying a deletion.
+                    // Read this view's snapshot, never the caller's live array.
+                    row(items[index])
                 }
                 .onMove(perform: moveRows)
                 .moveDisabled(move == nil)
@@ -76,7 +80,7 @@ struct EditableList<Row: View>: View {
                     selection = rows
                     removeSelection()
                 }
-                .disabled(!rows.contains(where: isRemovable))
+                .disabled(!rows.contains { items.indices.contains($0) && isRemovable(items[$0]) })
             } primaryAction: { rows in
                 if let edit, rows.count == 1, let index = rows.first {
                     edit(index)

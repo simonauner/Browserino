@@ -20,7 +20,6 @@ struct AppForm: View {
     @State private var schemeOverride: String
     @State private var url: URL?
     @State private var profile: String?
-    @State private var deletePresented = false
 
     init(app: App?, onSave: @escaping (App) -> Void, onDelete: (() -> Void)? = nil) {
         isNew = app == nil
@@ -117,7 +116,8 @@ struct AppForm: View {
             if onDelete != nil {
                 ToolbarItem(placement: .destructiveAction) {
                     Button(L10n.text("common.delete"), role: .destructive) {
-                        deletePresented = true
+                        onDelete?()
+                        dismiss()
                     }
                 }
             }
@@ -147,15 +147,6 @@ struct AppForm: View {
                 }
                 .keyboardShortcut(.defaultAction)
                 .disabled(!hostValid || parsedScheme == nil || url == nil)
-            }
-        }
-        .confirmationDialog(
-            L10n.text("apps.editor.delete_confirmation"),
-            isPresented: $deletePresented
-        ) {
-            Button(L10n.text("common.delete"), role: .destructive) {
-                onDelete?()
-                dismiss()
             }
         }
     }

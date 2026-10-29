@@ -47,6 +47,7 @@ struct GeneralTab: View {
     @State private var exportDocument = SettingsDocument()
     @State private var resetPresented = false
     @Environment(\.fitSettingsHeight) private var fitSettingsHeight
+    private var undoManager: UndoManager? { (NSApp.delegate as? AppDelegate)?.settingsUndoManager }
     @AppStorage("copy_closeAfterCopy") private var closeAfterCopy: Bool = false
     @AppStorage("copy_alternativeShortcut") private var alternativeShortcut: Bool = false
     @AppStorage("showInMenuBar") private var showInMenuBar: Bool = true
@@ -83,6 +84,7 @@ struct GeneralTab: View {
     private static let settingsKeys = SettingsPolicy.keys
 
     func resetSettings() {
+        undoManager?.removeAllActions()
         let defaults = UserDefaults.standard
         KeyboardShortcuts.setShortcut(nil, for: .moveCurrentTab)
         defaults.removeObject(forKey: "browserDataAccess")
@@ -105,6 +107,7 @@ struct GeneralTab: View {
 
             let defaults = UserDefaults.standard
             let accepted = try SettingsPolicy.validate(settings)
+            undoManager?.removeAllActions()
             for (key, value) in accepted {
                 if key == "KeyboardShortcuts_moveCurrentTab", let raw = value as? String {
                     let shortcut = try JSONDecoder().decode(KeyboardShortcuts.Shortcut.self, from: Data(raw.utf8))
