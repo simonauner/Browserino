@@ -6,6 +6,23 @@
 import Foundation
 import SwiftUI
 
+/// A domain mapped to the app that opens it.
+struct App: Codable, Hashable {
+    var host: String
+    var schemeOverride: String
+    var app: URL
+    var profile: String?
+
+    var target: BrowserTarget {
+        BrowserTarget(app: app, profile: profile)
+    }
+}
+
+/// A folder browsers are looked for in.
+struct Directory: Codable, Hashable {
+    var directoryPath: String
+}
+
 /// The settings stored as JSON, decoded once and kept in step with UserDefaults.
 ///
 /// Each value is written back as it changes, and everything is read again when

@@ -28,11 +28,15 @@
 			membershipExceptions = (
 				"Extensions/Bundle+AppDisplayName.swift",
 				Extensions/URLExtensions.swift,
+				Models/AppSettings.swift,
+				Models/BrowserTabScripting.swift,
 				Models/BrowserTarget.swift,
+				Models/BrowserTargetPresentation.swift,
 				Models/ChromiumProfile.swift,
 				Models/IntegrationPolicy.swift,
 				Models/JSONDefaults.swift,
 				Models/Localization.swift,
+				Models/PromptRows.swift,
 				Models/Rule.swift,
 				Models/SettingsPolicy.swift,
 			);
