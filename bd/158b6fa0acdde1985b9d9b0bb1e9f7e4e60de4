@@ -1,0 +1,19 @@
+Lotsen/LotsenApp.swift
+  s_e9c4e29553096e::t_ac3e092ee7a78e 144
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "bd158b6fa0acdde1985b9d9b0bb1e9f7e4e60de4",
+  "prompts": {},
+  "sessions": {
+    "s_e9c4e29553096e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9d11be9e-2dcf-4299-bd00-b41940c2998d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
