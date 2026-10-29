@@ -26,8 +26,11 @@ struct ShortcutButton: View {
                     isRecording = newFocus
                 }
                 .onKeyPress { press in
-                    let key = press.key.character.uppercased()
+                    let character = press.key.character
                     isRecording = false
+                    // Esc, Return and the like cancel: the picker uses them itself.
+                    guard character.isLetter || character.isNumber else { return .handled }
+                    let key = character.uppercased()
 
                     if let shortcut = shortcuts.first(where: { $0.value == key }) {
                         shortcuts[shortcut.key] = nil
