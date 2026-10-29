@@ -1,0 +1,32 @@
+Lotsen/Views/Preferences/BrowsersTab.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 31
+Lotsen/Views/Prompt/PromptView.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 16,101-104,106,112-115,121-122,127-130,139,154
+Lotsen/Models/IntegrationPolicy.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 3-26
+Lotsen/Views/Prompt/PromptItem.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 13,25-29
+Lotsen/Localizable.xcstrings
+  s_b0a04e005d424b::t_d9fa1843bed72f 8778-8849,8851-8855,8857-8861,8863-8867,8869-8873,8875-8879,8881-8885,8887-8891,8893-8897,8899-8903,8905-8972
+  s_b0a04e005d424b::t_4f0cea4e85a1ae 8850,8856,8862,8868,8874,8880,8886,8892,8898,8904
+Lotsen/Models/BrowserUtil.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 130
+Tests/PolicyTests.swift
+  s_b0a04e005d424b::t_8d2018a21c4baf 4-24
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a2b70b84533a8655e465789ee7f2b7abe2d8891c",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}

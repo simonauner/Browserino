@@ -1,0 +1,26 @@
+Lotsen/Views/Prompt/PromptView.swift
+  s_b0a04e005d424b::t_b83f100b2b5165 161-176,193-195,307
+  s_b0a04e005d424b::t_f696231ec6fecc 177-192
+Lotsen/Models/PromptRows.swift
+  s_b0a04e005d424b::t_b83f100b2b5165 52
+Tests/PromptRowsTests.swift
+  s_b0a04e005d424b::t_b83f100b2b5165 7-26
+Lotsen/Localizable.xcstrings
+  s_b0a04e005d424b::t_2ca775abdd7581 8973-9167
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "c45f7493b7eda69ea3acee65a19f9c7289f3956f",
+  "prompts": {},
+  "sessions": {
+    "s_b0a04e005d424b": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a1893d-18fc-7480-a7b8-7ff6f98c0f32",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
