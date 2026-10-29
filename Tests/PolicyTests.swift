@@ -53,33 +53,3 @@ struct ProfilePathPolicyTests {
         #expect(ProfilePathPolicy.contains(root.appendingPathComponent("Profile 1"), in: root), "child allowed")
     }
 }
-
-struct MovePolicyTests {
-    private let original = SourceTabIdentity(windowID: 1, tabID: 7, url: "https://example.com")
-    private let changed = SourceTabIdentity(windowID: 1, tabID: 8, url: "https://example.com")
-
-    @Test("close original only after success")
-    func closesAfterSuccess() {
-        #expect(MovePolicy.shouldClose(openSucceeded: true, closeEnabled: true, original: original, current: original))
-    }
-
-    @Test("do not close changed tab")
-    func keepsChangedTab() {
-        #expect(!MovePolicy.shouldClose(openSucceeded: true, closeEnabled: true, original: original, current: changed))
-    }
-
-    @Test("failed open preserves source")
-    func failedOpenPreservesSource() {
-        #expect(!MovePolicy.shouldClose(openSucceeded: false, closeEnabled: true, original: original, current: original))
-    }
-
-    @Test("close toggle respected")
-    func closeToggleRespected() {
-        #expect(!MovePolicy.shouldClose(openSucceeded: true, closeEnabled: false, original: original, current: original))
-    }
-
-    @Test("missing source preserved")
-    func missingSourcePreserved() {
-        #expect(!MovePolicy.shouldClose(openSucceeded: true, closeEnabled: true, original: original, current: nil))
-    }
-}

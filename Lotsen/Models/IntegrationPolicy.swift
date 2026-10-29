@@ -37,15 +37,7 @@ struct SourceTabIdentity: Equatable, Sendable {
     let windowID: Int
     let tabID: Int
     let url: String
-    func matches(_ other: SourceTabIdentity) -> Bool { self == other }
 }
-
-enum MovePolicy {
-    static func shouldClose(openSucceeded: Bool, closeEnabled: Bool, original: SourceTabIdentity, current: SourceTabIdentity?) -> Bool {
-        openSucceeded && closeEnabled && current == original
-    }
-}
-
 
 enum TargetPolicy {
     static func isHidden(_ target: BrowserTarget, hidden: [BrowserTarget]) -> Bool {

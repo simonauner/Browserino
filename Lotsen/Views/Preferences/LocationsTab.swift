@@ -55,14 +55,6 @@ struct BrowserSearchLocationsTab: View {
                 .foregroundStyle(.secondary)
         }
         .padding(20)
-        .onAppear(perform: loadDirectories)
-    }
-
-    private func loadDirectories() {
-        if directories.isEmpty {
-            let defaultDirectory = Directory(directoryPath: "/Applications")
-            directories.append(defaultDirectory)
-        }
     }
 }
 

@@ -16,7 +16,7 @@ On top of Browserino, Lotsen adds:
 - **Move current tab**: send the open tab to another browser from the menu bar or a global shortcut ([#61](https://github.com/AlexStrNik/Browserino/pull/61) by Lukas Wolfsteiner).
 - **Missing apps** stay visible and editable instead of disappearing ([#63](https://github.com/AlexStrNik/Browserino/pull/63) by Matija Zezelj).
 - **Localization** in ten languages, with a manual language picker.
-- **Rules**: write a rule as a simple wildcard pattern such as `https://example.com*` instead of a regex, or generate a regex from the URLs in Test URLs.
+- **Rules**: write a rule as a simple wildcard pattern such as `https://example.com*` instead of a regex, and check it against example URLs in Test URLs.
 - **Modern macOS**: Swift 6, macOS 14 minimum ([#64](https://github.com/AlexStrNik/Browserino/pull/64) by Matija Zezelj), Liquid Glass on macOS 26 and builds with the Xcode 27 SDK.
 
 ### Thanks to the Browserino contributors

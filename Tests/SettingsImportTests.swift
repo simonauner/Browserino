@@ -33,9 +33,20 @@ struct SettingsImportTests {
         #expect((try? SettingsPolicy.validate(["rules": #"[{"app":"file:///Applications/Safari.app","regex":".*","profile":7}]"#])) == nil)
     }
 
+    @Test("unknown rule kind cannot erase rules")
+    func unknownRuleKindRejected() {
+        #expect((try? SettingsPolicy.validate(["rules": #"[{"app":"file:///Applications/Safari.app","regex":".*","kind":"glob"}]"#])) == nil)
+    }
+
     @Test("object app profile cannot erase mappings")
     func objectAppProfileRejected() {
         #expect((try? SettingsPolicy.validate(["apps": #"[{"app":"file:///Applications/Safari.app","host":"","schemeOverride":"","profile":{}}]"#])) == nil)
+    }
+
+    @Test("app scheme override that would crash the picker rejected")
+    func invalidSchemeOverrideRejected() {
+        #expect((try? SettingsPolicy.validate(["apps": #"[{"app":"file:///Applications/Figma.app","host":"","schemeOverride":"1 bad"}]"#])) == nil)
+        #expect((try? SettingsPolicy.validate(["apps": #"[{"app":"file:///Applications/Figma.app","host":"","schemeOverride":"figma"}]"#])) != nil)
     }
 
     @Test("legacy profile settings are normalized on import")

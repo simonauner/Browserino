@@ -54,7 +54,8 @@ struct BrowsersTab: View {
             .padding(.horizontal, 20)
             List {
                 ForEach(displayed, id: \.offset) { offset, browser in
-                    if let bundle = Bundle(url: browser.app) {
+                    // Resolved once per row: each piece otherwise reads the browser's profile data again.
+                    if let presentation = BrowserTargetPresentation(browser) {
                         let isFirstOfApp = browsers.first(where: { $0.app == browser.app }) == browser
                         let isHidden = TargetPolicy.visible(browsers.filter { $0.app == browser.app }, hidden: hiddenBrowsers, profilesEnabled: profilesEnabled).isEmpty
                             || TargetPolicy.isHidden(browser, hidden: hiddenBrowsers)
@@ -65,23 +66,23 @@ struct BrowsersTab: View {
                                 .foregroundStyle(.secondary)
                                 .frame(width: 20, alignment: .trailing)
 
-                            BrowserTargetIcon(target: browser)
+                            BrowserTargetIcon(presentation)
                                 .frame(width: 24, height: 24)
 
-                            if let profile = browser.profile, let identifier = bundle.bundleIdentifier {
+                            if let profile = browser.profile, let identifier = presentation.bundleIdentifier {
                                 TextField(profile, text: Binding(
-                                    get: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] ?? browser.chromiumProfile?.name ?? profile },
+                                    get: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] ?? presentation.profile?.name ?? profile },
                                     set: { profileNames[browser.shortcutKey(bundleIdentifier: identifier)] = $0 }
                                 ))
                                 .textFieldStyle(.roundedBorder)
                                 .frame(minWidth: 100, maxWidth: 200)
                             } else {
-                                Text(browser.displayName)
+                                Text(presentation.displayName)
                             }
 
                             Spacer()
 
-                            if let browserId = bundle.bundleIdentifier {
+                            if let browserId = presentation.bundleIdentifier {
                                 // Incognito is a property of the browser, not of one
                                 // profile, so it stays on the plain row and every
                                 // profile of that browser inherits it.

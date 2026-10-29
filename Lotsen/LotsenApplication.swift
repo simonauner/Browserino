@@ -10,12 +10,8 @@ import AppKit
 class LotsenApplication: NSApplication {
     override open func sendEvent(_ event: NSEvent) {
         if event.type == .keyDown {
-            if event.modifierFlags.contains(.command)
-                && NSEvent.ModifierFlags.deviceIndependentFlagsMask.contains(.command)
-            {
-                if event.modifierFlags.contains(.shift)
-                    && NSEvent.ModifierFlags.deviceIndependentFlagsMask.contains(.shift)
-                {
+            if event.modifierFlags.contains(.command) {
+                if event.modifierFlags.contains(.shift) {
                     if event.charactersIgnoringModifiers == "Z" {
                         if NSApp.sendAction(Selector(("redo:")), to: nil, from: self) { return }
                     }

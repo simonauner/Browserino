@@ -24,6 +24,9 @@ final class AppSettings {
     var profileNames: [String: String] { didSet { store(profileNames, forKey: "profileNames") } }
     var privateArgs: [String: String] { didSet { store(privateArgs, forKey: "privateArgs") } }
 
+    /// Where browsers are looked for until the user adds more.
+    static let defaultDirectories = [Directory(directoryPath: "/Applications")]
+
     @ObservationIgnored private let defaults: UserDefaults
     /// Set while values are being read back, so that doing so does not write them again.
     @ObservationIgnored private var reloading = false
@@ -35,7 +38,7 @@ final class AppSettings {
         hiddenBrowsers = defaults.json(forKey: "hiddenBrowsers") ?? []
         apps = defaults.json(forKey: "apps") ?? []
         rules = defaults.json(forKey: "rules") ?? []
-        directories = defaults.json(forKey: "directories") ?? []
+        directories = defaults.json(forKey: "directories") ?? Self.defaultDirectories
         shortcuts = defaults.json(forKey: "shortcuts") ?? [:]
         profileNames = defaults.json(forKey: "profileNames") ?? [:]
         privateArgs = defaults.json(forKey: "privateArgs") ?? [:]
@@ -73,7 +76,7 @@ final class AppSettings {
         update(\.hiddenBrowsers, "hiddenBrowsers", empty: [])
         update(\.apps, "apps", empty: [])
         update(\.rules, "rules", empty: [])
-        update(\.directories, "directories", empty: [])
+        update(\.directories, "directories", empty: Self.defaultDirectories)
         update(\.shortcuts, "shortcuts", empty: [:])
         update(\.profileNames, "profileNames", empty: [:])
         update(\.privateArgs, "privateArgs", empty: [:])

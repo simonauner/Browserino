@@ -58,6 +58,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if UserDefaults.standard.object(forKey: "browsers") == nil {
             openPreferences()
         }
+        loadBrowsersIfEmpty()
+    }
+
+    /// The list is otherwise only filled when the Browsers pane appears, which a
+    /// new install or a reset may never have shown.
+    private func loadBrowsersIfEmpty() {
+        if AppSettings.shared.browsers.isEmpty {
+            AppSettings.shared.browsers = BrowserUtil.loadBrowsers(oldBrowsers: [])
+        }
     }
 
     func applicationShouldHandleReopen(_ sender: NSApplication, hasVisibleWindows: Bool) -> Bool {
@@ -130,6 +139,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     @objc func moveCurrentTab() { BrowserSwitchService.shared.beginMove(preferFrontmost: false) }
 
     func presentMovePrompt(snapshot: SourceTabSnapshot) {
+        loadBrowsersIfEmpty()
         let targets = AppSettings.shared.browsers
         let hidden = AppSettings.shared.hiddenBrowsers
         guard TargetPolicy.visible(targets, hidden: hidden, profilesEnabled: UserDefaults.standard.object(forKey: "profilesEnabled") as? Bool != false).contains(where: { Bundle(url: $0.app) != nil && Bundle(url: $0.app)?.bundleIdentifier != snapshot.bundleIdentifier }) else {
@@ -235,11 +245,10 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
 
             for rule in AppSettings.shared.rules {
                 if let regex = rule.compiledRegex, urlString.firstMatch(of: regex) != nil {
-                    BrowserUtil.openURL(
-                        processedUrls,
-                        target: rule.target,
-                        isIncognito: false
-                    )
+                    // A rule's browser may be uninstalled; the picker keeps the link.
+                    BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
+                        if error != nil { self.presentSelector(urls: processedUrls) }
+                    }
                     return
                 }
             }
@@ -249,6 +258,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
     }
 
     private func presentSelector(urls: [URL], sourceTab: SourceTabSnapshot? = nil) {
+        loadBrowsersIfEmpty()
         if selectorWindow == nil {
             selectorWindow = LotsenWindow()
         }

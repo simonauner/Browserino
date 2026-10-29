@@ -1,3 +1,4 @@
+import AppKit
 import Foundation
 import CoreFoundation
 
@@ -19,7 +20,26 @@ enum SettingsPolicy {
         }
     }
 
+    /// An app's scheme override. URLComponents traps on a scheme it can't
+    /// represent, so anything else is refused; empty means no override.
+    static func isValidScheme(_ scheme: String) -> Bool {
+        scheme.isEmpty || scheme.wholeMatch(of: /[A-Za-z][A-Za-z0-9+.\-]*/) != nil
+    }
+
     struct LegacyProfile: Codable { let directoryName: String; let displayName: String; let isHidden: Bool }
+
+    /// Moves Chrome profile names, shortcuts and hidden flags from the format used
+    /// before profiles were targets onto the profile targets.
+    private static func normalize(_ profiles: [LegacyProfile], chrome: URL, names: inout [String: String], shortcuts: inout [String: String], hidden: inout [BrowserTarget]) {
+        for profile in profiles {
+            let target = BrowserTarget(app: chrome, profile: profile.directoryName)
+            let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
+            if names[key] == nil { names[key] = profile.displayName }
+            if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
+            if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
+        }
+    }
+
     static func migrateLegacyProfiles(defaults: UserDefaults, chrome: URL) {
         guard !defaults.bool(forKey: "profileMigration48"),
               let raw = defaults.string(forKey: "chromeProfiles"),
@@ -32,13 +52,7 @@ enum SettingsPolicy {
         }
         var names = dictionary("profileNames"), shortcuts = dictionary("shortcuts")
         var hidden = defaults.string(forKey: "hiddenBrowsers").flatMap { $0.data(using: .utf8) }.flatMap { try? JSONDecoder().decode([BrowserTarget].self, from: $0) } ?? []
-        for profile in profiles {
-            let target = BrowserTarget(app: chrome, profile: profile.directoryName)
-            let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
-            if names[key] == nil { names[key] = profile.displayName }
-            if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
-            if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
-        }
+        normalize(profiles, chrome: chrome, names: &names, shortcuts: &shortcuts, hidden: &hidden)
         for (key, value) in [("profileNames", names), ("shortcuts", shortcuts)] {
             if let data = try? JSONEncoder().encode(value), let raw = String(data: data, encoding: .utf8) { defaults.set(raw, forKey: key) }
         }
@@ -61,14 +75,9 @@ enum SettingsPolicy {
             var names = try dictionary("profileNames"), shortcuts = try dictionary("shortcuts")
             var hidden: [BrowserTarget] = []
             if let raw = settings["hiddenBrowsers"] as? String { hidden = try JSONDecoder().decode([BrowserTarget].self, from: Data(raw.utf8)) }
-            let browser = URL(fileURLWithPath: "/Applications/Google Chrome.app")
-            for profile in profiles {
-                let target = BrowserTarget(app: browser, profile: profile.directoryName)
-                let key = target.shortcutKey(bundleIdentifier: "com.google.Chrome")
-                if names[key] == nil { names[key] = profile.displayName }
-                if shortcuts[key] == nil { shortcuts[key] = shortcuts["com.google.Chrome::" + profile.directoryName] }
-                if profile.isHidden && !hidden.contains(target) { hidden.append(target) }
-            }
+            let chrome = NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.google.Chrome")
+                ?? URL(fileURLWithPath: "/Applications/Google Chrome.app")
+            normalize(profiles, chrome: chrome, names: &names, shortcuts: &shortcuts, hidden: &hidden)
             normalized["profileNames"] = String(decoding: try JSONEncoder().encode(names), as: UTF8.self)
             normalized["shortcuts"] = String(decoding: try JSONEncoder().encode(shortcuts), as: UTF8.self)
             normalized["hiddenBrowsers"] = String(decoding: try JSONEncoder().encode(hidden), as: UTF8.self)
@@ -95,10 +104,14 @@ enum SettingsPolicy {
                 guard targets.allSatisfy({ $0.app.isFileURL && $0.app.pathExtension == "app" && ($0.profile.map(ProfilePathPolicy.isSafeComponent) ?? true) }) else { throw CocoaError(.fileReadCorruptFile) }
             case "apps", "rules":
                 struct Mapping: Decodable { let host: String; let schemeOverride: String; let app: URL; let profile: String? }
-                struct Pattern: Decodable { let regex: String; let app: URL; let profile: String?; let profileDirectory: String? }
                 let targets: [BrowserTarget]
-                if key == "rules" { targets = try JSONDecoder().decode([Pattern].self, from: data).map { BrowserTarget(app: $0.app, profile: $0.profile ?? $0.profileDirectory) } }
-                else { targets = try JSONDecoder().decode([Mapping].self, from: data).map { BrowserTarget(app: $0.app, profile: $0.profile) } }
+                // Decoded as the app reads them, since a rule it can't read empties the whole list.
+                if key == "rules" { targets = try JSONDecoder().decode([Rule].self, from: data).map(\.target) }
+                else {
+                    let mappings = try JSONDecoder().decode([Mapping].self, from: data)
+                    guard mappings.allSatisfy({ isValidScheme($0.schemeOverride) }) else { throw CocoaError(.fileReadCorruptFile) }
+                    targets = mappings.map { BrowserTarget(app: $0.app, profile: $0.profile) }
+                }
                 guard targets.allSatisfy({ $0.app.isFileURL && $0.app.pathExtension == "app" && ($0.profile.map(ProfilePathPolicy.isSafeComponent) ?? true) }) else { throw CocoaError(.fileReadCorruptFile) }
             case "KeyboardShortcuts_moveCurrentTab":
                 struct Shortcut: Decodable { let carbonKeyCode: Int; let carbonModifiers: Int }
