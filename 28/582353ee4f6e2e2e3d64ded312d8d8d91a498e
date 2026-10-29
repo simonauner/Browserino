@@ -1,0 +1,20 @@
+Lotsen/Views/Prompt/PromptView.swift
+  s_81c22724572dd8::t_f4b29294c801dc 176,178-184
+  s_81c22724572dd8::t_060cc5af119984 177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "28582353ee4f6e2e2e3d64ded312d8d8d91a498e",
+  "prompts": {},
+  "sessions": {
+    "s_81c22724572dd8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d7bbb67e-f4b9-46a3-a846-1e84a644c3dd",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
