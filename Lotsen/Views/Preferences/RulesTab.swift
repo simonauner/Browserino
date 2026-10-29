@@ -92,6 +92,18 @@ struct RulesTab: View {
             ) { rule in
                 RuleRow(rule: rule)
             }
+            .overlay {
+                if rules.isEmpty {
+                    ContentUnavailableView {
+                        Label(L10n.text("rules.empty.title"), systemImage: "arrow.triangle.branch")
+                    } description: {
+                        Text(verbatim: L10n.text("rules.empty.description"))
+                    } actions: {
+                        Button(L10n.text("rules.empty.add")) { addPresented = true }
+                    }
+                    .padding(.bottom, 30)
+                }
+            }
             
             Text(verbatim: L10n.text("rules.list.instructions"))
                 .foregroundStyle(.secondary)

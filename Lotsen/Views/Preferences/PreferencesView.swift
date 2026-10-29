@@ -79,7 +79,7 @@ extension EnvironmentValues {
 
 struct PreferencesView: View {
     static let sidebarWidth: CGFloat = 200
-    static let contentMinSize = CGSize(width: 860, height: 500)
+    static let contentMinSize = CGSize(width: 640, height: 500)
 
     @State private var selection: SettingsPane
     @State private var ruleDraft: RuleDraft?

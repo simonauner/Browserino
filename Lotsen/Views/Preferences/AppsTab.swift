@@ -80,6 +80,18 @@ struct AppsTab: View {
             ) { app in
                 AppRow(app: app)
             }
+            .overlay {
+                if apps.isEmpty {
+                    ContentUnavailableView {
+                        Label(L10n.text("apps.empty.title"), systemImage: "square.grid.2x2")
+                    } description: {
+                        Text(verbatim: L10n.text("apps.empty.description"))
+                    } actions: {
+                        Button(L10n.text("apps.empty.add")) { addPresented = true }
+                    }
+                    .padding(.bottom, 30)
+                }
+            }
             
             Text(verbatim: L10n.text("apps.list.instructions"))
                 .foregroundStyle(.secondary)

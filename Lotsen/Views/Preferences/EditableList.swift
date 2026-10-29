@@ -68,7 +68,7 @@ struct EditableList<Item, Row: View>: View {
                 .moveDisabled(move == nil)
             }
             .listStyle(.plain)
-            .alternatingRowBackgrounds()
+            .alternatingRowBackgrounds(count == 0 ? .disabled : .enabled)
             .contextMenu(forSelectionType: Int.self) { rows in
                 if let edit, rows.count == 1, let index = rows.first {
                     Button(L10n.text("common.edit")) {
