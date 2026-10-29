@@ -1,0 +1,21 @@
+Lotsen/Models/Rule.swift
+  s_e9c4e29553096e::t_ac3e092ee7a78e 60-62,64-65,69
+Tests/RuleTests.swift
+  s_e9c4e29553096e::t_ac3e092ee7a78e 37-38
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e950f5c38774ca3a334867ff90b051c2c258b0b5",
+  "prompts": {},
+  "sessions": {
+    "s_e9c4e29553096e": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "9d11be9e-2dcf-4299-bd00-b41940c2998d",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
