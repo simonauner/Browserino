@@ -173,6 +173,15 @@ struct PromptView: View {
                         scrollViewProxy.scrollTo(selected, anchor: .center)
                     }
                 }
+                // The focused list handles the browsers' keys itself: plain-key
+                // shortcuts on the rows' own buttons never fired, they just beeped.
+                .onKeyPress { press in
+                    guard press.modifiers.isDisjoint(with: [.command, .option, .control]),
+                          let row = rows.all.first(where: { $0.shortcut == press.key.character.uppercased() })
+                    else { return .ignored }
+                    activate(row, isIncognito: press.modifiers.contains(.shift))
+                    return .handled
+                }
                 .background {
                     Button(action: {
                         openSelected(isIncognito: false)
