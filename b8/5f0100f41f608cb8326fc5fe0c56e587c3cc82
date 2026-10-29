@@ -1,0 +1,19 @@
+Lotsen/Models/SettingsPolicy.swift
+  s_0ffc9e83984adc::t_43811ba4893a63 1,30-42,55,78-80
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b85f0100f41f608cb8326fc5fe0c56e587c3cc82",
+  "prompts": {},
+  "sessions": {
+    "s_0ffc9e83984adc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "5b66169e-96f8-4081-9632-1a5562ac91fb",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
