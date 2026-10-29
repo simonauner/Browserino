@@ -50,6 +50,7 @@ extension BrowserTarget {
 struct BrowserTargetPresentation {
     let target: BrowserTarget
     let bundleIdentifier: String?
+    let profile: ChromiumProfile?
     let displayName: String
     let icon: NSImage
     let avatar: NSImage?
@@ -63,6 +64,7 @@ struct BrowserTargetPresentation {
         let profile = target.chromiumProfile
 
         self.target = target
+        self.profile = profile
         bundleIdentifier = bundle.bundleIdentifier
         displayName = target.displayName(bundle: bundle) { profile }
         icon = target.icon
