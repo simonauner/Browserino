@@ -1,0 +1,47 @@
+Tests/RuleTests.swift
+  s_dad193c1ae559d::t_921d6672b9a944 24-43
+Lotsen/Models/SettingsPolicy.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 6
+Lotsen/Models/BrowserTabScripting.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 13-17
+Lotsen/Views/Preferences/ShortcutsTab.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 57-58
+Lotsen/Models/PromptRows.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 63
+Tests/PromptRowsTests.swift
+  s_dad193c1ae559d::t_921d6672b9a944 7-36
+Lotsen/Models/Rule.swift
+  s_dad193c1ae559d::t_921d6672b9a944 100,104-109
+  s_dad193c1ae559d::t_f87460d0294e2d 21,23-24,26,35,43,54-56,101,103
+Lotsen/LotsenApp.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 19,91,95,144-152,268-271,273
+Tests/SettingsImportTests.swift
+  s_dad193c1ae559d::t_921d6672b9a944 6-16
+Readme.md
+  s_dad193c1ae559d::t_921d6672b9a944 81-88
+Lotsen/Views/Prompt/PromptView.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 33,37-38,78,81,286-290
+  s_dad193c1ae559d::t_e61966d4290198 291
+Lotsen/Views/Preferences/RuleForm.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 19,37-38,50,72-75,167-172,206-207,213
+Lotsen/Views/Preferences/RulesTab.swift
+  s_dad193c1ae559d::t_f87460d0294e2d 28-33,59,74-77
+Lotsen/Localizable.xcstrings
+  s_dad193c1ae559d::t_e320904300fb03 9883-10074
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "e4921ccd03970cbc477cc9383cc82bd7e3df625e",
+  "prompts": {},
+  "sessions": {
+    "s_dad193c1ae559d": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a189a5-bfeb-7283-a7d0-7e512016a5e0",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
