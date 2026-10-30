@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the Lotsen cask using the checksum of the final, stapled ZIP."""
+"""Render the Lotsen cask using the checksum of the ad hoc signed ZIP."""
 import hashlib
 from pathlib import Path
 import re
@@ -23,6 +23,12 @@ def render(version, archive):
   depends_on macos: :sonoma
 
   app "Lotsen.app"
+
+  caveats <<~EOS
+    Lotsen is ad hoc signed and is not notarized by Apple.
+    If macOS blocks the first launch, try opening Lotsen, then use
+    System Settings > Privacy & Security > Open Anyway if you trust this download.
+  EOS
 end
 '''
 

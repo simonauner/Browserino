@@ -15,13 +15,15 @@ class HomebrewCaskTests(unittest.TestCase):
     def test_release_url_and_checksum(self):
         with tempfile.TemporaryDirectory() as directory:
             archive = Path(directory) / "Lotsen.zip"
-            archive.write_bytes(b"stapled release")
+            archive.write_bytes(b"release archive")
             rendered = cask.render("1.4.1", archive)
         self.assertIn('version "1.4.1"', rendered)
-        self.assertIn(hashlib.sha256(b"stapled release").hexdigest(), rendered)
+        self.assertIn(hashlib.sha256(b"release archive").hexdigest(), rendered)
         self.assertIn('/download/v#{version}/Lotsen.zip"', rendered)
         self.assertIn('app "Lotsen.app"', rendered)
         self.assertIn('depends_on macos: :sonoma', rendered)
+        self.assertIn('not notarized by Apple', rendered)
+        self.assertIn('Privacy & Security > Open Anyway', rendered)
 
     def test_rejects_invalid_versions_before_reading_archive(self):
         for version in ('1.2', 'v1.2.3', '01.2.3', '1.2.3"\nend', '1.2.3-beta'):

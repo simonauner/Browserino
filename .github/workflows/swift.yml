@@ -26,6 +26,8 @@ jobs:
       run: python3 scripts/check-localizations.py
     - name: Check Homebrew cask generation
       run: python3 scripts/test-homebrew-cask.py
+    - name: Check release packaging
+      run: bash scripts/package-release.sh
     # Compiles the tab-move AppleScripts against Chrome's and Safari's dictionaries
     # without running them.
     - name: Check browser scripts

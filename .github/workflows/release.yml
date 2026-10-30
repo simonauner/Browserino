@@ -1,4 +1,4 @@
-# Version bumps publish a signed universal app, then update the Homebrew tap.
+# Version bumps publish an ad hoc signed universal app, then update the Homebrew tap.
 name: Release
 
 on:
@@ -62,40 +62,7 @@ jobs:
     - uses: actions/checkout@v7
     - name: Select Xcode
       run: sudo xcode-select -s /Applications/Xcode_26.6.app
-    - name: Import release credentials
-      env:
-        CERTIFICATE: ${{ secrets.APPLE_CERTIFICATE_P12_BASE64 }}
-        CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
-        NOTARY_KEY: ${{ secrets.APPLE_NOTARY_KEY_P8 }}
-        NOTARY_KEY_ID: ${{ secrets.APPLE_NOTARY_KEY_ID }}
-        NOTARY_ISSUER: ${{ secrets.APPLE_NOTARY_ISSUER_ID }}
-      run: |
-        set -euo pipefail
-        : "${CERTIFICATE:?Configure APPLE_CERTIFICATE_P12_BASE64}"
-        : "${CERTIFICATE_PASSWORD:?Configure APPLE_CERTIFICATE_PASSWORD}"
-        : "${NOTARY_KEY:?Configure APPLE_NOTARY_KEY_P8}"
-        : "${NOTARY_KEY_ID:?Configure APPLE_NOTARY_KEY_ID}"
-        : "${NOTARY_ISSUER:?Configure APPLE_NOTARY_ISSUER_ID}"
-        umask 077
-        keychain="$RUNNER_TEMP/lotsen-signing.keychain-db"
-        password=$(openssl rand -hex 32)
-        echo "::add-mask::$password"
-        printf '%s' "$CERTIFICATE" | base64 --decode > "$RUNNER_TEMP/lotsen.p12"
-        printf '%s' "$NOTARY_KEY" > "$RUNNER_TEMP/notary.p8"
-        security create-keychain -p "$password" "$keychain"
-        security set-keychain-settings -lut 7200 "$keychain"
-        security unlock-keychain -p "$password" "$keychain"
-        security import "$RUNNER_TEMP/lotsen.p12" -P "$CERTIFICATE_PASSWORD" \
-          -k "$keychain" -T /usr/bin/codesign
-        security set-key-partition-list -S apple-tool:,apple:,codesign: -k "$password" "$keychain"
-        identity=$(security find-identity -v -p codesigning "$keychain" | awk '/Developer ID Application:/ { print $2 }')
-        [[ "$identity" =~ ^[A-Fa-f0-9]{40}$ ]] || { echo '::error::Expected one valid Developer ID Application identity'; exit 1; }
-        xcrun notarytool store-credentials lotsen-release --keychain "$keychain" \
-          --key "$RUNNER_TEMP/notary.p8" --key-id "$NOTARY_KEY_ID" --issuer "$NOTARY_ISSUER"
-        echo "SIGNING_IDENTITY=$identity" >> "$GITHUB_ENV"
-        echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
-        echo "NOTARY_KEYCHAIN_PROFILE=lotsen-release" >> "$GITHUB_ENV"
-    - name: Build, sign and notarize
+    - name: Build and ad hoc sign
       run: bash scripts/package-release.sh
     - name: Calculate checksum
       id: checksum
@@ -113,12 +80,6 @@ jobs:
         fi
         gh release upload "$tag" build/Lotsen.zip
         gh release edit "$tag" --draft=false --latest
-    - name: Remove release credentials
-      if: always()
-      run: |
-        security delete-keychain "$RUNNER_TEMP/lotsen-signing.keychain-db" || true
-        rm -f "$RUNNER_TEMP/lotsen.p12" "$RUNNER_TEMP/notary.p8"
-
   homebrew:
     needs: [prepare, release]
     runs-on: ubuntu-latest
@@ -127,7 +88,7 @@ jobs:
     - uses: actions/checkout@v7
       with:
         repository: simonauner/homebrew-tap
-        token: ${{ secrets.HOMEBREW_TAP_TOKEN }}
+        ssh-key: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
         path: build/homebrew-tap
     - name: Update the cask from the published download
       env:

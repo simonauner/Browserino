@@ -36,9 +36,9 @@ Each version is tagged, and its changes are listed under [Releases](https://gith
 
 ### Homebrew
 
-The Homebrew release pipeline is prepared; installation becomes available after the maintainer completes the [signing setup and first signed release](docs/HOMEBREW.md).
+The Homebrew release pipeline is prepared; installation becomes available after the maintainer completes the [tap setup and first binary release](docs/HOMEBREW.md).
 
-Once that release is published, install the signed and notarized app from the project's own tap:
+Once that release is published, install the app from the project's own tap:
 
 ```bash
 brew install --cask simonauner/tap/lotsen
@@ -50,6 +50,8 @@ Requires macOS 14 or later. The download supports both Apple Silicon and Intel; 
 brew update
 brew upgrade --cask lotsen
 ```
+
+Lotsen uses ad hoc signing and is **not notarized by Apple**. If macOS blocks the first launch, try opening the app, then use **System Settings → Privacy & Security → Open Anyway** if you trust the download. See [Apple's instructions](https://support.apple.com/en-gb/102445). Managed Macs may not allow this exception.
 
 If you previously installed Lotsen from source, quit it and move `/Applications/Lotsen.app` to the Trash before installing the cask. Your preferences are stored separately and are preserved.
 
@@ -107,7 +109,7 @@ Hold Option while opening a link to skip automatic rules for that opening and sh
 
 Choosing a private window with “Always open” saves private mode with the rule. Private rules show a lock in Rules, where “Open in Private Window” can be changed. Older rules continue to open normally. Private opening must be supported by the destination browser.
 
-Browser authentication sessions may still require Safari. Local development builds use ad-hoc signing; downloadable releases use Developer ID signing and notarization.
+Browser authentication sessions may still require Safari. Both local development builds and downloadable releases use ad hoc signing without Apple notarization.
 
 ## Local development
 
