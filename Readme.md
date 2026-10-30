@@ -30,9 +30,30 @@ Several of these features started as pull requests to Browserino that are still 
 
 The [integration notes](docs/UPSTREAM_REVIEW.md) describe what was taken from each pull request and what changed along the way.
 
-Lotsen has no Homebrew cask and no prebuilt builds yet, so you build it from source. Each version is tagged, and its changes are listed under [Releases](https://github.com/simonauner/lotsen/releases). If you want the original app, install it from [the Browserino repository](https://github.com/AlexStrNik/Browserino#installation).
+Each version is tagged, and its changes are listed under [Releases](https://github.com/simonauner/lotsen/releases). If you want the original app, install it from [the Browserino repository](https://github.com/AlexStrNik/Browserino#installation).
 
 # Installation
+
+### Homebrew
+
+The Homebrew release pipeline is prepared; installation becomes available after the maintainer completes the [signing setup and first signed release](docs/HOMEBREW.md).
+
+Once that release is published, install the signed and notarized app from the project's own tap:
+
+```bash
+brew install --cask simonauner/tap/lotsen
+```
+
+Requires macOS 14 or later. The download supports both Apple Silicon and Intel; Xcode is not needed. Open Lotsen from Applications, then select it in **System Settings → Desktop & Dock → Default web browser**. Update with:
+
+```bash
+brew update
+brew upgrade --cask lotsen
+```
+
+If you previously installed Lotsen from source, quit it and move `/Applications/Lotsen.app` to the Trash before installing the cask. Your preferences are stored separately and are preserved.
+
+### Build from source
 
 Requirements: macOS 14 or later and Xcode (the Command Line Tools alone can't build apps).
 
@@ -54,7 +75,7 @@ Then uninstall Browserino so the two apps don't compete as the default browser. 
 brew uninstall --cask browserino
 ```
 
-To update, pull and run the script again:
+To update a source installation, pull and run the script again:
 
 ```bash
 git pull && ./scripts/install-local.sh
@@ -86,7 +107,7 @@ Hold Option while opening a link to skip automatic rules for that opening and sh
 
 Choosing a private window with “Always open” saves private mode with the rule. Private rules show a lock in Rules, where “Open in Private Window” can be changed. Older rules continue to open normally. Private opening must be supported by the destination browser.
 
-Browser authentication sessions may still require Safari. Release signing and notarization are separate from these development builds.
+Browser authentication sessions may still require Safari. Local development builds use ad-hoc signing; downloadable releases use Developer ID signing and notarization.
 
 ## Local development
 

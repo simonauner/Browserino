@@ -24,6 +24,8 @@ jobs:
       run: xcodebuild test -project Lotsen.xcodeproj -scheme Lotsen -configuration Debug -derivedDataPath build/DerivedData CODE_SIGNING_ALLOWED=NO
     - name: Check localizations
       run: python3 scripts/check-localizations.py
+    - name: Check Homebrew cask generation
+      run: python3 scripts/test-homebrew-cask.py
     # Compiles the tab-move AppleScripts against Chrome's and Safari's dictionaries
     # without running them.
     - name: Check browser scripts
