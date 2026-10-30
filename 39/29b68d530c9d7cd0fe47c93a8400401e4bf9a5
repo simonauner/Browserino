@@ -1,0 +1,19 @@
+Readme.md
+  s_e05125571f7dc0::t_85760c00b500f4 54-55
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "3929b68d530c9d7cd0fe47c93a8400401e4bf9a5",
+  "prompts": {},
+  "sessions": {
+    "s_e05125571f7dc0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18b3e-4d45-78c0-b024-cdf56b6e3e8a",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
