@@ -36,9 +36,7 @@ Each version is tagged, and its changes are listed under [Releases](https://gith
 
 ### Homebrew
 
-The Homebrew release pipeline is prepared; installation becomes available after the maintainer completes the [tap setup and first binary release](docs/HOMEBREW.md).
-
-Once that release is published, install the app from the project's own tap:
+Install the app from the project's own tap:
 
 ```bash
 brew install --cask simonauner/tap/lotsen

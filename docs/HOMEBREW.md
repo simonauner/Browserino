@@ -6,9 +6,8 @@ Lotsen uses the public `simonauner/homebrew-tap` repository and installs with:
 brew install --cask simonauner/tap/lotsen
 ```
 
-The tap starts with a README. `Casks/lotsen.rb` is added automatically after the
-first binary release is published. Until then, use the source installation in the
-main README.
+Version 1.5.1 is the first binary release. Installation from the published tap has
+been verified. The release workflow maintains `Casks/lotsen.rb` automatically.
 
 ## Signing and first launch
 
@@ -38,11 +37,11 @@ To rotate the deploy key, generate a new SSH key pair, add its public key to the
 tap with write access, replace the private-key secret in Lotsen, then remove the
 old deploy key. Never commit the private key or paste it into chat.
 
-## First release
+## Publishing a release
 
-Existing releases contain notes only. With the deploy key configured, use
-`scripts/bump-version.sh patch` to give the first binary release an unused version,
-then merge that bump to main. Do not move an existing tag to a different commit.
+Use `scripts/bump-version.sh major|minor|patch` according to the changes, then merge
+the version bump to main. Do not reuse a version or move an existing tag to a
+different commit. Releases before 1.5.1 contain notes only.
 
 The Release workflow:
 
@@ -57,11 +56,10 @@ The Release workflow:
 The cask keeps the ZIP's SHA-256 and the macOS 14 minimum. Normal uninstall removes
 only the app and leaves user preferences intact.
 
-Check the first published release on a Mac using the command above, then open
-Lotsen and verify the first-launch exception, default-browser selection and the
-Automation permission for tab transfer. Local package validation cannot confirm
-Gatekeeper's behavior on another user's Mac. Once verified, remove the
-pending-first-release notice from the main README and update the tap README.
+When changing the distribution workflow, test installation from the published
+tap and check first launch, default-browser selection and Automation permission
+for tab transfer. Local package validation alone cannot confirm Gatekeeper's
+behavior on another user's Mac.
 
 ## Later releases and recovery
 
