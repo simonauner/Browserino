@@ -26,7 +26,9 @@ Pick the level from the largest change on the branch, using its conventional com
 If main moves on while a branch is open, rebase and re-run the bump against main's
 version rather than keeping the old number, so two branches never ship the same one.
 
-Merging a bump to main publishes the release: `.github/workflows/release.yml` tags
-the merge commit `vX.Y.Z` and creates a GitHub release with notes generated from the
-merged pull requests, so their titles are what users read. It fails if the tag
-already exists, so never reuse a version.
+Merging a bump to main publishes the release: `.github/workflows/release.yml` builds
+a universal app, ad hoc signs it, tags the merge commit `vX.Y.Z`, publishes
+`Lotsen.zip` with generated release notes, and updates `simonauner/homebrew-tap`.
+PR titles are what users read in the notes. Never reuse a version or move a tag.
+The app is not notarized and needs no Apple credentials. Tap deploy key and first-release
+setup are documented in `docs/HOMEBREW.md`.

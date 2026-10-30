@@ -1,45 +1,111 @@
-# Publishes a GitHub release whenever a push to main changes Lotsen's version.
-# The release carries generated notes only; there is no signed build to attach yet.
-
+# Version bumps publish an ad hoc signed universal app, then update the Homebrew tap.
 name: Release
 
 on:
   push:
     branches: [ "main" ]
     paths: [ "Lotsen.xcodeproj/project.pbxproj" ]
+  workflow_dispatch:
+
+concurrency:
+  group: lotsen-release
+  cancel-in-progress: false
 
 permissions:
   contents: write
 
 jobs:
-  release:
-
+  prepare:
     runs-on: ubuntu-latest
-
+    outputs:
+      version: ${{ steps.version.outputs.version }}
+      publish: ${{ steps.version.outputs.publish }}
     steps:
     - uses: actions/checkout@v7
       with:
         fetch-depth: 0
-    - name: Release the new version
+    - name: Check the release version
+      id: version
       env:
-        GH_TOKEN: ${{ github.token }}
         BEFORE: ${{ github.event.before }}
+        EVENT: ${{ github.event_name }}
       run: |
         version() {
           sed -n 's/.*MARKETING_VERSION = \([0-9.]*\);/\1/p' | sort -u
         }
         current=$(version < Lotsen.xcodeproj/project.pbxproj)
+        [[ "$current" =~ ^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)$ ]]
         previous=$(git show "$BEFORE:Lotsen.xcodeproj/project.pbxproj" 2>/dev/null | version || true)
-
-        if [ "$current" = "$previous" ]; then
+        echo "version=$current" >> "$GITHUB_OUTPUT"
+        if [ "$EVENT" != workflow_dispatch ] && [ "$current" = "$previous" ]; then
           echo "Version is still $current; nothing to release."
           exit 0
         fi
 
         tag="v$current"
         if git rev-parse -q --verify "refs/tags/$tag" >/dev/null; then
-          echo "::error::Tag $tag already exists. Bump to a version that hasn't been released."
-          exit 1
+          if [ "$(git rev-list -n 1 "$tag")" != "$GITHUB_SHA" ]; then
+            echo "::error::Tag $tag points to another commit. Bump the version before releasing."
+            exit 1
+          fi
         fi
+        echo "publish=true" >> "$GITHUB_OUTPUT"
 
-        gh release create "$tag" --target "$GITHUB_SHA" --title "Lotsen $current" --generate-notes
+  release:
+    needs: prepare
+    if: needs.prepare.outputs.publish == 'true'
+    runs-on: macos-26
+    timeout-minutes: 60
+    outputs:
+      checksum: ${{ steps.checksum.outputs.sha256 }}
+    steps:
+    - uses: actions/checkout@v7
+    - name: Select Xcode
+      run: sudo xcode-select -s /Applications/Xcode_26.6.app
+    - name: Build and ad hoc sign
+      run: bash scripts/package-release.sh
+    - name: Calculate checksum
+      id: checksum
+      run: echo "sha256=$(shasum -a 256 build/Lotsen.zip | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+    - name: Publish the verified app
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ needs.prepare.outputs.version }}
+      run: |
+        set -euo pipefail
+        tag="v$VERSION"
+        # A draft keeps incomplete new releases out of the download list.
+        if ! gh release view "$tag" >/dev/null 2>&1; then
+          gh release create "$tag" --target "$GITHUB_SHA" --title "Lotsen $VERSION" --generate-notes --draft
+        fi
+        gh release upload "$tag" build/Lotsen.zip
+        gh release edit "$tag" --draft=false --latest
+  homebrew:
+    needs: [prepare, release]
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v7
+    - uses: actions/checkout@v7
+      with:
+        repository: simonauner/homebrew-tap
+        ssh-key: ${{ secrets.HOMEBREW_TAP_SSH_KEY }}
+        path: build/homebrew-tap
+    - name: Update the cask from the published download
+      env:
+        GH_TOKEN: ${{ github.token }}
+        VERSION: ${{ needs.prepare.outputs.version }}
+        EXPECTED_CHECKSUM: ${{ needs.release.outputs.checksum }}
+      run: |
+        set -euo pipefail
+        gh release download "v$VERSION" --pattern Lotsen.zip --dir build
+        echo "$EXPECTED_CHECKSUM  build/Lotsen.zip" | sha256sum --check
+        mkdir -p build/homebrew-tap/Casks
+        python3 scripts/homebrew-cask.py "$VERSION" build/Lotsen.zip > build/homebrew-tap/Casks/lotsen.rb
+        cd build/homebrew-tap
+        git config user.name 'github-actions[bot]'
+        git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+        git add Casks/lotsen.rb
+        if ! git diff --cached --quiet; then
+          git commit -m "Update Lotsen to $VERSION"
+          git push
+        fi

@@ -62,3 +62,4 @@ fastlane/screenshots/**/*.png
 fastlane/test_output
 # Local builds (scripts/install-local.sh)
 build/
+__pycache__/
