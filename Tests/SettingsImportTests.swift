@@ -3,6 +3,17 @@ import Testing
 
 /// Imported files and settings left by older builds are untrusted input.
 struct SettingsImportTests {
+    @Test("private rules and paused state round trip through settings import")
+    func privateRulesAndPause() throws {
+        let rule = Rule(regex: "https://example.com/*", app: URL(fileURLWithPath: "/Applications/Chrome.app"), kind: .pattern, isIncognito: true)
+        let raw = String(decoding: try JSONEncoder().encode([rule]), as: UTF8.self)
+        let accepted = try SettingsPolicy.validate(["rules": raw, "rules_paused": true])
+        #expect(accepted["rules_paused"] as? Bool == true)
+        let imported = try #require(accepted["rules"] as? String)
+        #expect(try JSONDecoder().decode([Rule].self, from: Data(imported.utf8)) == [rule])
+        #expect((try? SettingsPolicy.validate(["rules_paused": 1])) == nil)
+    }
+
     @Test("valid settings accepted")
     func validSettingsAccepted() {
         #expect((try? SettingsPolicy.validate(["language": "ru", "profilesEnabled": true])) != nil)

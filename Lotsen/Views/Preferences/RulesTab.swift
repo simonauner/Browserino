@@ -25,6 +25,12 @@ struct RuleRow: View {
                     .foregroundStyle(.secondary)
             }
 
+            if rule.isIncognito {
+                Image(systemName: "lock")
+                    .help(L10n.text("picker.private.open"))
+                    .accessibilityLabel(L10n.text("picker.private.open"))
+            }
+
             Spacer()
 
             Text(bundle == nil
@@ -50,6 +56,7 @@ struct RuleRow: View {
 
 struct RulesTab: View {
     @Setting(\.rules) private var rules
+    @AppStorage("rules_paused") private var rulesPaused = false
     @AppStorage("rules_showInPicker") private var showInPicker: Bool = true
     @State private var addPresented = false
     @State private var editing: EditedRow<Rule>?
@@ -64,6 +71,10 @@ struct RulesTab: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
+            Toggle(L10n.text("rules.pause"), isOn: $rulesPaused)
+            Text(verbatim: L10n.text("rules.bypass_hint"))
+                .foregroundStyle(.secondary)
+
             Toggle(isOn: $showInPicker) {
                 Text(verbatim: L10n.text("rules.picker.show_option"))
                     .fixedSize(horizontal: false, vertical: true)

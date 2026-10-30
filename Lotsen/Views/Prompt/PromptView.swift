@@ -30,11 +30,12 @@ struct PromptView: View {
 
     private func open(_ urls: [URL], target: BrowserTarget, isIncognito: Bool, savingRule: Bool = true) {
         if savingRule {
-            saveRuleIfRequested(for: target)
+            saveRuleIfRequested(for: target, isIncognito: isIncognito)
         }
         BrowserUtil.openURL(urls, target: target, isIncognito: isIncognito) { app, error in
             if let error { BrowserSwitchService.shared.presentOpenFailedAlert(error); return }
-            guard app != nil, let sourceTab, closeSourceTab else { return }
+            guard app != nil, let sourceTab, closeSourceTab,
+                  sourceTab.canCloseAfterOpening(in: Bundle(url: target.app)?.bundleIdentifier) else { return }
             Task {
                 do { try await BrowserTabScripting.close(sourceTab) }
                 catch { BrowserSwitchService.shared.presentCloseFailedAlert() }
@@ -74,10 +75,10 @@ struct PromptView: View {
         urls.first.map(Rule.hostPattern(for:)) ?? ""
     }
 
-    private func saveRuleIfRequested(for target: BrowserTarget) {
+    private func saveRuleIfRequested(for target: BrowserTarget, isIncognito: Bool) {
         guard offersRule, alwaysOpen else { return }
         AppSettings.shared.replace(
-            \.rules, with: Rule.addingPattern(rulePattern, target: target, to: rules),
+            \.rules, with: Rule.addingPattern(rulePattern, target: target, isIncognito: isIncognito, to: rules),
             undoManager: (NSApp.delegate as? AppDelegate)?.settingsUndoManager,
             actionName: L10n.text("common.add")
         )
@@ -281,6 +282,12 @@ struct PromptView: View {
             .frame(height: min(listHeight, Self.maxListHeight))
 
             Divider()
+
+            if sourceTab != nil {
+                Text(verbatim: L10n.text("tabs.transfer.profile_copy_hint"))
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
 
             if offersRule {
                 HStack(alignment: .firstTextBaseline) {

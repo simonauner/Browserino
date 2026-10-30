@@ -78,6 +78,14 @@ Chromium profiles appear in Browsers. Use Enable profiles to grant access to the
 
 Use Move current tab from the menu bar or assign its global shortcut in General. Allow Automation only for the browser you want to control. Closing the original is optional and disabled by default; Safari keeps its source tab open. Chromium closing requires the same original tab/window IDs and URL. Application launch success does not confirm that the destination page finished loading.
 
+The selector also offers profiles in the source browser. When opening in a profile of the same browser, the original tab stays open because its source profile cannot be identified reliably. Enable profile display in Browsers to use these destinations.
+
+### Rules and one-time exceptions
+
+Hold Option while opening a link to skip automatic rules for that opening and show the selector. Pause automatic rules from the menu bar or in Rules settings; turn the same option off to resume. The pause survives relaunching Lotsen and leaves saved rules intact.
+
+Choosing a private window with “Always open” saves private mode with the rule. Private rules show a lock in Rules, where “Open in Private Window” can be changed. Older rules continue to open normally. Private opening must be supported by the destination browser.
+
 Browser authentication sessions may still require Safari. Release signing and notarization are separate from these development builds.
 
 ## Local development

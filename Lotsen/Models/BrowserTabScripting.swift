@@ -10,6 +10,11 @@ struct SourceTabSnapshot: Sendable {
     let identity: SourceTabIdentity
     let isSafari: Bool
     var url: URL { URL(string: identity.url)! }
+
+    func canCloseAfterOpening(in destinationBundleIdentifier: String?) -> Bool {
+        // The source profile is unknown; opening in it may reuse the captured tab.
+        !isSafari && destinationBundleIdentifier != nil && destinationBundleIdentifier != bundleIdentifier
+    }
 }
 
 enum BrowserScriptingFamily { case safari, chromium, unsupported }

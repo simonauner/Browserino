@@ -4,6 +4,36 @@ import Testing
 
 /// What the picker lists for a link, worked out from the stored settings.
 struct PromptRowsTests {
+    @Test("tab transfer offers explicit profiles in the source browser and keeps its original tab")
+    func transferBetweenProfiles() throws {
+        let suite = "LotsenProfileTransfer-" + UUID().uuidString
+        let defaults = try #require(UserDefaults(suiteName: suite))
+        defer { defaults.removePersistentDomain(forName: suite) }
+        let app = try #require(NSWorkspace.shared.urlForApplication(withBundleIdentifier: "com.apple.Safari"))
+        // A real app bundle renders the rows; synthetic profile names avoid reading user data.
+        let plain = BrowserTarget(app: app)
+        let work = BrowserTarget(app: app, profile: "Work")
+        let personal = BrowserTarget(app: app, profile: "Personal")
+        let settings = AppSettings(defaults: defaults)
+        settings.browsers = [plain, work, personal]
+        let source = SourceTabSnapshot(bundleIdentifier: "com.apple.Safari", processIdentifier: 1, sourceName: "Source",
+                                       identity: SourceTabIdentity(windowID: 1, tabID: 2, url: "https://example.com/"), isSafari: false)
+        func targets() -> [BrowserTarget] {
+            PromptRows(urls: [source.url], sourceTab: source, settings: settings, defaults: defaults).browsers.map(\.target)
+        }
+        #expect(targets() == [work, personal])
+        settings.hiddenBrowsers = [personal]
+        #expect(targets() == [work])
+        defaults.set(false, forKey: "profilesEnabled")
+        #expect(targets().isEmpty, "a bare source-browser choice cannot select a destination profile")
+        #expect(!source.canCloseAfterOpening(in: source.bundleIdentifier))
+        #expect(!source.canCloseAfterOpening(in: nil))
+        #expect(source.canCloseAfterOpening(in: "another.browser"))
+        let safari = SourceTabSnapshot(bundleIdentifier: "com.apple.Safari", processIdentifier: 1, sourceName: "Safari",
+                                       identity: source.identity, isSafari: true)
+        #expect(!safari.canCloseAfterOpening(in: "another.browser"))
+    }
+
     @Test("batch app choices must match every link and an empty batch has no apps")
     func batchMappings() throws {
         let suiteName = "LotsenBatchRows-" + UUID().uuidString

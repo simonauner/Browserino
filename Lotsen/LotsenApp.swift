@@ -16,7 +16,7 @@ extension UserDefaults {
     }
 }
 
-class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwitchPresenting {
+class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, NSMenuDelegate, BrowserSwitchPresenting {
     private var menuBarObservation: NSKeyValueObservation?
     private var selectorWindow: LotsenWindow?
     private var preferencesWindow: NSWindow?
@@ -88,9 +88,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
                 let quit = NSMenuItem(title: L10n.text("menu.quit"), action: #selector(quitApp), keyEquivalent: "")
                 
                 statusMenu = NSMenu()
+                statusMenu.delegate = self
                 
                 let move = NSMenuItem(title: L10n.text("tabs.transfer.title"), action: #selector(moveCurrentTab), keyEquivalent: "")
                 statusMenu!.addItem(move)
+                statusMenu!.addItem(NSMenuItem(title: L10n.text("rules.pause"), action: #selector(toggleRulesPaused), keyEquivalent: ""))
                 statusMenu!.addItem(.separator())
                 statusMenu!.addItem(preferences)
                 statusMenu!.addItem(.separator())
@@ -139,6 +141,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         return false
     }
     
+    @objc func toggleRulesPaused() {
+        UserDefaults.standard.set(!UserDefaults.standard.bool(forKey: "rules_paused"), forKey: "rules_paused")
+    }
+
+    func menuNeedsUpdate(_ menu: NSMenu) {
+        menu.items.first { $0.action == #selector(toggleRulesPaused) }?.state =
+            UserDefaults.standard.bool(forKey: "rules_paused") ? .on : .off
+    }
+
     @objc func moveCurrentTab() { BrowserSwitchService.shared.beginMove(preferFrontmost: false) }
 
     func presentMovePrompt(snapshot: SourceTabSnapshot) {
@@ -254,9 +265,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSWindowDelegate, BrowserSwi
         if processedUrls.count == 1 {
             let urlString = processedUrls.first!.absoluteString
 
-            if let rule = Rule.firstMatch(in: AppSettings.shared.rules, for: urlString) {
+            if let rule = Rule.firstMatch(
+                in: AppSettings.shared.rules, for: urlString,
+                bypassing: UserDefaults.standard.bool(forKey: "rules_paused") || NSEvent.modifierFlags.contains(.option)
+            ) {
                 // A rule's browser may be uninstalled; the picker keeps the link.
-                BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: false) { _, error in
+                BrowserUtil.openURL(processedUrls, target: rule.target, isIncognito: rule.isIncognito) { _, error in
                     if error != nil { self.presentSelector(urls: processedUrls) }
                 }
                 return
