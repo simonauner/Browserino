@@ -1,0 +1,19 @@
+Lotsen.xcodeproj/project.pbxproj
+  s_e4a5c350dd1b38::t_19659c20777ef6 362,380,400,418,432,435,448,451
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1973d3038cd9b5f831f02534ee48cd322efd6da5",
+  "prompts": {},
+  "sessions": {
+    "s_e4a5c350dd1b38": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18b36-bc0c-72e1-837f-654e1641edd6",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
