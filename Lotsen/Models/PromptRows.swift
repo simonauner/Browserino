@@ -60,7 +60,7 @@ struct PromptRows {
 
         let browserRows: [PromptRow] = visible
             .compactMap(BrowserTargetPresentation.init)
-            .filter { $0.bundleIdentifier != sourceTab?.bundleIdentifier }
+            .filter { $0.bundleIdentifier != sourceTab?.bundleIdentifier || $0.target.profile != nil }
             .map { PromptRow(presentation: $0, app: nil, shortcut: shortcut(for: $0)) }
 
         self.apps = appRows

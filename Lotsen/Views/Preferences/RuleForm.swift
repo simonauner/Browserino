@@ -16,7 +16,7 @@ struct RuleDraft: Identifiable {
 
     /// Opens the link the picker was showing, in `rule`'s browser.
     func open(with rule: Rule) {
-        BrowserUtil.openURL([link], target: rule.target, isIncognito: false) { _, error in
+        BrowserUtil.openURL([link], target: rule.target, isIncognito: rule.isIncognito) { _, error in
             if let error { BrowserSwitchService.shared.presentOpenFailedAlert(error) }
         }
     }
@@ -34,6 +34,8 @@ struct RuleForm: View {
 
     @State private var regex: String
     @State private var kind: Rule.Kind
+    @State private var isIncognito: Bool
+    @Setting(\.privateArgs) private var privateArgs
     @State private var testUrls: String = ""
     @State private var url: URL?
     @State private var profile: String?
@@ -45,6 +47,7 @@ struct RuleForm: View {
         self.onDelete = onDelete
         _regex = State(initialValue: rule?.regex ?? "")
         _kind = State(initialValue: rule?.kind ?? .pattern)
+        _isIncognito = State(initialValue: rule?.isIncognito ?? false)
         _url = State(initialValue: rule?.app)
         _profile = State(initialValue: rule?.profile)
     }
@@ -64,6 +67,10 @@ struct RuleForm: View {
 
     private var compiledRegex: Regex<AnyRegexOutput>? {
         expression.isEmpty ? nil : Rule.compile(expression, kind: kind)
+    }
+
+    private var supportsPrivate: Bool {
+        PrivateBrowsingPolicy.canOpen(identifier: url.flatMap { Bundle(url: $0)?.bundleIdentifier }, overrides: privateArgs)
     }
 
     private var testLines: [String] {
@@ -157,6 +164,12 @@ struct RuleForm: View {
                 LabeledContent(L10n.text("browsers.target.open_in")) {
                     BrowserTargetPicker(app: $url, profile: $profile)
                 }
+                Toggle(L10n.text("picker.private.open"), isOn: $isIncognito)
+                    .disabled(!supportsPrivate && !isIncognito)
+                if isIncognito && !supportsPrivate {
+                    Label(L10n.text("picker.private.unavailable"), systemImage: "exclamationmark.triangle")
+                        .foregroundStyle(.red)
+                }
             }
         }
         .formStyle(.grouped)
@@ -190,13 +203,14 @@ struct RuleForm: View {
                             regex: expression,
                             app: url,
                             profile: profile,
-                            kind: kind
+                            kind: kind,
+                            isIncognito: isIncognito
                         )
                     )
                     dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
-                .disabled(compiledRegex == nil || url == nil)
+                .disabled(compiledRegex == nil || url == nil || (isIncognito && !supportsPrivate))
             }
         }
     }

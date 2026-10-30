@@ -54,6 +54,8 @@ struct ShortcutsTab: View {
                 row(L10n.text("shortcuts.picker.open_private"), keys: "⇧↩")
                 row(L10n.text("settings.copy_url.title"), keys: alternativeShortcut ? "⌘C" : "⌥⌘C")
                 row(L10n.text("shortcuts.picker.close"), keys: "esc")
+                Text(verbatim: L10n.text("rules.bypass_hint"))
+                    .foregroundStyle(.secondary)
             }
 
             Section {

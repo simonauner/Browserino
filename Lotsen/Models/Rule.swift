@@ -18,11 +18,12 @@ struct Rule: Hashable, Codable {
     var app: URL
     var profile: String?
     var kind: Kind = .regex
+    var isIncognito: Bool = false
 
-    init(regex: String, app: URL, profile: String? = nil, kind: Kind = .regex) {
-        self.regex = regex; self.app = app; self.profile = profile; self.kind = kind
+    init(regex: String, app: URL, profile: String? = nil, kind: Kind = .regex, isIncognito: Bool = false) {
+        self.regex = regex; self.app = app; self.profile = profile; self.kind = kind; self.isIncognito = isIncognito
     }
-    private enum CodingKeys: String, CodingKey { case regex, app, profile, profileDirectory, kind }
+    private enum CodingKeys: String, CodingKey { case regex, app, profile, profileDirectory, kind, isIncognito }
     // Rules saved before `kind` existed are regexes.
     init(from decoder: any Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
@@ -31,6 +32,7 @@ struct Rule: Hashable, Codable {
         profile = try values.decodeIfPresent(String.self, forKey: .profile)
             ?? values.decodeIfPresent(String.self, forKey: .profileDirectory)
         kind = try values.decodeIfPresent(Kind.self, forKey: .kind) ?? .regex
+        isIncognito = try values.decodeIfPresent(Bool.self, forKey: .isIncognito) ?? false
     }
     func encode(to encoder: any Encoder) throws {
         var values = encoder.container(keyedBy: CodingKeys.self)
@@ -38,6 +40,7 @@ struct Rule: Hashable, Codable {
         try values.encode(app, forKey: .app)
         try values.encodeIfPresent(profile, forKey: .profile)
         try values.encode(kind, forKey: .kind)
+        try values.encode(isIncognito, forKey: .isIncognito)
     }
 
     var target: BrowserTarget {
@@ -48,8 +51,9 @@ struct Rule: Hashable, Codable {
         Rule.compile(regex, kind: kind)
     }
 
-    static func firstMatch(in rules: [Rule], for url: String) -> Rule? {
-        rules.first { rule in
+    static func firstMatch(in rules: [Rule], for url: String, bypassing: Bool = false) -> Rule? {
+        guard !bypassing else { return nil }
+        return rules.first { rule in
             rule.compiledRegex.map { url.firstMatch(of: $0) != nil } ?? false
         }
     }
@@ -93,11 +97,16 @@ struct Rule: Hashable, Codable {
     }
 
     /// Appends the pattern rule the picker saves for "Always open … in …".
-    /// A blank pattern, or a rule that already exists, leaves `rules` as it was.
-    static func addingPattern(_ pattern: String, target: BrowserTarget, to rules: [Rule]) -> [Rule] {
+    /// Updates the private choice on an existing pattern for the same target.
+    static func addingPattern(_ pattern: String, target: BrowserTarget, isIncognito: Bool = false, to rules: [Rule]) -> [Rule] {
         let pattern = pattern.trimmingCharacters(in: .whitespacesAndNewlines)
-        let rule = Rule(regex: pattern, app: target.app, profile: target.profile, kind: .pattern)
-        guard !pattern.isEmpty, !rules.contains(rule) else { return rules }
+        let rule = Rule(regex: pattern, app: target.app, profile: target.profile, kind: .pattern, isIncognito: isIncognito)
+        guard !pattern.isEmpty else { return rules }
+        if let index = rules.firstIndex(where: { $0.kind == .pattern && $0.regex == pattern && $0.target == target }) {
+            var updated = rules
+            updated[index] = rule
+            return updated
+        }
 
         return rules + [rule]
     }

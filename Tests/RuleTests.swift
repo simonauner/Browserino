@@ -21,6 +21,26 @@ struct RuleTests {
     @Test("legacy Chrome rule target retained")
     func legacyRuleTargetRetained() throws {
         #expect(try legacyRule().profile == "Profile 1")
+        #expect(try legacyRule().isIncognito == false)
+    }
+
+    @Test("remembered private choice survives storage and updates without a shadowed duplicate")
+    func privateRule() throws {
+        let normal = Rule.addingPattern("https://example.com/*", target: chrome, to: [])
+        let privateRules = Rule.addingPattern("https://example.com/*", target: chrome, isIncognito: true, to: normal)
+        #expect(privateRules.count == 1)
+        let restored = try JSONDecoder().decode([Rule].self, from: JSONEncoder().encode(privateRules))
+        #expect(Rule.firstMatch(in: restored, for: "https://example.com/a")?.isIncognito == true)
+        #expect(restored.first?.target == chrome)
+        #expect(Rule.addingPattern("https://example.com/*", target: chrome, to: restored) == normal)
+    }
+
+    @Test("bypassing rules is temporary and preserves private rules and priority")
+    func bypassRules() throws {
+        let rules = Rule.addingPattern("https://example.com/*", target: chrome, isIncognito: true, to: [])
+        let url = "https://example.com/a"
+        #expect(Rule.firstMatch(in: rules, for: url, bypassing: true) == nil)
+        #expect(Rule.firstMatch(in: rules, for: url) == rules.first)
     }
 
     @Test("picker rules from \"Always open links like this in…\"")
