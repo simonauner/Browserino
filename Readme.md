@@ -51,6 +51,8 @@ brew upgrade --cask lotsen
 
 Lotsen uses ad hoc signing and is **not notarized by Apple**. If macOS blocks the first launch, try opening the app, then use **System Settings → Privacy & Security → Open Anyway** if you trust the download. See [Apple's instructions](https://support.apple.com/en-gb/102445). Managed Macs may not allow this exception.
 
+<img src="images/macos-open-anyway.png" width="720" alt="Security section in macOS System Settings showing that Lotsen.app was blocked, with the Open Anyway button on the right">
+
 If you previously installed Lotsen from source, quit it and move `/Applications/Lotsen.app` to the Trash before installing the cask. Your preferences are stored separately and are preserved.
 
 ### Build from source
