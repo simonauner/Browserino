@@ -45,6 +45,7 @@ struct PromptView: View {
 
 
     @State private var opacityAnimation = 0.0
+    @State private var copyFeedbackID: UUID?
     @State private var selected = 0
     @FocusState private var focused: Bool
     @State private var alwaysOpen = false
@@ -161,6 +162,16 @@ struct PromptView: View {
         )
     }
 
+    private func copyURLs(closingPicker: Bool = false) {
+        let pasteboard = NSPasteboard.general
+        pasteboard.clearContents()
+        guard pasteboard.setString(urls.map(\.absoluteString).joined(separator: "\n"), forType: .string) else { return }
+        copyFeedbackID = UUID()
+        if closingPicker {
+            NSApplication.shared.keyWindow?.close()
+        }
+    }
+
     var body: some View {
         VStack {
             if urls.count > 1 {
@@ -186,14 +197,17 @@ struct PromptView: View {
                         .foregroundStyle(.secondary)
                     Spacer(minLength: 4)
                     Button {
-                        NSPasteboard.general.clearContents()
-                        NSPasteboard.general.setString(urls.map(\.absoluteString).joined(separator: "\n"), forType: .string)
+                        copyURLs()
                     } label: {
-                        Image(systemName: "doc.on.doc")
+                        if copyFeedbackID != nil {
+                            Label(L10n.text("picker.copy.copied"), systemImage: "checkmark.circle.fill")
+                        } else {
+                            Image(systemName: "doc.on.doc")
+                        }
                     }
                     .buttonStyle(.borderless)
                     .help(L10n.text("picker.batch.copy"))
-                    .accessibilityLabel(L10n.text("picker.batch.copy"))
+                    .accessibilityLabel(L10n.text(copyFeedbackID != nil ? "picker.copy.copied" : "picker.batch.copy"))
                     .keyboardShortcut(KeyEquivalent("c"), modifiers: alternativeShortcut ? [.command] : [.command, .option])
                 }
                 Divider()
@@ -317,17 +331,16 @@ struct PromptView: View {
 
             if urls.count == 1, let host = urls.first?.host() {
                 Button(action: {
-                    let pasteboard = NSPasteboard.general
-                    pasteboard.clearContents()
-                    pasteboard.setString(urls.first?.absoluteString ?? "", forType: .string)
-
-                    if closeAfterCopy {
-                        NSApplication.shared.keyWindow?.close()
-                    }
+                    copyURLs(closingPicker: closeAfterCopy)
                 }) {
-                    Text(
-                        host
-                    )
+                    ZStack {
+                        Text(host)
+                            .opacity(copyFeedbackID == nil ? 1 : 0)
+                        Label(L10n.text("picker.copy.copied"), systemImage: "checkmark.circle.fill")
+                            .opacity(copyFeedbackID != nil ? 1 : 0)
+                    }
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(copyFeedbackID != nil ? L10n.text("picker.copy.copied") : host)
                 }
                 .buttonStyle(.plain)
                 .keyboardShortcut(
@@ -340,6 +353,15 @@ struct PromptView: View {
         .fileImporter(isPresented: $otherApplicationPresented, allowedContentTypes: [.application]) { result in
             if case .success(let application) = result {
                 open(urls, target: BrowserTarget(app: application), isIncognito: false, savingRule: false)
+            }
+        }
+        .task(id: copyFeedbackID) {
+            guard copyFeedbackID != nil else { return }
+            do {
+                try await Task.sleep(for: .seconds(2))
+                copyFeedbackID = nil
+            } catch {
+                // A new copy or a dismissed picker cancels the previous timer.
             }
         }
         .padding(12)
