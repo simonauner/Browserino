@@ -1,0 +1,40 @@
+scripts/homebrew-cask.py
+  s_e05125571f7dc0::t_98b583bcb83a89 23
+  s_e05125571f7dc0::t_28f7dd6608e59a 1-11,14-22,24-33
+  s_e05125571f7dc0::t_7585e827c4ac6f 12-13
+CLAUDE.md
+  s_e05125571f7dc0::t_1369d3bcaa861f 29-33
+docs/HOMEBREW.md
+  s_e05125571f7dc0::t_1369d3bcaa861f 1-100
+scripts/test-homebrew-cask.py
+  s_e05125571f7dc0::t_bb1426e4154855 1-23,25-33
+  s_e05125571f7dc0::t_98b583bcb83a89 24
+Readme.md
+  s_e05125571f7dc0::t_1369d3bcaa861f 33,37-57,78,110
+scripts/package-release.sh
+  s_e05125571f7dc0::t_28f7dd6608e59a 1-19,22-43
+  s_e05125571f7dc0::t_f7c3a06893352f 20-21
+.github/workflows/release.yml
+  s_e05125571f7dc0::t_7585e827c4ac6f 1,8-12,18,20-22,27-28,31,37,39-40,47-50,52,54-150
+.github/workflows/swift.yml
+  s_e05125571f7dc0::t_7585e827c4ac6f 27
+  s_e05125571f7dc0::t_bb1426e4154855 28
+.gitignore
+  s_e05125571f7dc0::t_bb1426e4154855 65
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2f698a4ab7eb16d2d07e752adc7fc6c573812275",
+  "prompts": {},
+  "sessions": {
+    "s_e05125571f7dc0": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a18b3e-4d45-78c0-b024-cdf56b6e3e8a",
+        "model": "gpt-6.1-sol"
+      },
+      "human_author": "Simon Aunér <simonauner@gmail.com>"
+    }
+  }
+}
